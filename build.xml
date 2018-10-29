@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garanti
+   .: Objeto......build.xml
+   .: Criação.....2 de abril, 13:06
+   .: Autor.......Thiago Uriel M. Garcia
+   .: Descrição...Gera o arquivo war e dependências do sistema.
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+--> 
+<project default="build" name="Yamaha Builder">
+	<property file="build.properties" />
+
+	<!-- Configurar o caminho das bibliotecas -->
+	<path id="component.class.path">
+		<fileset dir="${general.dir.lib}/server">
+			<include name="*.jar" />
+		</fileset>		
+		<fileset dir="${general.dir.lib}/app">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Limpa classes compiladas em builds anteriores -->	
+    <target name="clean" description="Limpando classes...">
+    	
+    	<echo message="Limpando classes..."/>
+        <delete dir="${infra.dir.build}"/>
+    	<delete dir="${main.dir.build}"/>
+    	<delete dir="${general.dir.deploy}"/>
+    	<delete dir="${general.dir.doc}"/>
+    	
+    </target>
+	
+	<!-- Compilar classes Java e criar jars -->
+	<target name="compile" description="Compilando classes Java e preparando arquivos JAR...">
+		<echo message="Compilando classes Java e preparando arquivos JAR..."/>
+		
+		<mkdir dir="${infra.dir.build}" />
+		<javac destdir="${infra.dir.build}" 
+			   classpathref="component.class.path" 
+			   debug="true"
+			   target="1.4"
+			   source="1.4"
+			encoding="iso-8859-1">
+			<src path="${infra.dir.src}" />
+		</javac>
+		<copy todir="${infra.dir.build}">
+			<fileset dir="${infra.dir.src}">
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+        <jar destfile="${general.dir.lib}/app/${infra.file.jar}"
+ 			 basedir="${infra.dir.build}"
+			 includes="**/*.*,**/*.properties">
+			<manifest>
+		        <attribute name="Built-By" value="Resource Tecnologia"/>
+		    </manifest>			
+        </jar>		
+		
+		<mkdir dir="${main.dir.build}" />
+		<javac destdir="${main.dir.build}" 
+			   classpathref="component.class.path" 
+			   debug="true"
+			   target="1.4"
+			   source="1.4"
+			encoding="iso-8859-1">
+			<src path="${main.dir.src}" />
+		</javac>		
+		<copy todir="${main.dir.build}">
+			<fileset dir="${main.dir.src}">
+				<include name="**/*.properties" />
+				<include name="**/*.js" />
+				<include name="**/*.xml" />
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+        <jar destfile="${general.dir.lib}/app/${application.file.jar}"
+ 			 basedir="${main.dir.build}"
+			 includes="**/*.*,**/*.properties">
+			<manifest>
+		        <attribute name="Built-By" value="Resource Tecnologia"/>
+		    </manifest>			
+        </jar>		
+		
+	</target>
+
+	<!-- Criar arquivos War da aplicação -->
+	<target name="war" depends="compile" description="Empacotando arquivos War...">
+		<echo message="Empacotando arquivos War..."/>
+		<mkdir dir="${general.dir.deploy}" />
+		<war destfile="${general.dir.deploy}/${application.file.war}" webxml="${general.dir.config}/WEB-INF/web.xml">
+			<fileset dir="${main.dir.web}">
+				<include name="**/*.*" />
+			</fileset>
+			<lib dir="${general.dir.lib}/app" />
+			<webinf dir="${general.dir.config}/WEB-INF/">
+				<include name="tld/*.*" />
+				<include name="hibernate/*.*" />
+				<include name="struts-config.xml" />
+				<include name="spring-config.xml" />
+				<include name="validation.xml" />
+				<include name="validator-rules.xml" />
+				<include name="tiles-defs.xml" />
+				<exclude name="web.xml" />
+			</webinf>
+			<manifest>
+		        <attribute name="Built-By" value="Resource Tecnologia"/>
+		    </manifest>			
+		</war>
+	</target>
+
+	<target name="doc"  description="Gerando Javadoc...">
+		<mkdir dir="${general.dir.doc}" />
+		<javadoc destdir="${general.dir.doc}" author="true" version="true" use="true" package="true">
+			<fileset dir="${infra.dir.src}">
+				<include name="**/*.java"/>
+			</fileset>
+			<fileset dir="${main.dir.src}">
+				<include name="**/*.java"/>
+			</fileset>
+			<classpath>
+				<pathelement path="component.class.path"/>
+			</classpath>
+		</javadoc>
+	</target>
+	
+	<!-- Criar arquivo EAR -->
+	<target name="ear" depends="compile,war" description="Criando arquivo EAR...">
+		<echo message="Criando arquivo EAR..."/>
+		<ear destfile="${general.dir.deploy}/${application.file.ear}" appxml="${general.dir.config}/META-INF/application.xml">
+			<fileset dir="${general.dir.deploy}" includes="*.jar,*.war"/>
+			<!--<zipfileset dir="${general.dir.res}" includes="*.*,**/*.*" prefix="resources" /> -->
+			<manifest>
+			    <attribute name="Built-By" value="Edson Luiz Sumensari"/>
+			</manifest>
+	    </ear>
+	</target>
+	
+	<!-- Copiar arquivo para o servidor -->
+	<target name="install" depends="compile,war,ear" description="Copiando arquivos no servidor...">
+		<echo message="Copiando arquivos no servidor..."/>
+		<copy file="${general.dir.deploy}/${application.file.ear}" 
+			  todir="${dir.jboss}" 
+			  overwrite="yes" />
+	</target>
+	
+	<!-- Executar! -->
+	<target name="build" depends="clean,compile,war,ear,install"/>	
+	
+</project>

@@ -1,0 +1,505 @@
+
+
+
+
+
+
+
+<html>
+	<head>
+		<title>Yamaha - Sistema de Garantia</title>
+		<base href="http://localhost:8080/ym_sistema_garantia/jsp/home.jsp">
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta>
+		<link rel="stylesheet" type="text/css" href="../css/yamaha.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/menu/menu.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/themes/default.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/themes/mac_os_x.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/themes/alphacube.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/themes/pwc-os.css"></link>
+		<script type="text/javascript" src="../scripts/Menu/menu.js"> </script>
+		<script type="text/javascript" src="../scripts/Ajax/Clock/ajaxClock.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/window_utils.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/prototype.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/effects.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/window.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/window_effects.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/debug.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/pwc-os.js"> </script>
+	</head>
+	<body topmargin="0" leftmargin="0" onload="getClock();">
+		
+		<div id="dock"></div>		
+		
+		<!-- Início: Tabela de alinhamento -->
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+		
+			<!-- Início: Header -->
+			<tr>
+				<td align="left" valign="middle">
+				
+					<!-- Início: Logo -->
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+						<tr>
+							<td width="160"><img src="../images/home_logo_red.gif" border="0" alt="Yamaha"/></td>
+							<td align="center" valign="middle"><img src="../images/title_home.gif" border="0" alt="Sistema de Garantia"/></td>
+						</tr>
+					</table>
+					<!-- Fim: Logo -->
+				
+				</td>
+				<td align="right" valign="middle">
+				
+					<!-- Início: Relógio -->
+					<table border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td><img src="../images/home_clock_01.gif" border="0"/></td>
+							<td background="../images/home_clock_02.gif" align="right" valign="middle" class="clock">
+								<div id="clockDiv"></div>
+							</td>
+							<td><img src="../images/home_clock_03.gif" border="0"/></td>
+						</tr>
+					</table>
+					<!-- Fim: Relógio -->
+				
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" colspan="2" width="100%">
+				
+					<!-- Início: Barra de divisão -->
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+						<tr>
+							<td width="144"><img src="../images/header_separator_01_01.gif" border="0"/></td>
+							<td background="../images/header_separator_01_02.gif"></td>
+							<td width="6"><img src="../images/header_separator_01_03.gif" border="0"/></td>
+						</tr>
+						<tr>
+							<td><img src="../images/header_separator_02_01.gif" border="0"/></td>
+							<td background="../images/header_separator_02_02.gif" align="right" valign="middle" class="bold">
+								Oskar Comercio De Motos E Pecas Ltda
+
+							</td>
+							<td><img src="../images/header_separator_02_03.gif" border="0"/></td>
+						</tr>
+						<tr>
+							<td><img src="../images/header_separator_03_01.gif" border="0"/></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+					<!-- Fim: Barra de divisão -->
+				
+				</td>
+			</tr>
+			<!-- Fim: Header -->
+			
+			<!-- Início: Body -->
+			<tr>
+				<td align="left" valign="top">
+				
+					<table border="0" cellpadding="0" cellspacing="0">
+						
+						<!-- Início: Item de menu (Clientes) -->
+						<tr>
+							<td align="left" valign="top">
+							
+								<!-- Início: Botão de menu (Clientes) -->
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td id="clientesItemA" width="12"  height="56" style="background-image: none;"></td>
+										<td id="clientesItemB" width="127" height="56" style="background-image: none;" valign="middle">
+										
+											<table border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td id="clientesItemC" width="46" height="46" style="background-image: url('../images/menu_button_left_normal.gif');" align="center" valign="middle">
+														<img src="../images/menu_icon_clientes.gif" border="0"/>
+													</td>
+													<td id="clientesItemD" width="81" height="46" style="background-image: url('../images/menu_button_right_normal.gif');" align="left" valign="middle">
+														<table border="0" cellpadding="0" cellspacing="0">
+															<tr>
+																<td width="5"></td>
+																<td><a id="clientesOption" href="JavaScript:openWindow('win_sg_clientes_search', 'Pesquisar Clientes', '/ym_sistema_garantia/Cliente.do?task=search');" onClick="JavaScript:openMenu('clientes');" class="menu_text">Clientes</a></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td id="clientesItemE" width="123" height="3" style="background-image: none;"></td>
+									</tr>
+								</table>
+								<!-- Fim: Botão de menu (Clientes) -->
+							
+							</td>
+							<td align="left" valign="top">
+							
+								<!-- Início: Subitens de menu (Clientes) -->
+								<div id="clientesSubMenu" style="display:none; position: absolute;">
+								
+								</div>
+								<!-- Fim: Subitens de menu (Clientes) -->
+								
+							</td>
+						</tr>
+						<!-- Fim: Item de menu (Clientes) -->
+
+						<!-- Início: Item de menu (Lotes) -->
+						<tr>
+							<td align="left" valign="top">
+							
+								<!-- Início: Botão de menu (Lotes) -->
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td id="lotesItemA" width="12"  height="56" style="background-image: none;"></td>
+										<td id="lotesItemB" width="127" height="56" style="background-image: none;" valign="middle">
+										
+											<table border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td id="lotesItemC" width="46" height="46" style="background-image: url('../images/menu_button_left_normal.gif');" align="center" valign="middle">
+														<img src="../images/menu_icon_revisoes.gif" border="0"/>
+													</td>
+													<td id="lotesItemD" width="81" height="46" style="background-image: url('../images/menu_button_right_normal.gif');" align="left" valign="middle">
+														<table border="0" cellpadding="0" cellspacing="0">
+															<tr>
+																<td width="5"></td>
+																<td><a id="lotesOption" href="JavaScript:;" onClick="JavaScript:openMenu('lotes');" class="menu_text">Lote</a></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td id="lotesItemE" width="123" height="3" style="background-image: none;"></td>
+									</tr>
+								</table>
+								<!-- Fim: Botão de menu (lotes) -->
+							
+							</td>
+							<td align="left" valign="top">
+							
+								<!-- Início: Subitens de menu (lotes) -->
+								<div id="lotesSubMenu" style="display:none; position: absolute;">
+								
+									<table border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td><img src="../images/menu_submenu_item_01_01.gif" border="0"/></td>
+											<td width="99" height="34" background="../images/menu_submenu_item_01_02.gif" align="left" valign="middle">
+												<table border="0" cellpadding="2" cellspacing="0">
+													<tr>
+														<td valign="middle"><img src="../images/submenu_icon_list.gif" alt="Listar" border="0"/></td>
+														<td valign="middle"><a href="JavaScript:openWindow('win_sg_lote_list', 'Relação de Lotes', '/ym_sistema_garantia/Lote.do?task=list&page=1&dir=desc&sort=1&limit=20');" class="submenu_text">Listar</a></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td><img src="../images/menu_submenu_item_02_01.gif" border="0"/></td>
+											<td width="99" height="34" background="../images/menu_submenu_item_02_02.gif" align="left" valign="middle">
+												<table border="0" cellpadding="2" cellspacing="0">
+													<tr>
+														<td valign="middle"><img src="../images/submenu_icon_search.gif" alt="Listar" border="0"/></td>
+														<td valign="middle"><a href="JavaScript:openWindow('win_sg_lote_search', 'Pesquisar Lotes', '/ym_sistema_garantia/Lote.do?task=search');" class="submenu_text">Consultar</a></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td><img src="../images/menu_submenu_item_03_01.gif" border="0"/></td>
+											<td width="99" height="35" background="../images/menu_submenu_item_03_02.gif" align="left" valign="middle">
+												<table border="0" cellpadding="2" cellspacing="0">
+													<tr>
+														<td valign="middle"><img src="../images/submenu_icon_add.gif" alt="Incluir Lote" border="0"/></td>
+														<td valign="middle"><a href="JavaScript:openWindow('win_sg_lote_add', 'Incluir Lote', '/ym_sistema_garantia/Lote.do?task=add');" class="submenu_text">Incluir</a></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td><img src="../images/menu_submenu_item_04_01.gif" border="0"/></td>
+											<td><img src="../images/menu_submenu_item_04_02.gif" border="0"/></td>
+										</tr>										
+									</table>
+								
+								</div>
+								<!-- Fim: Subitens de menu (lotes) -->
+								
+							</td>
+						</tr>
+						<!-- Fim: Item de menu (Lotes) -->
+					
+						<!-- Início: Item de menu ((Nota Fiscal) -->
+						<tr>
+							<td align="left" valign="top">
+							
+								<!-- Início: Botão de menu ((Nota Fiscal) -->
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td id="notasItemA" width="12"  height="56" style="background-image: none;"></td>
+										<td id="notasItemB" width="127" height="56" style="background-image: none;" valign="middle">
+										
+											<table border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td id="notasItemC" width="46" height="46" style="background-image: url('../images/menu_button_left_normal.gif');" align="center" valign="middle">
+														<img src="../images/notaFiscal.gif" border="0"/>
+													</td>
+													<td id="notasItemD" width="81" height="46" style="background-image: url('../images/menu_button_right_normal.gif');" align="left" valign="middle">
+														<table border="0" cellpadding="0" cellspacing="0">
+															<tr>
+																<td width="5"></td>
+																<td><a id="notasOption" href="JavaScript:openWindow('win_sg_notaFiscal_list', 'Nota Fiscal', '/ym_sistema_garantia/NotaFiscal.do?task=list');" class="menu_text">Nota Fiscal</a></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td id="notasItemE" width="123" height="3" style="background-image: none;"></td>
+									</tr>
+								</table>
+								<!-- Fim: Botão de menu (Nota Fiscal) -->
+							
+							</td>
+							<td align="left" valign="top">
+							
+								&nbsp;
+								
+							</td>
+						</tr>
+						<!-- Fim: Item de menu (Nota Fiscal) -->
+						
+						<!-- Início: Item de menu (Info. Mercado) -->
+						<tr>
+							<td align="left" valign="top">
+							
+								<!-- Início: Botão de menu (Relatórios) -->
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td id="infosItemA" width="12"  height="56" style="background-image: none;"></td>
+
+										<td id="infosItemB" width="127" height="56" style="background-image: none;" valign="middle">
+										
+											<table border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td id="infosItemC" width="46" height="46" style="background-image: url('../images/menu_button_left_normal.gif');" align="center" valign="middle">
+														<img src="../images/menu_icon_garantias.gif" border="0"/>
+													</td>
+													<td id="infosItemD" width="81" height="46" style="background-image: url('../images/menu_button_right_normal.gif');" align="left" valign="middle">
+														<table border="0" cellpadding="0" cellspacing="0">
+															<tr>
+																<td width="5"></td>
+																<td><a id="infosOption" href="JavaScript:;" onClick="JavaScript:openMenu('infos');" class="menu_text">I. Mercado</a></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td id="infosItemE" width="123" height="3" style="background-image: none;"></td>
+									</tr>
+								</table>
+								<!-- Fim: Botão de menu (Info. Mercado) -->
+							
+							</td>
+							<td align="left" valign="top">
+							
+								<!-- Início: Subitens de menu (Info. Mercado) -->
+								<div id="infosSubMenu" style="display:none; position: absolute;">
+								
+									<table border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td><img src="../images/menu_submenu_item_01_01.gif" border="0"/></td>
+											<td width="99" height="34" background="../images/menu_submenu_item_01_02.gif" align="left" valign="middle">
+												<table border="0" cellpadding="2" cellspacing="0">
+													<tr>
+														<td valign="middle"><img src="../images/submenu_icon_list.gif" alt="Listar" border="0"/></td>
+														<td valign="middle"><a href="JavaScript:openWindow('win_sg_mercado_search', 'Informações de Mercado', '/ym_sistema_garantia/jsp/inConstruction.jsp');" class="submenu_text">Listar</a></td>
+														
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td><img src="../images/menu_submenu_item_02_01.gif" border="0"/></td>
+											<td width="99" height="34" background="../images/menu_submenu_item_02_02.gif" align="left" valign="middle">
+												<table border="0" cellpadding="2" cellspacing="0">
+													<tr>
+														<td valign="middle"><img src="../images/submenu_icon_search.gif" alt="Pesquisar" border="0"/></td>
+														<td valign="middle" class="submenu_text"> Consultar </td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td><img src="../images/menu_submenu_item_03_01.gif" border="0"/></td>
+											<td width="99" height="35" background="../images/menu_submenu_item_03_02.gif" align="left" valign="middle">
+												<table border="0" cellpadding="2" cellspacing="0">
+													<tr>
+														<td valign="middle"><img src="../images/submenu_icon_add.gif" alt="Adicionar" border="0"/></td>
+														<td valign="middle"><a href="JavaScript:openWindow('win_sg_mercado_add', 'Informações de Mercado', '/ym_sistema_garantia/jsp/inConstruction.jsp');" class="submenu_text">Incluir</a></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										
+										<tr>
+											<td><img src="../images/menu_submenu_item_04_01.gif" border="0"/></td>
+											<td><img src="../images/menu_submenu_item_04_02.gif" border="0"/></td>
+										</tr>										
+									</table>
+								
+								</div>
+								<!-- Fim: Subitens de menu (Info. Mercado) -->
+								
+							</td>
+						</tr>
+						<!-- Fim: Item de menu (Info. Mercado) -->
+					
+						<!-- Início: Item de menu (Relatórios) -->
+						<tr>
+							<td align="left" valign="top">
+							
+								<!-- Início: Botão de menu (Relatórios) -->
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td id="relatoriosItemA" width="12"  height="56" style="background-image: none;"></td>
+										<td id="relatoriosItemB" width="127" height="56" style="background-image: none;" valign="middle">
+										
+											<table border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td id="relatoriosItemC" width="46" height="46" style="background-image: url('../images/menu_button_left_normal.gif');" align="center" valign="middle">
+														<img src="../images/relatorios.gif" border="0"/>
+													</td>
+													<td id="relatoriosItemD" width="81" height="46" style="background-image: url('../images/menu_button_right_normal.gif');" align="left" valign="middle">
+														<table border="0" cellpadding="0" cellspacing="0">
+															<tr>
+																<td width="5"></td>
+																<td><a id="relatoriosOption" href="JavaScript:;" onClick="JavaScript:openMenu('relatorios');" class="menu_text">Relatórios</a></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td id="relatoriosItemE" width="123" height="3" style="background-image: none;"></td>
+									</tr>
+								</table>
+								<!-- Fim: Botão de menu (Relatórios) -->
+							
+							</td>
+							<td align="left" valign="top">
+							
+								<!-- Início: Subitens de menu (Relatórios) -->
+								<div id="relatoriosSubMenu" style="display:none; position: absolute;">
+								
+									<table border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td><img src="../images/menu_submenu_item_01_01.gif" border="0"/></td>
+											<td width="99" height="34" background="../images/menu_submenu_item_01_02.gif" align="left" valign="middle">
+												<table border="0" cellpadding="2" cellspacing="0">
+													<tr>
+														<td valign="middle"><img src="../images/submenu_icon_list.gif" alt="Listar" border="0"/></td>
+														<td valign="middle"><a href="JavaScript:openWindow('win_sg_relatorio_list', 'Relatórios', '/ym_sistema_garantia/jsp/inConstruction.jsp');" class="submenu_text"> &nbsp; </a></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td><img src="../images/menu_submenu_item_02_01.gif" border="0"/></td>
+											<td width="99" height="34" background="../images/menu_submenu_item_02_02.gif" align="left" valign="middle">
+												<table border="0" cellpadding="2" cellspacing="0">
+													<tr>
+														<td valign="middle"><img src="../images/submenu_icon_search.gif" alt="Listar" border="0"/></td>
+														<td valign="middle"> &nbsp; </td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td><img src="../images/menu_submenu_item_03_01.gif" border="0"/></td>
+											<td width="99" height="35" background="../images/menu_submenu_item_03_02.gif" align="left" valign="middle">
+												<table border="0" cellpadding="2" cellspacing="0">
+													<tr>
+														<td valign="middle"><img src="../images/submenu_icon_search.gif" alt="Listar" border="0"/></td>
+														<td valign="middle"> &nbsp; </td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										
+										<tr>
+											<td><img src="../images/menu_submenu_item_04_01.gif" border="0"/></td>
+											<td><img src="../images/menu_submenu_item_04_02.gif" border="0"/></td>
+										</tr>										
+									</table>
+								
+								</div>
+								<!-- Fim: Subitens de menu (Relatórios) -->
+								
+							</td>
+						</tr>
+						<!-- Fim: Item de menu (Relatórios) -->
+						
+						<!-- Início: Item de menu (Fechar janelas) -->
+						<tr>
+							<td align="left" valign="top">
+							
+								<!-- Início: Botão de menu ((Nota Fiscal) -->
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td id="fecharItemA" width="12"  height="56" style="background-image: none;"></td>
+										<td id="fecharItemB" width="127" height="56" style="background-image: none;" valign="middle">
+										
+											<table border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td id="fecharItemC" width="46" height="46" style="background-image: url('../images/menu_button_left_normal.gif');" align="center" valign="middle">
+														<img src="../images/menu_icon_sair.gif" border="0" alt="Fechar Janela"/>
+													</td>
+													<td id="fecharItemD" width="81" height="46" style="background-image: url('../images/menu_button_right_normal.gif');" align="left" valign="middle">
+														<table border="0" cellpadding="0" cellspacing="0">
+															<tr>
+																<td width="5"></td>
+																<td><a id="fecharOption" href="JavaScript:Windows.closeAll();" class="menu_text">Fechar</a></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td id="fecharItemE" width="123" height="3" style="background-image: none;"></td>
+									</tr>
+								</table>
+								<!-- Fim: Botão de menu (Fechar janelas) -->
+							
+							</td>
+							<td align="left" valign="top">&nbsp;
+							<td>
+						
+					</table>
+				
+				</td>
+			</tr>
+			<!-- Fim: Body -->
+			
+		</table>
+		<!-- Fim: Tabela de alinhamento -->
+
+	</body>
+</html>

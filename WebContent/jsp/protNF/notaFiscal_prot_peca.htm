@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Peças</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../../css/yamaha.css"></link>
+<script language="javascript">
+var valorTotal = new Number(0);
+function checkValue(obj,ix) {
+	
+	if ( obj.checked ){
+		var garId = obj.name.substr(obj.name.lastIndexOf('_') + 1,obj.name.length);
+		removeCheckDif( garId );
+		parent.pecas[ix].setIsSelected(true);
+		//valorTotal += parent.pecas[ix].valor;
+	} else {
+		parent.pecas[ix].setIsSelected(false);
+		//valorTotal -= parent.pecas[ix].valor;
+	}
+		
+}
+
+function fechar() {
+	parent.document.getElementById("peca").click();
+	parent.hidePopWin(false,false);
+	
+}
+
+function removeCheckDif( id ) {
+
+	var f = window.document.popupPeca;
+	var chkObj = eval("window.document.popupPeca.all_" + id);
+	
+	for ( var i=0 ; i < f.elements.length ; i++ ) {
+		
+		var el=f.elements[i];
+		var elName = el.name;
+		if ( el.type=='checkbox' && elName != chkObj.name ) {
+			var garId = elName.substr(elName.lastIndexOf('_') + 1,id.length);
+			var elIx  = elName.substr(2,elName.lastIndexOf('_')-2);
+			if ( garId != id ) {				
+				el.checked = false;
+			}
+				
+		}
+	}
+}
+
+function checkAll(garantiaId) {
+	var f = window.document.popupPeca;
+	var chkObj = eval("window.document.popupPeca.all_" + garantiaId);
+	valorTotal = 0;
+	for ( var i=0 ; i < f.elements.length ; i++ ) {
+		
+		var el=f.elements[i];
+		var elName = el.name;
+		if ( el.type=='checkbox' && elName != chkObj.name ) {
+			var garId = elName.substr(elName.lastIndexOf('_') + 1,garantiaId.length);
+			var elIx  = elName.substr(2,elName.lastIndexOf('_')-2);
+			if ( garId == garantiaId ) {
+				el.checked = chkObj.checked;
+				if ( el.checked ) {
+					parent.pecas[elIx].setIsSelected(true);
+					//valorTotal += parent.pecas[elIx].valor;
+				} else {
+					parent.pecas[elIx].setIsSelected(false);
+					//valorTotal -= parent.pecas[elIx].valor;
+				}
+			} else {
+				el.checked = false;
+			}
+				
+		}
+	}
+}
+
+function enviaDados() {	
+	var f = window.document.popupPeca;
+	var hasChecked = false;
+	for ( var i=0 ; i<f.elements.length ; i++ ) {
+	
+		var el=f.elements[i];
+		if ( el.type=='checkbox' ) {
+			if ( el.checked ) {
+			  hasChecked = true;
+			  break;
+			}
+		}
+	}
+	
+	if ( hasChecked ) {
+	
+		//parent.document.getElementById("pecaValueNF").value = window.top.convMoeda(valorTotal);
+		parent.document.getElementById("pecaValueNF").readOnly = false;
+		parent.document.getElementById("pecaValueNF").focus();
+		parent.hidePopWin(false, false);
+		
+	} else {
+	
+		parent.alert("Nenhum item foi selecionado para enviar!");
+		return false;
+	}
+	
+}
+
+</script>
+</head>
+
+<body onBlur="window.focus();">
+	<form name="popupPeca" action="">
+	
+		<script language="javascript">
+			var garantiaId = 0;
+			window.document.write("<table width='95%' style='border: 1 1 1 1 solid #788C9B;'>");
+			for ( i = 0; i < parent.pecas.length ; i++ ) {
+				
+				if ( !parent.pecas[i].getIsNota() ) {
+			
+					if ( garantiaId != parent.pecas[i].id ) {
+						garantiaId   = parent.pecas[i].id;
+						window.document.write("		<tr>");
+						window.document.write("			<td class='td_dark'><b>");
+						window.document.write("				<input type='checkbox'  name='all_" +  garantiaId + "' value='ck' onClick='checkAll(" + garantiaId +" );'>");
+						window.document.write("					&nbsp; SG:" + garantiaId );
+						window.document.write("			</b></td>");
+						window.document.write("			<td class='td_dark'><b>Qtde</b></td>");
+						window.document.write("			<td class='td_dark'><b>Código</b></td>");
+						window.document.write("			<td class='td_dark'><b>Descrição</b></td>");
+						window.document.write("			<td class='td_dark' align='center'><b>Valor</b></td>");								
+						window.document.write("		</tr>"); 
+						window.document.write("		<tr>");
+						window.document.write("			<td class='text'><input type='checkbox'  name='i_" + i + "_" + garantiaId + "' value=" + parent.pecas[i].lineId + " onClick='checkValue(this, " + i + ");'></td>");
+						window.document.write("			<td class='text'>" + parent.pecas[i].qtde 			+ "</td>");
+						window.document.write("			<td class='text'>" + parent.pecas[i].itemCode 		+ "</td>");
+						window.document.write("			<td class='text'>" + parent.pecas[i].descricao 		+ "</td>");
+						window.document.write("			<td class='text' align='right'>" + parent.pecas[i].valorFormatado	+ "</td>");					
+						window.document.write("		</tr>");					
+					} else {			
+						window.document.write( "	<tr>");
+						window.document.write( "<td class='text'><input type='checkbox'  name='i_" + i + "_" + garantiaId + "' value=" + parent.pecas[i].lineId + " onClick='checkValue(this, " + i + ");' ></td>");
+						window.document.write( "			<td class='text'>" + parent.pecas[i].qtde 			+ "</td>");
+						window.document.write( "			<td class='text'>" + parent.pecas[i].itemCode 		+ "</td>");
+						window.document.write( "			<td class='text'>" + parent.pecas[i].descricao 		+ "</td>");
+						window.document.write( "			<td class='text' align='right'>" + parent.pecas[i].valorFormatado	+ "</td>");					
+						window.document.write( "	</tr>");
+						
+					}
+				}
+			}
+			window.document.write( "	</table>" );
+		</script>
+		<table width='100%'>
+			<tr height="15"><td>&nbsp;</td></tr>
+			<tr>
+				<td class="text" width="50%" align="center"><input type="button" class="button_medium" value="Lançar" onClick="enviaDados()"></td>
+				<td class="text" width="50%" align="center"><input type="button" class="button_medium" value="Fechar" onClick="fechar()"></td>
+				</tr>
+				</table>
+	</form>
+</body>
+</html>

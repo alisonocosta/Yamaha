@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src_infra"/>
+	<classpathentry kind="src" path="src_main"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_161">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/ajaxtags-1.2-beta3.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/antlr.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/bcver.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/brazilutils-0.1.1.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/brazilutils-barcode.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/c3p0-0.9.0.4.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/cglib.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/classes12.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/commons-collections-3.2.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/commons-javaflow-20060411.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/commons-lang-2.1.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/commons-validator-1.3.0.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/displaytag-1.1.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/displaytag-export-poi-1.1.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/ehcache-1.2.3.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/itext-1.3.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jakarta-bcel-20050813.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jakarta-oro-2.0.7.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jakarta-oro.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jasperreports-1.3.4.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jasperreports-extensions-1.3.1.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jazn.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jcifs-1.3.17.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jcommon-1.0.10.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jfreechart-1.0.6.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jstl.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/png-encoder-1.5.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/poi-2.5.1.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/resource_infra.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/spring.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/standard.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/struts-1.2.9-el.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/struts-1.2.9.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/xpp3-1.1.3.4d_b4_min.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/xstream-1.2.1.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/ym_sistema_garantia.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/server/classes12.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/server/jazn.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/server/ojdbc14.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/server/rt.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/server/servlet.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/hibernate-3.1.3.jar"/>
+	<classpathentry kind="lib" path="config/WEB-INF/lib/app/jta-1_1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

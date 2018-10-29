@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Yamaha
+Copyright (c) 2012 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......GarantiaArquivo.hbm.xml
+   .: Criação.....04 de Novembro, 18:11
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "GarantiaArquivo" e tabela "YM_SG_GARANTIA_ARQUIVO".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+    <class name="br.com.yamaha.sistemagarantia.model.GarantiaArquivo" table="YM_SG_TAB_GARANTIA_ARQUIVO">
+		
+		<id name="entityId" column="GARANTIA_ARQUIVO_ID" type="java.lang.Integer">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_GARANTIA_ARQUIVO_S</param>
+			</generator>
+		</id> 	
+		
+        <property name="contentType"    column="TIPO_ARQUIVO" 			type="java.lang.String"  not-null="false" length="50"/>
+        <property name="filename" 		column="NOME_ARQUIVO" 			type="java.lang.String"  not-null="true"  length="100"/>
+        <property name="filePath"		column="ENDERECO"       		type="java.lang.String"  not-null="false" length="100"/>
+        <property name="size" 			column="TAMANHO"        		type="java.lang.Integer" not-null="false"/>
+        <property name="linhaId" 		column="LINHA_ID"        		type="java.lang.Long" not-null="false"/>
+        
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		
+		<many-to-one name="garantia" 	
+					 class="br.com.yamaha.sistemagarantia.model.GarantiaHeader" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="GARANTIA_ID" 	
+					 not-null="true" 
+					 lazy="false"/>	
+		
+    </class>
+
+</hibernate-mapping>

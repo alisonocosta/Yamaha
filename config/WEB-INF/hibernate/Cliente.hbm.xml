@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......Cliente.hbm.xml
+   .: Criação.....4 de abril, 12:39
+   .: Autor.......Thiago Uriel M. Garcia
+   .: Descrição...Mapeamento entre classe "Cliente" e tabela "YM_SG_CLIENTES".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+ 
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.Cliente" table="YM_SG_CLIENTE">
+           
+		<id name="entityId" column="CLIENTE_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_CLIENTE_S</param>
+			</generator>
+		</id>           
+
+		<property name="cnpj"            column="CNPJ"             type="java.lang.Long"   not-null="true"  />
+		<property name="codigoCliente"   column="CODIGO_CLIENTE"   type="java.lang.Long"   not-null="false" />
+		<property name="tipoCliente"     column="TIPO_CLIENTE"     type="java.lang.String" not-null="true"  length="1"/>
+		<property name="cep"             column="CEP"              type="java.lang.Long"   not-null="true"  />
+		<property name="nome"            column="NOME"             type="java.lang.String" not-null="true"  />
+		<property name="endereco"        column="ENDERECO"         type="java.lang.String" not-null="true"  />
+		<property name="bairro"          column="BAIRRO"           type="java.lang.String" not-null="false"  />
+		<property name="cidade"          column="CIDADE"           type="java.lang.String" not-null="true"  />
+		<property name="estado"          column="ESTADO"           type="java.lang.String" not-null="true"  />
+		<property name="telefoneRes"     column="TELEFONE_RES"     type="java.lang.String" not-null="false" />
+		<property name="telefoneCom"     column="TELEFONE_COM"     type="java.lang.String" not-null="false" />
+		<property name="telefoneCel"     column="TELEFONE_CEL"     type="java.lang.String" not-null="false" />
+		<property name="email"           column="EMAIL"            type="java.lang.String" not-null="false" />
+		<!-- Demanda 00003 - Resource IT - INICIO -->
+		<property name="sexo"            column="SEXO"             type="java.lang.String" not-null="false" />
+		<property name="dataNascimento"  column="DATA_NASCIMENTO"  type="java.util.Date"   not-null="false" />
+		<!-- Demanda 00003 - Resource IT - FIM -->
+		<property name="dddRes"          column="DDD_RES"          type="java.lang.Long"   not-null="false"  />
+		<property name="dddCom"          column="DDD_COM"          type="java.lang.Long"   not-null="false"  />
+		<property name="dddCel"          column="DDD_CEL"          type="java.lang.Long"   not-null="false"  />
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  />  
+				
+		
+	</class>
+	
+</hibernate-mapping>

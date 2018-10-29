@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......AlertGarantia.hbm.xml
+   .: Criação.....22 de Junho, 13:06
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "AlertGarantia" e tabela "YM_SG_ALERT_GARANTIA".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.AlertGarantia" table="YM_SG_ALERT_GARANTIA">
+           
+        <id name="entityId" column="ALERT_GARANTIA_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_ALERT_GARANTIA_S</param>
+			</generator>
+		</id> 
+		
+		<property name="alertGarantiaSeveridade" column="ALERT_GARANTIA_SEVERIDADE"  type="java.lang.String" not-null="true"/>
+		<property name="alertGarantiaText"       column="ALERT_GARANTIA_TEXT"        type="java.lang.String" not-null="true"/>
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="false" update="false" />
+		<property name="dataCriacao"     column="CRAETED_DATE"     type="java.util.Date"   not-null="true"  update="false" />
+		
+		<many-to-one name="garantia"  		
+					 class="br.com.yamaha.sistemagarantia.model.GarantiaHeader" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="GARANTIA_ID"			
+					 not-null="false"
+					 lazy="false"
+					 fetch="join"/>
+		
+		<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+				
+		
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+
+</hibernate-mapping>

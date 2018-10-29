@@ -1,0 +1,35 @@
+<html>
+<head>
+<script type="text/javascript">
+function checkLen(form,x,y) {
+	if (y.length==x.maxLength) {
+
+		var isThis =x.name;
+		alert(isThis);
+		
+		if ( isThis == "pr" ) {
+	
+			form.se.focus();
+		
+		} else if ( isThis == "se" ) {
+	
+			form.te.focus();
+		
+		} 
+	}
+}
+</script>
+</head>
+
+<body>
+<p>This script automatically jumps to the next field when a field's maxlength has been reached:</p>
+
+<form name ="tForm" id="myForm">
+<input name="pr" size="3"  maxlength="3" onkeyup="checkLen(tForm,this,this.value)">
+<input name="se" size="2"  maxlength="2" onkeyup="checkLen(tForm,this,this.value)">
+<input name="te" size="3"  maxlength="3" onkeyup="checkLen(tForm,this,this.value)">
+</form>
+</body>
+
+</html>
+

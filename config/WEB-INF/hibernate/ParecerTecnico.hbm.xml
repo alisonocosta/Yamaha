@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......ParecerTecnico.hbm.xml
+   .: Criação.....17 de agosto, 16:18
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "ParecerTecnico" e tabela "YM_SG_HIST_PARECER_TECNICO".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.ParecerTecnico" table="YM_SG_HIST_PARECER_TECNICO">
+         
+        <id name="entityId" column="PARECER_TECNICO_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_HIST_PARECER_TECNICO_S</param>
+			</generator>
+		</id> 
+
+		<property name="parecerTecnico" column="PARECER_TECNICO_TXT" type="java.lang.String" not-null="true" />
+
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		
+		
+		<many-to-one name="garantia"	
+					 column="GARANTIA_ID" 
+					 class="br.com.yamaha.sistemagarantia.model.GarantiaHeader"
+					 not-null="true" 
+					 lazy="false"/> 
+		
+		
+	</class>
+
+</hibernate-mapping>

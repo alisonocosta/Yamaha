@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......Usuario.hbm.xml
+   .: Criação.....7 de maio, 14:32
+   .: Autor.......Edson Luiz Sumensari

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......HistDiagnostico.hbm.xml
+   .: Criação.....23/08/2007, 19:27
+   .: Autor.......Thiago Uriel M. Garcia
+   .: Descrição...Mapeamento Hibernate.
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.HistDiagnostico" table="YM_SG_HIST_DIAGNOSTICO">
+           
+		<id name="entityId" column="DIAGNOSTICO_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_HIST_DIAGNOSTICO_S</param>
+			</generator>
+		</id> 
+				
+		<property name="infoMercadoId"   column="INFO_MERC_ID"     type="java.lang.Integer"   />
+		<property name="diagnostico"     column="DIAGNOSTICO_TEXT" type="java.lang.String" />
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		
+		
+	</class>
+	
+</hibernate-mapping>

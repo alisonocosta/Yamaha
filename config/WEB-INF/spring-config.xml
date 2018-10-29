@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+         
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......spring-config.xml
+   .: Criação.....4 de abril, 12:39
+   .: Autor.......Thiago Uriel M. Garcia
+   .: Descrição...Configuração do Spring com framework Hibernate.
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->         
+          
+<beans>
+
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+	<!-- Parte 1: Configuração dos beans de infraestrutura da aplicação.   -->
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+
+	<!-- DataSource utilizado na aplicação. -->
+	
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+
+		<!-- DataSource local do banco de Desenvolvimento -->
+		<!-- <property name="jndiName" value="java:jdbc/OracleYamahaDS"/> --> 
+		 
+		<!-- DataSource do IAS Desenv. e Produção -->	 			
+		<property name="jndiName" value="java:comp/env/jdbc/OracleYamahaCoreDS"/>
+				 
+		<!-- DataSource local do banco de Homologação -->				
+		<!--<property name="jndiName" value="jdbc/OracleYamahaCoreDS_HOM"/>  -->
+	</bean>
+
+	<!-- Configuração do SessionFactory do Hibernate. -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mappingDirectoryLocations">
+			<list><value>WEB-INF/hibernate</value></list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+				<prop key="hibernate.connection.autoReconnect">true</prop>				
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.use_outer_join">false</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Transaction Manager utilizado com a SessionFactory do Hibernate. -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- Template para cotnrole de transações. -->
+	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager"/>
+	</bean>
+	
+	<!-- Hibernate Template, compartilhado com múltiplos objetos DAO. -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>	
+
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+	<!-- Parte 2: Configuração dos beans de acesso aos dados.              -->
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+
+	<!-- DAO genérico, utilizado para entidades mais simples. -->
+	<bean id="genericDAO" class="br.com.resource.infra.dao.hibernate.HibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- DAO de clientes. -->
+	<bean id="clienteDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.ClienteHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de estadoDdd. -->
+	<bean id="estadoDddDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.EstadoDddHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de estado. -->
+	<bean id="estadoDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.EstadoHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de cupom. -->
+	<bean id="loteDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.LoteHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de cupom. -->
+	<bean id="cupomDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.CupomHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de revisao. -->
+	<bean id="revisaoDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.RevisaoHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de FeriadoData. -->
+	<bean id="feriadoDataDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.FeriadoDataHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de garantiaHeader. -->
+	<bean id="garantiaHeaderDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.GarantiaHeaderHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de Nota Fiscal. -->
+	<bean id="notaFiscalDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.NotaFiscalHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- DAO de usuarios. -->
+	<bean id="usuarioDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.UsuarioHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de usuarios. -->
+	<bean id="autorizacaoEspecialSGDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.AutEspecSGHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de item. -->
+	<bean id="itemDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.ItemHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- DAO de relatório. -->
+	<bean id="relatorioDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.RelatorioHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de empresa. -->
+	<bean id="empresaDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.EmpresaHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	
+	<!-- DAO de modelo. -->
+	<bean id="modeloDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.ModeloHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>		
+
+	<!-- DAO de fornecedores. -->
+	<bean id="fornecedorDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.FornecedorHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+
+	<!-- DAO de Informações de Mercado. -->
+	<bean id="infoMercadoDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.InformacaoMercadoHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de Camapanha de Modificação Técnica. -->
+	<bean id="campaignDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.CampaignHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de Documento. -->
+	<bean id="documentoDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.DocumentoHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de de arquivos da garantia. -->
+	<bean id="garantiaArquivoDAO" class="br.com.yamaha.sistemagarantia.dao.hibernate.GarantiaArquivoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de Análise de garantia. -->
+	<bean id="analiseGarantiaDAO" class="br.com.yamaha.sistemagarantia.processo.dao.hibernate.AnaliseGarantiaHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- DAO de Classificação técnica de garantia. -->
+	<bean id="classificaGarantiaMotoDAO" class="br.com.yamaha.sistemagarantia.processo.dao.hibernate.ClassificaGarantiaMotoHibernateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+	<!-- Parte 3: Configuração dos beans de negócio.                       -->
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		
+	<!-- BO de clientes. -->
+	<bean id="clienteBO" class="br.com.yamaha.sistemagarantia.business.ClienteBusiness">
+		<property name="clienteDao" ref="clienteDAO" />
+	</bean>
+	
+	<!-- BO de estadoDdd. -->
+	<bean id="estadoDddBO" class="br.com.yamaha.sistemagarantia.business.EstadoDddBusiness">
+		<property name="estadoDddDao" ref="estadoDddDAO" />
+	</bean>
+	
+	<!-- BO de estado. -->
+	<bean id="estadoBO" class="br.com.yamaha.sistemagarantia.business.EstadoBusiness">
+		<property name="estadoDao" ref="estadoDAO" />
+	</bean>
+
+	<!-- BO de linhas. -->
+	<bean id="linhaBO" class="br.com.yamaha.sistemagarantia.business.LinhaBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>
+
+	<!-- BO de tipos de lotes. -->
+	<bean id="tipoLoteBO" class="br.com.yamaha.sistemagarantia.business.TipoLoteBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>
+
+	<!-- BO de status de lotes. -->
+	<bean id="statusLoteBO" class="br.com.yamaha.sistemagarantia.business.StatusLoteBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>
+
+	<!-- BO de lotes. -->
+	<bean id="loteBO" class="br.com.yamaha.sistemagarantia.business.LoteBusiness">
+		<property name="loteDao" ref="loteDAO" />
+		<property name="cupomBO" ref="cupomBO" />
+		<property name="garantiaHeaderBO" ref="garantiaHeaderBO" />
+	</bean>
+
+	<!-- BO de Empresas. -->
+	<bean id="empresaBO" class="br.com.yamaha.sistemagarantia.business.EmpresaBusiness">
+		<property name="empresaDao" ref="empresaDAO" />
+	</bean>
+	
+	<!-- BO de Modelo. -->
+	<bean id="modeloBO" class="br.com.yamaha.sistemagarantia.business.ModeloBusiness">
+		<property name="modeloDao" ref="modeloDAO" />
+	</bean>	
+		
+	<!-- BO de Concessionárias. -->
+	<bean id="concessionariaBO" class="br.com.yamaha.sistemagarantia.business.ConcessionariaBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>
+	
+	<!-- BO de Usuário. -->
+	<bean id="usuarioBO" class="br.com.yamaha.sistemagarantia.business.UsuarioBusiness">
+		<property name="usuarioDao" ref="usuarioDAO" />
+	</bean>
+	
+	<!-- BO de Cupom. -->
+	<bean id="cupomBO" class="br.com.yamaha.sistemagarantia.business.CupomBusiness">
+		<property name="cupomDao"      ref="cupomDAO" />
+		<property name="feriadoDataBO" ref="feriadoDataBO" />
+		<property name="loteBO"        ref="loteBO" />
+		<property name="revisaoBO"     ref="revisaoBO" />
+		<property name="itemBO" 	   ref="itemBO" />
+	</bean>
+	
+	<!-- BO de TipoUsoBarco. -->
+	<bean id="tipoUsoBarcoBO" class="br.com.yamaha.sistemagarantia.business.TipoUsoBarcoBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>
+	
+	<!-- BO de Faturamento. -->
+	<bean id="faturamentoBO" class="br.com.yamaha.sistemagarantia.business.FaturamentoBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>
+	
+	<!-- BO de Revisao. -->
+	<bean id="revisaoBO" class="br.com.yamaha.sistemagarantia.business.RevisaoBusiness">
+		<property name="revisaoDao" ref="revisaoDAO" />
+	</bean>
+	
+	<!-- BO de AlertCupom. -->
+	<bean id="alertCupomBO" class="br.com.yamaha.sistemagarantia.business.AlertCupomBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>
+	
+	<!-- BO de AlertGarantia. -->
+	<bean id="alertGarantiaBO" class="br.com.yamaha.sistemagarantia.business.AlertGarantiaBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>
+	
+	<!-- BO de FeriadoData. -->
+	<bean id="feriadoDataBO" class="br.com.yamaha.sistemagarantia.business.FeriadoDataBusiness">
+		<property name="feriadoDataDao" ref="feriadoDataDAO" />
+	</bean>
+	
+	<!-- BO de garantiaLine. -->
+	<bean id="garantiaLineBO" class="br.com.yamaha.sistemagarantia.business.GarantiaLineBusiness">
+		<property name="genericDao" 		 ref="genericDAO" />
+	</bean>
+	
+	<!-- BO de garantiaHeader. -->
+	<bean id="garantiaHeaderBO" class="br.com.yamaha.sistemagarantia.business.GarantiaHeaderBusiness">
+		<property name="garantiaHeaderDao" ref="garantiaHeaderDAO" />
+		<property name="feriadoDataBO" ref="feriadoDataBO" />
+		<property name="loteBO" ref="loteBO" />
+		<property name="alertGarantiaBO" ref="alertGarantiaBO" />
+		<property name="cupomBO" ref="cupomBO" />
+		<property name="itemBO" ref="itemBO" />
+		<property name="campaignDao" ref="campaignDAO" />
+		<property name="transactionTemplate" ref="transactionTemplate" />
+	</bean>
+	
+	<!-- BO de notaFiscal. -->
+	<bean id="notaFiscalBO" class="br.com.yamaha.sistemagarantia.business.NotaFiscalBusiness">
+		<property name="notaFiscalDao" ref="notaFiscalDAO" />
+		<property name="loteBo" ref="loteBO" />
+		<property name="cupomBo" ref="cupomBO" />
+		<property name="transactionTemplate" ref="transactionTemplate" />
+	</bean>
+	
+	<!-- BO de grupoServico. -->
+	<bean id="grupoServicoBO" class="br.com.yamaha.sistemagarantia.business.GrupoServicoBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>
+	
+	<!-- BO de autorizacaoEspecialSG. -->
+	<bean id="autorizacaoEspecialSGBO" class="br.com.yamaha.sistemagarantia.business.AutEspecSGBusiness">
+		<property name="autorizacaoEspecialSGDao" ref="autorizacaoEspecialSGDAO" />
+	</bean>
+	
+	<!-- BO de notaFiscalBO. -->
+	<bean id="itemBO" class="br.com.yamaha.sistemagarantia.business.ItemBusiness">
+		<property name="itemDao" ref="itemDAO" />
+	</bean>	
+	
+	<!-- BO de descricaoDefeitoBO. -->
+	<bean id="descricaoDefeitoBO" class="br.com.yamaha.sistemagarantia.business.DescricaoDefeitoBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>	
+	
+	<!-- BO de parecerTecnicoBO. -->
+	<bean id="parecerTecnicoBO" class="br.com.yamaha.sistemagarantia.business.ParecerTecnicoBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>	
+	
+	<!-- BO de infoMercado. -->
+	<bean id="infoMercadoBO" class="br.com.yamaha.sistemagarantia.business.InfoMercadoBusiness">
+		<property name="infoMercadoDao"   ref="infoMercadoDAO"   />
+		<property name="faturamentoBo"    ref="faturamentoBO"    />
+		<property name="loteBo"           ref="loteBO"           />
+		<property name="tipoLoteBo"       ref="tipoLoteBO"       />
+		<property name="statusLoteBo"     ref="statusLoteBO"     />
+		<property name="linhaBo"          ref="linhaBO"          />
+		<property name="garantiaHeaderBo" ref="garantiaHeaderBO" />
+		<property name="garantiaLineBo"   ref="garantiaLineBO"   />
+		<property name="itemBo"           ref="itemBO"           />
+		<property name="transactionTemplate" ref="transactionTemplate" />
+	</bean>	
+	
+	<!-- BO de Representante. -->
+	<bean id="representanteBO" class="br.com.yamaha.sistemagarantia.business.RepresentanteBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>	
+
+	<!-- BO de Analista. -->
+	<bean id="analistaBO" class="br.com.yamaha.sistemagarantia.business.AnalistaBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>	
+
+	<!-- BO de Relatório. -->
+	<bean id="relatorioBO" class="br.com.yamaha.sistemagarantia.business.RelatorioBusiness">
+		<property name="relatorioDao" ref="relatorioDAO" />
+	</bean>	
+	
+	<!-- BO de Fornecedores. -->
+	<bean id="fornecedorBO" class="br.com.yamaha.sistemagarantia.business.FornecedorBusiness">
+		<property name="fornecedorDao" ref="fornecedorDAO" />
+	</bean>	
+	
+	<!-- BO de Programa. -->
+	<bean id="programaBO" class="br.com.yamaha.sistemagarantia.business.ProgramaBusiness">
+		<property name="genericDao" ref="genericDAO" />
+	</bean>	
+	
+	<!-- BO de Estoque. -->
+	<bean id="estoqueBO" class="br.com.yamaha.sistemagarantia.business.EstoqueBusiness">
+		<property name="genericDao" ref="genericDAO" />
+		<property name="transactionTemplate" ref="transactionTemplate" />
+	</bean>
+	
+	<!-- BO de TipoUsoBarco. -->
+	<bean id="campaignBO" class="br.com.yamaha.sistemagarantia.business.CampaignBusiness">
+		<property name="campaignDao" ref="campaignDAO" />
+		<property name="garantiaHeaderBo" ref="garantiaHeaderBO" />
+	</bean>
+	
+	<!-- BO de Documento. -->
+	<bean id="documentoBO" class="br.com.yamaha.sistemagarantia.business.DocumentoBusiness">
+		<property name="documentoDao" ref="documentoDAO" />
+		<property name="transactionTemplate" ref="transactionTemplate" />
+	</bean>
+	
+	<!-- BO de Arquivo da Garantia. -->
+	<bean id="garantiaArquivoBO" class="br.com.yamaha.sistemagarantia.business.GarantiaArquivoBusiness">
+		<property name="garantiaArquivoDao" ref="garantiaArquivoDAO" />
+		<property name="transactionTemplate" ref="transactionTemplate" />
+	</bean>
+	
+	<!-- BO de Análise de Garantia. -->
+	<bean id="analiseGarantiaBO" class="br.com.yamaha.sistemagarantia.processo.business.AnaliseGarantiaBusiness">
+		<property name="analiseGarantiaDao" ref="analiseGarantiaDAO" />
+		<property name="transactionTemplate" ref="transactionTemplate" />
+	</bean>
+	
+	<!-- BO de Análise de Garantia. -->
+	<bean id="classificaGarantiaMotoBO" class="br.com.yamaha.sistemagarantia.processo.business.ClassificaGarantiaMotoBusiness">
+		<property name="classificaGarantiaMotoDao" ref="classificaGarantiaMotoDAO" />
+		<property name="transactionTemplate" ref="transactionTemplate" />
+	</bean>
+
+</beans>

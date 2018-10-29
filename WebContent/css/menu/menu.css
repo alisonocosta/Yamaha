@@ -1,0 +1,46 @@
+/*========================================================
+ * Resource Informática LTDA.
+ * Copyright (c) 2006 - Todos os direitos reservados
+ *
+ *   .: Projeto.....Yamaha - Sistema de Garantia
+ *   .: Objeto......menu.css
+ *   .: Criação.....27 de abril, 15:55
+ *   .: Autor.......Thiago Uriel M. Garcia
+ *   .: Descrição...Estilos para o menu principal.
+========================================================*/
+
+.menu_text {
+	font-family: Verdana;
+	font-size: 10px;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+}
+
+.menu_text:hover {
+	text-decoration: underline;
+}
+
+.submenu_text {
+	font-family: Verdana;
+	font-size: 10px;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+}
+
+.submenu_text:hover {
+	text-decoration: underline;
+}
+
+.menu_text_selected {
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.menu_text_selected:hover {
+	text-decoration: underline;
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......HistAtraso.hbm.xml
+   .: Criação.....08 de Agosto, 15:36
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "Cliente" e tabela "YM_SG_HISTATRASO".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.HistAtraso" table="YM_SG_HISTATRASO">
+           
+		<id name="entityId" column="HISTORICO_ATRASO_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_HISTATRASO_S</param>
+			</generator>
+		</id> 
+				
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />		
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		
+		<!-- Mapeamentos das chaves estrangeiras -->
+		
+		<many-to-one name="concessionaria"	
+					 column="CONCESSIONARIA_ID" 
+					 class="br.com.yamaha.sistemagarantia.model.Concessionaria"
+					 not-null="true" 
+					 lazy="false"
+					 fetch="join"/> 		
+		
+	</class>
+	
+</hibernate-mapping>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......TipoGasolina.hbm.xml
+   .: Criação.....30 de junho, 22:38
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "TipoGasolina" e tabela "YM_SG_TIPO_GASOLINA".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.TipoGasolina" table="YM_SG_TIPO_GASOLINA">
+           
+		<id name="entityId" column="TIPO_GASOLINA_ID" type="java.lang.String">
+        	<generator class="native"/>
+		</id>           
+
+		<property name="descricao"       column="DESCR_TIPO_GASOLINA" type="java.lang.String" not-null="true" length="15"/>
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 
+		
+	</class>
+
+</hibernate-mapping>

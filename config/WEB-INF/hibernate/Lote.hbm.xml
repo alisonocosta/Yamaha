@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......Lote.hbm.xml
+   .: Criação.....4 de abril, 12:39
+   .: Autor.......Thiago Uriel M. Garcia
+   .: Descrição...Mapeamento entre classe "Lote" e tabela "YM_SG_LOTE".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.Lote" table="YM_SG_LOTE">
+           
+		<id name="entityId" column="LOTE_ID" type="java.lang.Integer">
+        	<generator class="org.hibernate.id.TableGenerator">
+                <param name="table">YM_SG_NUMERO_LOTE</param>
+                <param name="column">ULTIMO_NUMERO</param>
+        	</generator>
+		</id>           		
+		
+		<property name="dataLote"         	column="LOTE_DATE"         type="java.util.Date"   not-null="true"  />
+		<property name="dataFechamento"   	column="FECHAMENTO_DATE"   type="java.util.Date"   not-null="false" />
+		<property name="dataLiberacao"    	column="LIBERACAO_DATE"    type="java.util.Date"   not-null="false" />
+		<property name="dataEnvioAdiant"    column="DATA_ENVIO_ADT"    type="java.util.Date"   not-null="false" />
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 
+		
+		<!--  Mapeamento da coleção de cupons para o lote -->
+		<bag name="cupons" inverse="true" lazy="false" order-by="REVISAO_ID, MODELO asc" >
+        	<key column="LOTE_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.Cupom" />
+        	
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE > :asOfDate)]]></filter>
+        </bag> 
+        
+        <!--  Mapeamento da coleção de cupons para o lote -->
+		<bag name="garantias" inverse="true" lazy="false" order-by="MODELO,GARANTIA_ID asc">
+        	<key column="LOTE_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.GarantiaHeader"/>
+        	
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE > :asOfDate)]]></filter>
+        </bag>
+        
+        <!--  Mapeamento da coleção de notas para o lote -->
+		<bag name="notas" inverse="true" lazy="false">
+        	<key column="LOTE_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.NotaFiscal" />
+        	
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE > :asOfDate)]]></filter>
+        </bag> 
+		
+		<!-- Mapeamentos das chaves estrangeiras -->
+		<many-to-one name="linha" 	
+					 class="br.com.yamaha.sistemagarantia.model.Linha" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="LINHA_ID" 	
+					 not-null="true" 
+					 lazy="false"
+					 fetch="join"/>	 
+		
+		<many-to-one name="statusLote" 	
+					 class="br.com.yamaha.sistemagarantia.model.StatusLote" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="STATUS_LOTE_ID" 	
+					 not-null="true" 
+					 lazy="false"
+					 fetch="join"/>	
+		
+		<many-to-one name="tipoLote" 	
+					 class="br.com.yamaha.sistemagarantia.model.TipoLote" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="TIPO_LOTE_ID" 	
+					 not-null="true" 
+					 lazy="false"
+					 fetch="join"/>
+					 
+		<many-to-one name="concessionaria" 	
+					 class="br.com.yamaha.sistemagarantia.model.Concessionaria" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true"
+ 					 column="CONCESSIONARIA_ID" 	
+					 not-null="true" 
+					 lazy="false"
+					 fetch="join"/>
+		
+		<many-to-one name="statusAdiantamento" 	
+					 class="br.com.yamaha.sistemagarantia.model.StatusAdiantamento" 
+					 cascade="none"
+               		 update="false" 
+               		 insert="false" 
+ 					 column="STATUS_ADT" 	
+					 not-null="false" 
+					 lazy="false"
+					 fetch="join"/>	
+					 
+		<filter name="effectiveDate"><![CDATA[(START_DATE <= :asOfDate AND (END_DATE is null or END_DATE > :asOfDate)) AND LOTE_ID > 0]]></filter>
+		
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+
+</hibernate-mapping>

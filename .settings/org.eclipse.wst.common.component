@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Yamaha_SistemaGarantia_v13">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_infra"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_main"/>
+        <wb-resource deploy-path="/" source-path="/config"/>
+        <property name="java-output-path" value="/Yamaha_SistemaGarantia_v13/bin"/>
+        <property name="context-root" value="ym_sistema_garantia"/>
+    </wb-module>
+</project-modules>

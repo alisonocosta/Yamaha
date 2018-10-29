@@ -1,0 +1,1635 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="Sg_rl_garpec"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="782"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="moeda" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="linha" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath0" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="subReportPath1" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath2" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath3" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath4" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath5" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath6" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath7" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath8" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath9" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath10" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportPath11" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="empresa" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[SELECT to_char(ys.ano)                      ano                                                                                         
+      , 'VL DOLAR'                          topico                                                                                     
+      , max(decode(mes,1,ys.valor_real,0))  m01                                                                                        
+      , max(decode(mes,2,ys.valor_real,0))  m02                                                                                        
+      , max(decode(mes,3,ys.valor_real,0))  m03                                                                                        
+      , max(decode(mes,4,ys.valor_real,0))  m04                                                                                        
+      , max(decode(mes,5,ys.valor_real,0))  m05                                                                                        
+      , max(decode(mes,6,ys.valor_real,0))  m06                                                                                        
+      , max(decode(mes,7,ys.valor_real,0))  m07                                                                                        
+      , max(decode(mes,8,ys.valor_real,0))  m08                                                                                        
+      , max(decode(mes,9,ys.valor_real,0))  m09                                                                                        
+      , max(decode(mes,10,ys.valor_real,0)) m10                                                                                        
+      , max(decode(mes,11,ys.valor_real,0)) m11                                                                                        
+      , max(decode(mes,12,ys.valor_real,0)) m12                                                                                        
+   FROM ym_sg_moeda ys                                                                                                                 
+  WHERE trunc(ys.start_date) <= sysdate                                                                                                
+    AND nvl(trunc(ys.end_date), sysdate + 1) >= sysdate                                                                                
+    AND to_char(ys.ano) = 2007                                                                                                       
+  GROUP BY to_char(ys.ano)                                                                                                             
+ UNION ALL                                                                                                                             
+ SELECT to_char(yl.fechamento_date, 'YYYY')                  ano                                                                       
+      , 'VL PCA GARAN'                                       topico                                                                    
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),1,(gl.vl_peca_garantia*gl.quantidade),0))   m01                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),2,(gl.vl_peca_garantia*gl.quantidade),0))   m02                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),3,(gl.vl_peca_garantia*gl.quantidade),0))   m03                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),4,(gl.vl_peca_garantia*gl.quantidade),0))   m04                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),5,(gl.vl_peca_garantia*gl.quantidade),0))   m05                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),6,(gl.vl_peca_garantia*gl.quantidade),0))   m06                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),7,(gl.vl_peca_garantia*gl.quantidade),0))   m07                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),8,(gl.vl_peca_garantia*gl.quantidade),0))   m08                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),9,(gl.vl_peca_garantia*gl.quantidade),0))   m09                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),10,(gl.vl_peca_garantia*gl.quantidade),0))  m10                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),11,(gl.vl_peca_garantia*gl.quantidade),0))  m11                         
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),12,(gl.vl_peca_garantia*gl.quantidade),0))  m12                         
+   FROM ym_sg_lote               yl                                                                                                    
+      , ym_sg_garantia_header    gh                                                                                                    
+      , ym_sg_garantia_line	  gl                                                                                                     
+  WHERE yl.lote_id             = gh.lote_id                                                                                            
+    AND gh.garantia_id         = gl.garantia_id                                                                                        
+    AND yl.status_lote_id      in (9, 11)                                                                                              
+    AND gh.status_mov_id       =  2                                                                                                    
+    AND to_char(yl.fechamento_date, 'YYYY')  = 2007                                                                                  
+    AND yl.linha_id	                      = 1                                                                                
+    GROUP BY to_char(yl.fechamento_date, 'YYYY')                                                                                       
+ UNION ALL                                                                                                                             
+ SELECT to_char(yl.fechamento_date, 'YYYY')                  ano                                                                       
+      , 'VL MOBRA PEÇA'                                      topico                                                                    
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),1,ys.vl_servico,0))   m01                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),2,ys.vl_servico,0))   m02                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),3,ys.vl_servico,0))   m03                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),4,ys.vl_servico,0))   m04                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),5,ys.vl_servico,0))   m05                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),6,ys.vl_servico,0))   m06                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),7,ys.vl_servico,0))   m07                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),8,ys.vl_servico,0))   m08                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),9,ys.vl_servico,0))   m09                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),10,ys.vl_servico,0))  m10                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),11,ys.vl_servico,0))  m11                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),12,ys.vl_servico,0))  m12                                               
+   FROM ym_sg_lote               yl                                                                                                    
+      , ym_sg_garantia_header    gh                                                                                                    
+      , ym_sg_servico_grupo	  ys                                                                                                    
+  WHERE yl.lote_id              = gh.lote_id                                                                                           
+    AND gh.servico_grupo_id     = ys.servico_grupo_id                                                                                  
+    AND yl.status_lote_id      in (9, 11)                                                                                              
+    AND to_char(yl.fechamento_date, 'YYYY')  = 2007                                                                                  
+    AND yl.linha_id	                      = 1                                                                               
+    GROUP BY to_char(yl.fechamento_date, 'YYYY')                                                                                       
+ UNION ALL                                                                                                                             
+ SELECT to_char(yl.fechamento_date, 'YYYY')                  ano                                                                       
+      , 'VL MOBRA TERC'                                      topico                                                                    
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),1,gh.vl_servico_terceiro,0))   m01                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),2,gh.vl_servico_terceiro,0))   m02                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),3,gh.vl_servico_terceiro,0))   m03                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),4,gh.vl_servico_terceiro,0))   m04                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),5,gh.vl_servico_terceiro,0))   m05                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),6,gh.vl_servico_terceiro,0))   m06                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),7,gh.vl_servico_terceiro,0))   m07                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),8,gh.vl_servico_terceiro,0))   m08                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),9,gh.vl_servico_terceiro,0))   m09                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),10,gh.vl_servico_terceiro,0))  m10                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),11,gh.vl_servico_terceiro,0))  m11                                      
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),12,gh.vl_servico_terceiro,0))  m12                                      
+   FROM ym_sg_lote             yl                                                                                                      
+      , ym_sg_garantia_header	gh                                                                                                       
+  WHERE yl.lote_id           = gh.lote_id                                                                                              
+    AND yl.status_lote_id    in (9, 11)                                                                                                
+    AND gh.status_mov_id     =  2                                                                                                      
+    AND to_char(yl.fechamento_date, 'YYYY') = 2007                                                                                   
+    AND yl.linha_id	                     = 1                                                                                 
+  GROUP BY to_char(yl.fechamento_date, 'YYYY')                                                                                         
+ UNION ALL                                                                                                                             
+ SELECT to_char(yo.data,'YYYY')                  ano                                                                                   
+      , 'ORC.PCS + MO'                           topico                                                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),1,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0), 0))  m01                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),2,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))   m02                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),3,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))   m03                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),4,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))   m04                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),5,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))   m05                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),6,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))   m06                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),7,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))   m07                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),8,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))   m08                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),9,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))   m09                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),10,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))  m10                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),11,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))  m11                         
+      , sum(decode(to_number(to_char(yo.data,'MM')),12,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0),0))  m12                         
+   FROM ym_sg_orcamento yo                                                                                                             
+  WHERE yo.end_date is null                                                                                                            
+    AND to_char(yo.data,'YYYY') = 2007                                                                                               
+    AND yo.linha_id             = 1                                                                                             
+  GROUP BY to_char(yo.data,'YYYY')                                                                                                     
+ UNION ALL                                                                                                                             
+ SELECT to_char(yl.fechamento_date,'YYYY')                         ano                                                                 
+      , 'QT REVISAO '||trim(to_char(yr.numero_revisao,'99'))       topico                                                              
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),1,1,0))   m01                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),2,1,0))   m02                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),3,1,0))   m03                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),4,1,0))   m04                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),5,1,0))   m05                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),6,1,0))   m06                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),7,1,0))   m07                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),8,1,0))   m08                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),9,1,0))   m09                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),10,1,0))  m10                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),11,1,0))  m11                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),12,1,0))  m12                                                           
+   FROM ym_sg_lote      yl                                                                                                             
+      , ym_sg_cupom	 yc                                                                                                             
+      , ym_sg_revisao	 yr                                                                                                              
+  WHERE yl.lote_id            = yc.lote_id                                                                                             
+    AND yc.revisao_id         = yr.revisao_id                                                                                          
+    AND yr.numero_revisao in (1,2,3)                                                                                                   
+    AND yl.status_lote_id      in (9, 11)                                                                                              
+    AND yc.status_mov_id       = 2                                                                                                     
+    AND to_char(yl.fechamento_date,'YYYY')  = 2007                                                                                   
+    AND yl.linha_id	                     = 1                                                                                  
+    AND yr.numero_revisao < 4                                                                                                          
+  GROUP BY to_char(yl.fechamento_date,'YYYY')                                                                                          
+        ,  'QT REVISAO '||trim(to_char(yr.numero_revisao,'99'))                                                                        
+ UNION ALL                                                                                                                             
+ SELECT to_char(yl.fechamento_date,'YYYY')                        ano                                                                  
+      , 'VL REVISAO '||trim(to_char(yr.numero_revisao,'99'))      topico                                                               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),1,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m01               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),2,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m02               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),3,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m03               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),4,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m04               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),5,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m05               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),6,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m06               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),7,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m07               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),8,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m08               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),9,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m09               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),10,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))  m10               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),11,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))  m11               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),12,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))  m12               
+   FROM ym_sg_lote        yl                                                                                                           
+      , ym_sg_cupom	   yc                                                                                                            
+      , ym_sg_revisao	   yr                                                                                                            
+  WHERE yl.lote_id            = yc.lote_id                                                                                             
+    AND yc.revisao_id         = yr.revisao_id                                                                                          
+    AND yr.numero_revisao     in (1,2,3)                                                                                               
+    AND yl.status_lote_id     in (9, 11)                                                                                               
+    AND yc.status_mov_id      =  2                                                                                                     
+    AND to_char(yl.fechamento_date,'YYYY') = 2007                                                                                    
+    AND yl.linha_id	                    = 1                                                                                    
+    AND yr.numero_revisao < 4                                                                                                          
+  GROUP BY to_char(yl.fechamento_date,'YYYY')                                                                                          
+         , 'VL REVISAO '||trim(to_char(yr.numero_revisao,'99'))                                                                        
+ UNION ALL                                                                                                                             
+ SELECT to_char(yo.data,'YYYY')                   ano                                                                                  
+      , 'ORC.REVISÃO'                             topico                                                                               
+      , sum(decode(to_number(to_char(yo.data,'MM')),1,nvl(yo.valor_revisao,0),0))   m01                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),2,nvl(yo.valor_revisao,0),0))   m02                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),3,nvl(yo.valor_revisao,0),0))   m03                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),4,nvl(yo.valor_revisao,0),0))   m04                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),5,nvl(yo.valor_revisao,0),0))   m05                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),6,nvl(yo.valor_revisao,0),0))   m06                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),7,nvl(yo.valor_revisao,0),0))   m07                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),8,nvl(yo.valor_revisao,0),0))   m08                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),9,nvl(yo.valor_revisao,0),0))   m09                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),10,nvl(yo.valor_revisao,0),0))  m10                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),11,nvl(yo.valor_revisao,0),0))  m11                                                
+      , sum(decode(to_number(to_char(yo.data,'MM')),12,nvl(yo.valor_revisao,0),0))  m12                                                
+   FROM ym_sg_orcamento yo                                                                                                             
+  WHERE yo.end_date is null                                                                                                            
+    AND to_char(yo.data,'YYYY')  = 2007                                                                                              
+    AND yo.linha_id              = 1                                                                                            
+  GROUP BY to_char(yo.data,'YYYY')                                                                                                     
+         , 'ORC.REVISÃO'                                                                                                               
+ UNION ALL                                                                                                                             
+ SELECT to_char(yl.fechamento_date,'YYYY')                   ano                                                                       
+      , 'TOT REVISÕES'                                       topico                                                                    
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),1,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m01               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),2,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m02               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),3,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m03               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),4,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m04               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),5,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m05               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),6,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m06               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),7,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m07               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),8,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m08               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),9,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m09               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),10,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))  m10               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),11,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))  m11               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),12,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))  m12               
+   FROM ym_sg_lote        yl                                                                                                           
+      , ym_sg_cupom       yc                                                                                                           
+      , ym_sg_revisao	   yr                                                                                                            
+  WHERE yl.lote_id            = yc.lote_id                                                                                             
+    AND yc.revisao_id         = yr.revisao_id                                                                                          
+    AND yl.status_lote_id      in (9, 11)                                                                                              
+    AND yr.numero_revisao  in (1,2,3)                                                                                                  
+    AND to_char(yl.fechamento_date,'YYYY') = 2007                                                                                    
+    AND yl.linha_id	                    = 1                                                                                    
+    AND yc.status_mov_id  = 2                                                                                                          
+    AND yr.numero_revisao < 4                                                                                                          
+  GROUP BY to_char(yl.fechamento_date,'YYYY')                                                                                          
+         , 'TOT REVISÕES'                                                                                                              
+ UNION ALL                                                                                                                             
+ SELECT to_char(yo.data,'YYYY')                    ano                                                                                 
+      , 'ORC. TOTAL'                               topico                                                                              
+      , sum(decode(to_number(to_char(yo.data,'MM')),1,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0) + nvl(yo.valor_revisao,0),0)) m01 
+      , sum(decode(to_number(to_char(yo.data,'MM')),2,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0) + nvl(yo.valor_revisao,0),0)) m02 
+      , sum(decode(to_number(to_char(yo.data,'MM')),3,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0) + nvl(yo.valor_revisao,0),0)) m03 
+      , sum(decode(to_number(to_char(yo.data,'MM')),4,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0) + nvl(yo.valor_revisao,0),0)) m04 
+      , sum(decode(to_number(to_char(yo.data,'MM')),5,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0) + nvl(yo.valor_revisao,0),0)) m05 
+      , sum(decode(to_number(to_char(yo.data,'MM')),6,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0) + nvl(yo.valor_revisao,0),0)) m06 
+      , sum(decode(to_number(to_char(yo.data,'MM')),7,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0) + nvl(yo.valor_revisao,0),0)) m07 
+      , sum(decode(to_number(to_char(yo.data,'MM')),8,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0) + nvl(yo.valor_revisao,0),0)) m08 
+      , sum(decode(to_number(to_char(yo.data,'MM')),9,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0) + nvl(yo.valor_revisao,0),0)) m09 
+      , sum(decode(to_number(to_char(yo.data,'MM')),10,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0)+ nvl(yo.valor_revisao,0),0)) m10 
+      , sum(decode(to_number(to_char(yo.data,'MM')),11,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0)+ nvl(yo.valor_revisao,0),0)) m11 
+      , sum(decode(to_number(to_char(yo.data,'MM')),12,nvl(yo.valor_garantia,0)+ nvl(yo.valor_peca,0)+ nvl(yo.valor_revisao,0),0)) m12 
+   FROM ym_sg_orcamento yo                                                                                                             
+  WHERE yo.end_date is null                                                                                                            
+    AND to_char(yo.data,'YYYY')  = 2007                                                                                              
+    AND yo.linha_id              = 1                                                                                            
+  GROUP BY to_char(yo.data,'YYYY')                                                                                                     
+         , 'ORC. TOTAL'                                                                                                              
+ UNION ALL                                                                                                                             
+ SELECT to_char(yf.data_nf, 'YYYY')                  ano                                                                               
+      , 'VL FATUR'                                   topico                                                                            
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),1,yf.vl_produto,0))   m01                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),2,yf.vl_produto,0))   m02                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),3,yf.vl_produto,0))   m03                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),4,yf.vl_produto,0))   m04                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),5,yf.vl_produto,0))   m05                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),6,yf.vl_produto,0))   m06                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),7,yf.vl_produto,0))   m07                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),8,yf.vl_produto,0))   m08                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),9,yf.vl_produto,0))   m09                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),10,yf.vl_produto,0))  m10                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),11,yf.vl_produto,0))  m11                                                       
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),12,yf.vl_produto,0))  m12                                                       
+   FROM ym_sg_faturamento	   yf                                                                                                        
+  WHERE yf.end_date is NULL                                                                                                            
+    AND to_char(yf.data_nf, 'YYYY') = 2007                                                                                           
+    AND yf.linha_id	             = 1                                                                                         
+  GROUP BY to_char(yf.data_nf, 'YYYY')                                                                                                 
+         , 'VL FATUR'                                                                                                                  
+ UNION ALL                                                                                                                             
+ Select to_char(yl.fechamento_date, 'YYYY')                  ano                                                                       
+      , 'QT SGs'                                             topico                                                                    
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),1,1,0))   m01                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),2,1,0))   m02                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),3,1,0))   m03                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),4,1,0))   m04                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),5,1,0))   m05                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),6,1,0))   m06                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),7,1,0))   m07                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),8,1,0))   m08                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),9,1,0))   m09                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),10,1,0))  m10                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),11,1,0))  m11                                                           
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),12,1,0))  m12                                                           
+   FROM ym_sg_lote               yl                                                                                                    
+      , ym_sg_garantia_header	gh                                                                                                       
+  WHERE yl.lote_id             = gh.lote_id                                                                                            
+    AND yl.status_lote_id      in (9,11)                                                                                               
+    AND to_char(yl.fechamento_date, 'YYYY') = 2007                                                                                   
+    AND yl.linha_id	                     = 1                                                                                   
+    AND gh.status_mov_id   = 2                                                                                                         
+  GROUP BY to_char(yl.fechamento_date, 'YYYY')                                                                                         
+         , 'QT SGs'                                                                                                                    
+ UNION ALL                                                                                                                             
+ SELECT ano                                                                                                                            
+      , 'QT MOTOS' topico                                                                                                              
+      , sum(m01)   m01                                                                                                                 
+      , sum(m02)   m02                                                                                                                 
+      , sum(m03)   m03                                                                                                                 
+      , sum(m04)   m04                                                                                                                 
+      , sum(m05)   m05                                                                                                                 
+      , sum(m06)   m06                                                                                                                 
+      , sum(m07)   m07                                                                                                                 
+      , sum(m08)   m08                                                                                                                 
+      , sum(m09)   m09                                                                                                                 
+      , sum(m10)   m10                                                                                                                 
+      , sum(m11)   m11                                                                                                                 
+      , sum(m12)   m12                                                                                                                 
+ FROM ( SELECT to_char(yl.fechamento_date, 'YYYY')	ano                                                                                
+--/					"             , gh.modelo                                                                                                 
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),1,1,0))   m01                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),2,1,0))   m02                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),3,1,0))   m03                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),4,1,0))   m04                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),5,1,0))   m05                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),6,1,0))   m06                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),7,1,0))   m07                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),8,1,0))   m08                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),9,1,0))   m09                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),10,1,0))  m10                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),11,1,0))  m11                                                    
+             , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),12,1,0))  m12                                                    
+          FROM ym_sg_lote               yl                                                                                             
+             , ym_sg_garantia_header	 gh                                                                                              
+         WHERE yl.lote_id             = gh.lote_id                                                                                     
+           AND yl.status_lote_id      in (9, 11)                                                                                       
+           AND gh.status_mov_id       = 2                                                                                              
+           AND to_char(yl.fechamento_date, 'YYYY') = 2007                                                                            
+           AND yl.linha_id	                        = 1                                                                         
+         GROUP BY to_char(yl.fechamento_date, 'YYYY')                                                                                  
+--					"                , gh.modelo                                                                                             
+     )                                                                                                                               
+  GROUP by ano                                                                                                                       
+--					"         , modelo                                                                                                       
+         , 'QT MOTOS'                                                                                                                
+ UNION ALL                                                                                                                           
+ SELECT to_char(yf.data_nf, 'YYYY')                   ano                                                                              
+      , 'QT FATURADA'                                 topico                                                                           
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),1,1,0))   m01                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),2,1,0))   m02                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),3,1,0))   m03                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),4,1,0))   m04                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),5,1,0))   m05                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),6,1,0))   m06                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),7,1,0))   m07                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),8,1,0))   m08                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),9,1,0))   m09                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),10,1,0))  m10                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),11,1,0))  m11                                                                   
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),12,1,0))  m12                                                                   
+   FROM ym_sg_faturamento	   yf                                                                                                        
+  WHERE yf.end_date is null                                                                                                            
+    AND to_char(yf.data_nf, 'YYYY') = 2007                                                                                           
+    AND yf.linha_id	             = 1                                                                                   
+  GROUP BY to_char(yf.data_nf, 'YYYY')                                                                                                 
+         , 'QT FATURADA']]></queryString>
+
+	<field name="ano" class="java.lang.String"/>
+	<field name="topico" class="java.lang.String"/>
+	<field name="m01" class="java.lang.Double"/>
+	<field name="m02" class="java.lang.Double"/>
+	<field name="m03" class="java.lang.Double"/>
+	<field name="m04" class="java.lang.Double"/>
+	<field name="m05" class="java.lang.Double"/>
+	<field name="m06" class="java.lang.Double"/>
+	<field name="m07" class="java.lang.Double"/>
+	<field name="m08" class="java.lang.Double"/>
+	<field name="m09" class="java.lang.Double"/>
+	<field name="m10" class="java.lang.Double"/>
+	<field name="m11" class="java.lang.Double"/>
+	<field name="m12" class="java.lang.Double"/>
+	<field name="listVlAcmMobra" class="java.lang.Object"/>
+	<field name="listSubtotal" class="java.lang.Object"/>
+	<field name="listGarVlFatur" class="java.lang.Object"/>
+	<field name="listRevVlFatur" class="java.lang.Object"/>
+	<field name="listTotVlFatur" class="java.lang.Object"/>
+	<field name="listTotal" class="java.lang.Object"/>
+	<field name="listOrcPcsMobra" class="java.lang.Object"/>
+	<field name="listRevisoes" class="java.lang.Object"/>
+	<field name="listOrcRevisao" class="java.lang.Object"/>
+	<field name="listOrcTotal" class="java.lang.Object"/>
+	<field name="listVlFatur" class="java.lang.Object"/>
+	<field name="listQtdes" class="java.lang.Object"/>
+
+
+		<group  name="ano12" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="10"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-5"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listTotVlFatur">
+						<subreportParameterExpression><![CDATA[$F{listTotVlFatur}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listTotVlFatur}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath5}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano11" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="10"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-4"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listRevVlFatur">
+						<subreportParameterExpression><![CDATA[$F{listRevVlFatur}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listRevVlFatur}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath3}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano10" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="10"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-3"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listGarVlFatur">
+						<subreportParameterExpression><![CDATA[$F{listGarVlFatur}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listGarVlFatur}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath2}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano9" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-12"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listQtdes">
+						<subreportParameterExpression><![CDATA[$F{listQtdes}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listQtdes}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath11}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano8" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-11"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listVlFatur">
+						<subreportParameterExpression><![CDATA[$F{listVlFatur}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listVlFatur}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath10}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano7" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-10"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listOrcTotal">
+						<subreportParameterExpression><![CDATA[$F{listOrcTotal}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listOrcTotal}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath9}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano6" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-6"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listTotal">
+						<subreportParameterExpression><![CDATA[$F{listTotal}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listTotal}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath4}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano5" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-9"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listOrcRevisao">
+						<subreportParameterExpression><![CDATA[$F{listOrcRevisao}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listOrcRevisao}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath8}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano4" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-8"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listRevisoes">
+						<subreportParameterExpression><![CDATA[$F{listRevisoes}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listRevisoes}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath7}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano3" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-7"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listOrcPcsMobra">
+						<subreportParameterExpression><![CDATA[$F{listOrcPcsMobra}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listOrcPcsMobra}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath6}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano2" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-2"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listSubtotal">
+						<subreportParameterExpression><![CDATA[$F{listSubtotal}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listSubtotal}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath1}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ano" >
+			<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+			<groupHeader>
+			<band height="24"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="231"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Abr/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="285"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Mai/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="339"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Jun/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="393"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Jul/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="447"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Ago/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="501"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Set/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="555"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Out/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="609"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Nov/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="663"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Dez/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="69"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Jan/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="123"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-11"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Fev/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="177"
+						y="6"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-12"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Mar/" + $F{ano}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="717"
+						y="6"
+						width="65"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6"/>
+					</textElement>
+				<text><![CDATA[Total]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="781"
+						height="10"
+						key="subreport-1"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="listVlAcmMobra">
+						<subreportParameterExpression><![CDATA[$F{listVlAcmMobra}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$F{listVlAcmMobra}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{subReportPath0}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="topico" >
+			<groupExpression><![CDATA[$F{topico}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="69"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-24"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m01}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="123"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-25"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="177"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-26"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="231"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-27"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="285"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-28"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue() + $F{m05}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="339"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-29"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue() + $F{m05}.doubleValue() + $F{m06}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="393"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-30"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue() + $F{m05}.doubleValue() + $F{m06}.doubleValue() + $F{m07}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="447"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-31"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue() + $F{m05}.doubleValue() + $F{m06}.doubleValue() + $F{m07}.doubleValue()+ $F{m08}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="501"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-32"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue() + $F{m05}.doubleValue() + $F{m06}.doubleValue() + $F{m07}.doubleValue()+ $F{m08}.doubleValue() + $F{m09}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="555"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-33"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue() + $F{m05}.doubleValue() + $F{m06}.doubleValue() + $F{m07}.doubleValue()+ $F{m08}.doubleValue() + $F{m09}.doubleValue()+ $F{m10}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="609"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-34"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue() + $F{m05}.doubleValue() + $F{m06}.doubleValue() + $F{m07}.doubleValue()+ $F{m08}.doubleValue() + $F{m09}.doubleValue()+ $F{m10}.doubleValue()+ $F{m11}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="663"
+						y="-1"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField-35"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue() + $F{m05}.doubleValue() + $F{m06}.doubleValue() + $F{m07}.doubleValue()+ $F{m08}.doubleValue() + $F{m09}.doubleValue()+ $F{m10}.doubleValue()+ $F{m11}.doubleValue()+ $F{m12}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="717"
+						y="-1"
+						width="65"
+						height="10"
+						forecolor="#000000"
+						key="textField-36"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals("VL PCA GARAN"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue() + $F{m05}.doubleValue() + $F{m06}.doubleValue() + $F{m07}.doubleValue()+ $F{m08}.doubleValue() + $F{m09}.doubleValue()+ $F{m10}.doubleValue()+ $F{m11}.doubleValue()+ $F{m12}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="-1"
+						width="68"
+						height="10"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="staticText-8"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL PCA GARAN" ))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="6"/>
+					</textElement>
+				<text><![CDATA[VL ACM PECAS]]></text>
+				</staticText>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="42"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="3"
+						y="13"
+						width="220"
+						height="12"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Departamento de Suporte ao Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="230"
+						y="1"
+						width="320"
+						height="12"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Relatório de Garantia e Peças]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="230"
+						y="13"
+						width="320"
+						height="24"
+						key="textField-15"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" pdfFontName="Helvetica-Bold" size="18" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Linha: " + $P{linha}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="3"
+						y="25"
+						width="220"
+						height="12"
+						key="textField-20"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Ano: " + $F{ano}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="38"
+						width="780"
+						height="0"
+						forecolor="#CC0000"
+						key="divisor-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="3"
+						y="1"
+						width="220"
+						height="12"
+						key="textField-21"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{empresa}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="701"
+						y="1"
+						width="28"
+						height="12"
+						forecolor="#000000"
+						key="labelData-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+				<text><![CDATA[Data:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="729"
+						y="1"
+						width="53"
+						height="12"
+						forecolor="#000000"
+						key="valueData-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="701"
+						y="13"
+						width="28"
+						height="12"
+						forecolor="#000000"
+						key="labelHora-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+				<text><![CDATA[Hora:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="HH:mm:ss" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="729"
+						y="13"
+						width="53"
+						height="12"
+						forecolor="#000000"
+						key="valueHora-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="701"
+						y="25"
+						width="28"
+						height="12"
+						forecolor="#000000"
+						key="labelData-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+				<text><![CDATA[Pag.:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="728"
+						y="25"
+						width="26"
+						height="12"
+						forecolor="#000000"
+						key="pageNumber-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="754"
+						y="25"
+						width="28"
+						height="12"
+						forecolor="#000000"
+						key="pageCount-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" /" + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="15"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="2"
+						y="2"
+						width="29"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="staticText-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="7"/>
+					</textElement>
+				<text><![CDATA[ Moeda:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="32"
+						y="2"
+						width="104"
+						height="12"
+						key="textField-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{moeda}]]></textFieldExpression>
+				</textField>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="11"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="69"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m01}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="123"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m02}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="177"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m03}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="231"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m04}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="285"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m05}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="339"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m06}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="393"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m07}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="447"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m08}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="501"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m09}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="555"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m10}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="609"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m11}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="663"
+						y="0"
+						width="54"
+						height="10"
+						forecolor="#000000"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m12}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="717"
+						y="0"
+						width="65"
+						height="10"
+						forecolor="#000000"
+						key="textField-13"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals("VL DOLAR") == false)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() + $F{m02}.doubleValue() + $F{m03}.doubleValue() + $F{m04}.doubleValue() + $F{m05}.doubleValue() + $F{m06}.doubleValue() + $F{m07}.doubleValue()+ $F{m08}.doubleValue() + $F{m09}.doubleValue()+ $F{m10}.doubleValue()+ $F{m11}.doubleValue()+ $F{m12}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="68"
+						height="10"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="textField-14"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{topico}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="1"
+						y="10"
+						width="780"
+						height="0"
+						forecolor="#000000"
+						key="divisor-2">
+							<printWhenExpression><![CDATA[new Boolean($F{topico}.equals( "VL DOLAR" ))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

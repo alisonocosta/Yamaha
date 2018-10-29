@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......AutorizacaoEspecialSG.hbm.xml
+   .: Criação.....15 de junho, 12:51
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "AutorizacaoEspecialSG" e tabela "YM_SG_AUTOR_ESPEC_SG".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.AutorizacaoEspecialSG" table="YM_SG_AUTOR_ESPEC_SG">
+           
+		<id name="entityId" column="AUTORIZACAO_ESPECIAL_ID" type="java.lang.Long">
+        	<generator class="native"/>
+		</id> 
+		
+		<property name="numAutorizacao" column="NUM_AUTORIZ"  type="java.lang.String" not-null="false" length="20"/>
+		<property name="chassi"         column="CHASSI"       type="java.lang.String" not-null="false" length="12"/>
+		<property name="statusUso"      column="STATUS_USO"   type="java.lang.String" not-null="false" length="1"/>
+		<property name="autMo3"         column="AUT_MO3"      type="java.lang.String" not-null="false" length="1"/>
+		<property name="autServico"     column="AUT_SERVICO"  type="java.lang.String" not-null="false" length="1"/>
+		
+		<property name="concessionariaId" column="CONCESSIONARIA_ID"  type="java.lang.Long" not-null="false"/>
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  />  	
+		
+	</class>
+
+</hibernate-mapping>

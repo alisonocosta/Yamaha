@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......TempoPadrao.hbm.xml
+   .: Criação.....18 de junho, 9:13
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "TempoPadrao" e tabela "YM_SG_TEMPO_PADRAO".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.TempoPadrao" table="YM_SG_TEMPO_PADRAO">
+           
+		<id name="entityId" column="TEMPO_PADRAO_ID" type="java.lang.Long">
+        	<generator class="native"/>
+		</id>           
+
+		<property name="modelo"     	 column="MODELO"           type="java.lang.String" not-null="true" length="30"/>								
+		<property name="tempo"           column="TEMPO"	           type="double"   		   not-null="true" />	
+									
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  />  
+		
+		<many-to-one name="servico"  		
+					 class="br.com.yamaha.sistemagarantia.model.Servico" 
+					 cascade="none"
+               		 update="false" 
+               		 insert="false" 
+					 column="SERVICO_ID"			
+					 not-null="true"
+					 lazy="false"/>	
+		
+	</class>
+
+</hibernate-mapping>

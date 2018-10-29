@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	<title>Serviços</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" type="text/css" href="../../css/yamaha.css"></link>
+	
+<script language="javascript">
+function checkValue(obj,ix) {
+	
+	if ( obj.checked ){
+		parent.servicos3os[ix].setIsSelected(true);
+	} else {
+		parent.servicos3os[ix].setIsSelected(false);
+	}		
+}
+
+function fechar() {
+	parent.document.getElementById("maoObra3").click();
+	parent.hidePopWin(false,false);
+	
+}
+
+function checkAll() {
+	var f = window.document.popupServico3os;
+	var chkObj = eval("window.document.popupServico3os.all");
+	for ( var i=0 ; i<f.elements.length ; i++ ) {
+		
+		var el=f.elements[i];
+		if ( el.type=='checkbox' && el.name != "all" ) {
+			
+			el.checked = chkObj.checked;
+			if ( el.checked ) {
+				parent.servicos3os[el.value].setIsSelected(true);
+			} else {
+				parent.servicos3os[el.value].setIsSelected(false);
+			}
+				
+		}
+	}
+}
+
+function enviaDados() {	
+	var f = window.document.popupServico3os;
+	var hasChecked = false;
+	for ( var i=0 ; i<f.elements.length ; i++ ) {
+	
+		var el=f.elements[i];
+		if ( el.type=='checkbox' ) {
+			if ( el.checked ) {
+			  hasChecked = true;
+			  break;
+			}
+		}
+	}
+	
+	if ( hasChecked ) {
+		parent.document.getElementById("mo3ValueNF").readOnly = false;
+		parent.document.getElementById("mo3ValueNF").focus();
+		parent.hidePopWin(false, false);
+		
+	} else {
+	
+		parent.alert("Nenhum item foi selecionado para enviar!");
+		return false;
+	}
+	
+}
+
+</script>
+</head>
+
+<body onBlur="window.focus();">
+	<form name="popupServico3os" action="">
+	
+		<script language="javascript">
+			window.document.write("<table width='95%' style='border: 1 1 1 1 solid #788C9B;'>");
+			window.document.write("		<tr>");
+			window.document.write("			<td class='td_dark' colspan='5'><b>");
+			window.document.write("				<input type='checkbox'  name='all' value='cka' onClick='checkAll();'>");
+			window.document.write("					&nbsp; Selecionar Tudo");
+			window.document.write("			</b></td>");
+			window.document.write("		</tr>"); 	
+			for ( i = 0; i < parent.servicos3os.length ; i++ ) {
+				
+				if ( !parent.servicos3os[i].getIsNota() ) {	
+				
+					window.document.write("		<tr>");
+					window.document.write("			<td class='text' width='30%'><b>");
+					window.document.write("				<input type='checkbox'  name='i_" +  i + "' value=" + i + " onClick='checkValue(this, " + i +" );'>");
+					window.document.write("					&nbsp;" + parent.servicos3os[i].tipo + ": " + parent.servicos3os[i].id );
+					window.document.write("			</b></td>");					
+					window.document.write("			<td class='text' >" + parent.servicos3os[i].chassi + "</td>");	
+					window.document.write("			<td class='text' >" + parent.servicos3os[i].revisao + "</td>");	
+					window.document.write("			<td class='text' align='right'><b>Valor:</b></td>");	
+					window.document.write("			<td class='text' align='right'>" + parent.servicos3os[i].valorFormatado + "</td>");						
+					window.document.write("		</tr>"); 					
+					
+				}
+			}
+			window.document.write( "</table>" );
+		</script>
+		<table width='100%'>
+			<tr height="15"><td>&nbsp;</td></tr>
+			<tr>
+				<td class="text" width="50%" align="center"><input type="button" class="button_medium" value="Lançar" onClick="enviaDados()"></td>
+				<td class="text" width="50%" align="center"><input type="button" class="button_medium" value="Fechar" onClick="fechar()"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

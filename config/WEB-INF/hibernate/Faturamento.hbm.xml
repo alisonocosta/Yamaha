@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......Faturamento.hbm.xml
+   .: Criação.....3 de maio, 9:59
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "Faturamento" e tabela "YM_SG_FATURAMENTO".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.Faturamento" table="YM_SG_FATURAMENTO">
+           
+		<id name="entityId" column="FATURAMENTO_ID" type="java.lang.Long">
+        	<generator class="native"/>
+		</id>   
+		
+		<property name="chassi"            column="CHASSI"	             type="java.lang.String" not-null="true"/>
+		<property name="customerTrxLineId" column="CUSTOMER_TRX_LINE_ID" type="java.lang.Long"   not-null="false" />
+		<property name="numeroNotaFiscal"  column="NOTA_FISCAL"          type="java.lang.Long"   not-null="true"  />
+		<property name="itemId"            column="ITEM_ID"              type="java.lang.Long"   not-null="true"  />
+		<property name="serieNotaFiscal"   column="SERIE"	             type="java.lang.String" not-null="true"  length="10"/>
+		<property name="dataNotaFiscal"	   column="DATA_NF"	             type="java.util.Date"   not-null="true"  />
+		<property name="modelo"            column="MODELO"	             type="java.lang.String" not-null="true"  length="5"/>
+				
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 
+		
+		<!-- Mapeamentos das chaves estrangeiras -->
+		
+		<many-to-one name="empresa"	
+					 column="ORGANIZATION_ID" 
+					 class="br.com.yamaha.sistemagarantia.model.Empresa"
+					 not-null="true" 
+					 lazy="false"/> 
+		
+		<many-to-one name="concessionaria"	
+					 column="CONCESSIONARIA_ID" 
+					 class="br.com.yamaha.sistemagarantia.model.Concessionaria"
+					 not-null="true" 
+					 lazy="false"
+					 fetch="select"/>   
+					 
+		
+		<many-to-one name="linha" 	
+					 class="br.com.yamaha.sistemagarantia.model.Linha" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="LINHA_ID" 	
+					 not-null="true"
+					 lazy="false"/>	
+			
+					 
+		<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>			 
+					 
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+
+</hibernate-mapping>

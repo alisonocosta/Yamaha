@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2008 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......DocumentoLog.hbm.xml
+   .: Criação.....10 de setembro de 2008
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "Estado" e tabela "YM_SG_DOCUMENTO_LOG".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.DocumentoLog" table="YM_SG_DOCUMENTO_LOG">
+           
+		<id name="entityId" column="DOCUMENTO_LOG_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_DOCUMENTO_LOG_S</param>
+			</generator>
+		</id>           
+
+		<property name="operacao"        column="OPERACAO"         type="java.lang.String" not-null="true"  length="15"/>
+		<property name="observacao"      column="OBSERVACAO"       type="java.lang.String" not-null="false" length="500"/>		
+				
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="true"  />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="false" />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 
+		
+		<many-to-one name="usuario"  		
+					 class="br.com.yamaha.sistemagarantia.model.Usuario" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="USUARIO_ID"			
+					 not-null="true"
+					 fetch="join"/>
+					 
+		<many-to-one name="documento"  		
+					 class="br.com.yamaha.sistemagarantia.model.Documento" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="DOCUMENTO_ID"			
+					 not-null="true"
+					 fetch="join"/>			
+		
+				 
+		<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>			 
+		
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+	
+</hibernate-mapping>

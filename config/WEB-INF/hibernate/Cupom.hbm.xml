@@ -1,0 +1,130 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......Cupom.hbm.xml
+   .: Criação.....9 de maio, 11:10
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "Cupom" e tabela "YM_SG_CUPOM".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.Cupom" 
+		   table="YM_SG_CUPOM"
+		   dynamic-insert="true"
+	       dynamic-update="true">
+	       
+	   <!-- <synchronize table="YM_SG_CUPOM_NOTA"/>
+		<synchronize table="YM_SG_GARANTIA_NOTA"/>
+-->
+		<id name="entityId" column="CUPOM_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_CUPOM_S</param>
+			</generator>
+		</id>
+		
+		<property name="cupomCode"	   	   column="CUPOM_CODE"     		type="java.lang.Long"   not-null="false"  />
+		<property name="chassi"	   		   column="MODELO"		        type="java.lang.String" not-null="true"  />
+		<property name="dataRevisao"       column="DATA_REVISAO"        type="java.util.Date"   not-null="true"  />
+		<property name="dataVenda"   	   column="DATA_VENDA"          type="java.util.Date"   not-null="false" />
+		<property name="dataEntrega"	   column="DATA_ENTREGA"    	type="java.util.Date"   not-null="false" />
+		<property name="quilometragem"	   column="QUILOMETRAGEM"       type="java.lang.Long"   not-null="false"  />
+		<property name="diasUso"	   	   column="DIAS_USO"       		type="java.lang.Long"   not-null="false"  />
+		<property name="horasUso"	   	   column="HORAS_USO"       	type="java.lang.Long"   not-null="false"  />
+		<property name="numeroNotaFiscal"  column="NOTA_FISCALY_NUM"    type="java.lang.Long"   not-null="false" />
+		<property name="dataNotaFiscal"	   column="NOTA_FISCALY_DATA"  	type="java.util.Date"   not-null="false" />
+		<property name="serieNotaFiscal"   column="NOTA_FISCALY_SERIE"  type="java.lang.String" not-null="false" />
+		<property name="valorRevisao" 	   column="VL_REVISAO"  		type="double" 			not-null="false" />
+		<property name="valorBonificacao"  column="VL_BONIFICACAO"	    type="double" 			not-null="false" />		
+		<property name="modeloBarco" 	   column="MODELO_BARCO" 	    type="java.lang.String" not-null="false" />
+		<property name="marcaBarco" 	   column="MARCA_BARCO" 	    type="java.lang.String" not-null="false" />
+		<!-- <property name="statusMovId"  	   column="STATUS_MOV_ID"	    type="java.lang.Long"   not-null="true"  />-->
+		<property name="recusaId"  	   	   column="RECUSA_ID"		    type="java.lang.Long"   not-null="false"  />		
+		<property name="analistaId"  	   column="ANALISTA_ID"		    type="java.lang.Long"   not-null="false"  />
+		<property name="alertCupomId"  	   column="ALERT_CUPOM_ID"      type="java.lang.Long"   not-null="false" />	
+						
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 
+		
+		<property name="autorizacaoEsp"    column="AUTORIZACAO_ESPECIAL_ID"    type="java.lang.Long"   not-null="false" />
+		<property name="numeroManualSubst" column="NUMERO_MANUAL_SUBST"  	   type="java.lang.Long"   not-null="false" />
+		
+		<bag name="notas" table="YM_SG_CUPOM_NOTA" inverse="true" lazy="true" cascade="all">
+        	<key column="CUPOM_ID"/>
+        	<many-to-many 
+        		column="NOTA_ID"
+        		unique="true"
+        		class="br.com.yamaha.sistemagarantia.model.NotaFiscal"/>
+        		
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE > :asOfDate)]]></filter>			 
+        </bag>
+        	
+		<many-to-one name="cliente"  		
+					 class="br.com.yamaha.sistemagarantia.model.Cliente" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="CLIENTE_ID"			
+					 not-null="false"
+					 fetch="join"/>
+					 
+		<many-to-one name="tipoUsoBarco"  		
+					 class="br.com.yamaha.sistemagarantia.model.TipoUsoBarco" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="TIPO_USO_ID"			
+					 not-null="false"
+					 fetch="join"/>
+					 
+		<many-to-one name="lote"  		
+					 class="br.com.yamaha.sistemagarantia.model.Lote" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="LOTE_ID"			
+					 not-null="true"
+					 lazy="false"
+					 fetch="join"/>
+		 
+		<many-to-one name="revisao" 	
+					 class="br.com.yamaha.sistemagarantia.model.Revisao" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="REVISAO_ID" 	
+					 not-null="true"
+					 lazy="false"
+					 fetch="join"/>
+					 
+		<many-to-one name="statusGarantia" 	
+					 class="br.com.yamaha.sistemagarantia.model.StatusGarantia" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="STATUS_MOV_ID" 	
+					 not-null="true" 
+					 lazy="false"
+					 fetch="join"/>
+					 
+		<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE > :asOfDate)]]></filter>			 
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+
+</hibernate-mapping>

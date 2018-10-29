@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Yamaha
+Copyright (c) 2013 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......GarantiaArquivoNTC.hbm.xml
+   .: Criação.....05 de Setembro, 18:11
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "GarantiaArquivoNTC" e tabela "YM_SG_TB_GARANTIA_ARQUIVO_NTC".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+    <class name="br.com.yamaha.sistemagarantia.model.GarantiaArquivoNtc" table="YM_SG_TAB_GARANTIA_ARQ_NTC">
+		
+		<id name="entityId" column="GARANTIA_ARQUIVO_NTC_ID" type="java.lang.Integer">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_GARANTIA_ARQUIVO_NTC_S</param>
+			</generator>
+		</id> 	
+		        
+        <property name="content"	    column="CONTEUDO_ARQUIVO"       type="blob"     		 not-null="true"  />
+        
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="false" update="false" />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true"  update="false" />
+		
+		<many-to-one name="garantiaArquivo" 	
+					 class="br.com.yamaha.sistemagarantia.model.GarantiaArquivo" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="GARANTIA_ARQUIVO_ID" 	
+					 not-null="true" 
+					 lazy="false"/>	
+		
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+--Analise nova  Moto
+http://localhost:8080/ym_garantia_ccs/AnaliseGarantia.do?task=showForm&innerCode=1119
+
+-- Analise nova Náutica
+http://localhost:8080/ym_garantia_ccs/AnaliseGarantia.do?task=showForm&innerCode=1790
+
+--Classificação Técnica Moto
+http://localhost:8080/ym_garantia_ccs/ClassificaGarantiaMoto.do?task=showForm&innerCode=1119
+
+--Acesso concessionária náutica
+http://localhost:8080/ym_garantia_ccs/Home.do?task=showInner&userCode=CCYA8715
+
+-- Acesso concessionária moto
+http://localhost:8080/ym_sistema_garantia/Home.do?task=showInner&userCode=CCY14355
+http://localhost:8080/ym_sistema_garantia/Home.do?task=showInner&userCode=INFOA2
+
+-- Novo ias
+http://yamaha80.ymdb.com.br:1156/emd/console/ias/applicationServer$farm=IAS*_DESE.yamaha80.ymdb.com.br$type=oracle*_ias$target=IAS*_DESE.yamaha80.ymdb.com.br?event=doLoad
+
+Diretorio do Arquivo de deploy
+D:\Projetos\Yamaha\workspace\Yamaha_SistemaGarantia_v12\deploy\
+D:\Projetos\opt\servidores\jboss-4.0.5.GA\server\default\deploy

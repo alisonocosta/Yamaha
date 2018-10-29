@@ -1,0 +1,37 @@
+body {
+  margin:0;
+  padding:0;
+  overflow: hidden;
+}         
+
+#dock {
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:26px;
+  background:transparent url(../../images/dock-bg.gif) repeat-x 0 0;
+  z-index: 100000;	
+}       
+
+.dock_icon {
+  float:left;
+  width:102px;
+  height:21px;
+  margin-top:3px;
+  background: url(../../images/button-bg.gif);
+  font-family: Verdana;
+  text-align:center;
+  font-size: 09px;
+  color: #000;
+  line-height: 22px;    
+  margin-right:10px;
+  margin-left:10px;
+  cursor: pointer;
+}       
+
+#theme {       
+  float:right; 
+  margin-top:3px;
+  margin-right:15px;
+}

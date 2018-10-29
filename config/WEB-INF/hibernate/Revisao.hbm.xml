@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......Revisao.hbm.xml
+   .: Criação.....09 de maio, 13:45
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "Revisao" e tabela "YM_SG_REVISAO".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.Revisao" table="YM_SG_REVISAO">
+           
+		<id name="entityId" column="REVISAO_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_REVISAO_S</param>
+			</generator>
+		</id>           
+
+		<property name="modelo"  	    	 column="MODELO"   			    type="java.lang.String" not-null="true" />
+		<property name="descricao"      	 column="DESCRICAO" 		    type="java.lang.String" not-null="true" />
+		<property name="numeroRevisao"  	 column="NUMERO_REVISAO" 	    type="java.lang.Long"   not-null="true" />
+		<property name="tempoHoras"  		 column="TEMPO_HORAS" 		    type="java.lang.Long"   not-null="false"/>
+		<property name="tempoDias"  		 column="TEMPO_DIAS" 		    type="java.lang.Long"   not-null="false"/>		
+		<property name="tempoKm"  			 column="TEMPO_KM" 			    type="java.lang.Long"   not-null="false"/>	
+		<property name="toleranciaMotoPerc"	 column="TOLERANCIA_MOTO_PERC"  type="java.lang.Double" not-null="false"/>		
+		<property name="toleranciaMotoMes"	 column="TOLERANCIA_MOTO_MESES" type="java.lang.Double"   not-null="false"/>
+		<property name="toleranciaNauticaDias"	 column="TOLERANCIA_NAUTICA_DIAS"  type="java.lang.Double"   not-null="false"/>	
+		<property name="toleranciaNauticaHoras"  column="TOLERANCIA_NAUTICA_HORAS" type="java.lang.Double" not-null="false"/>					
+				
+		<property name="dataInicio"   column="START_DATE"   type="java.util.Date"    not-null="true" />
+		<property name="dataTermino"  column="END_DATE"     type="java.util.Date"    not-null="false" />
+		
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long" not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long" not-null="true"   />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date" not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date" not-null="true"  /> 
+		
+		<bag name="cupons" inverse="true" lazy="true" >
+        	<key column="REVISAO_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.Cupom" />
+        </bag> 
+		
+		
+	</class>
+</hibernate-mapping>

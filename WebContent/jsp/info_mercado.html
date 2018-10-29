@@ -1,0 +1,416 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../css/yamaha.css"></link>
+		<script language="JavaScript">
+		
+			/** Exibe ou oculta um item no document.
+			 *  
+			 *  @param wobj
+			 *		Identificador do objeto-alvo.
+			 */
+			function showHide(wobj) {
+				document.getElementById(wobj).style.display = (document.getElementById(wobj).style.display == 'none') ? '' : 'none';
+			}
+
+			/** Exibe ou oculta uma área de entrada de dados.
+			 *
+			 *  @param name
+			 *  	Parte básica do nome (sem prefixos ou sufixos).
+			 */
+			function showHideInput(name) {
+			
+				document.getElementById('new' + name +  'Text').value = "";
+				showHide(name + '_inputLine');
+				showHide(name + '_addLine');
+			
+			}
+		
+			/** Obtém a data atual.
+			 *
+			 *  @return
+			 *		Data atual no formato dd/mm/yyyy - hh:mm
+			 */
+			function getCurrentDate() {
+			
+				var currentDateTime = new Date();
+				
+				var currYear  = currentDateTime.getFullYear();
+				var currMonth = currentDateTime.getMonth() + 1;
+				var currDay   = currentDateTime.getDate();
+				var currHour  = currentDateTime.getHours();
+				var currMin   = currentDateTime.getMinutes();
+
+				return currDay + "/" + currMonth + "/" + currYear + " - " + currHour + ":" + currMin;			
+			
+			}
+
+			/** Adiciona um texto à respectiva caixa de informações.
+			 *
+			 *  @param name
+			 *  	Parte básica do nome (sem prefixos ou sufixos).
+			 */
+			function addText(name) {
+
+				var targetField     = document.getElementById(name + 'Text')
+				var sourceField     = document.getElementById('new' + name + 'Text')
+				var finalDate       = getCurrentDate();
+				var currentContent  = targetField.value;
+				var newContent      = sourceField.value;
+				
+				if ( newContent == "" ) {
+				
+					window.alert("Por favor forneca uma informação válida.");
+					
+				} else {
+				
+					if ( currentContent == "" )
+						var finalContent = "[" + finalDate + "] " + newContent;
+					else 
+						var finalContent = currentContent + "\n" + "[" + finalDate + "] " + newContent;
+					
+					targetField.value = finalContent;
+	
+					showHide(name + '_inputLine');
+					showHide(name + '_addLine');
+				
+				}
+
+			}
+		
+		</script>
+	</head>
+	<body>
+	
+		<form name="myForm" method="post">
+	
+		<center>
+		
+		<table width="98%" border="0" cellpadding="2" cellspacing="2">
+			<tr>
+				<td class="td_dark">Data</td>
+				<td class="td_dark">Preenchido Por</td>
+				<td class="td_dark">Chassi</td>
+				<td class="td_dark">Total hrs</td>
+				<td class="td_dark">Data de venda</td>
+				<td class="td_dark">Data problema</td>
+			</tr>
+			<tr>
+				<td class="text" width="10%">15/07/2007</td>
+				<td class="text"><input type="text" name="criador" class="text_field_maior"/></td>
+				<td class="text"><input type="text" name="chassi" class="text_field_maior"/></td>
+				<td class="text"><input type="text" name="totalHrs" class="text_field_menor"/></td>
+				<td class="text" width="10%"><input type="text" name="dataVenda" class="text_field_menor"/></td>
+				<td class="text" width="10%"><input type="text" name="dataProblema" class="text_field_menor"/></td>
+			</tr>
+		</table>
+
+		<p/>
+
+		<table width="98%" border="0" cellpadding="2" cellspacing="2">
+			<tr>
+				<td class="td_dark" width="20%">Combustível</td>
+				<td class="td_dark" width="20%">Local Uso</td>
+				<td class="td_dark" width="20%">Tipo Uso</td>
+				<td class="td_dark" width="20%">Casco Utilizado</td>
+				<td class="td_dark" width="20%">Hélice</td>
+			</tr>
+			<tr>
+				<td class="text" align="left" valign="top">
+				
+					<table border="0" cellpadding="2" cellspacing="1" width="100%">
+						<tr>
+							<td class="text"><input type="radio"> Comum</td>
+						</tr>
+						<tr>
+							<td class="text"><input type="radio"> Aditivada</td>
+						</tr>
+						<tr>
+							<td class="text"><input type="radio"> Premium</td>
+						</tr>
+						<tr>
+							<td class="text"><input type="radio"> Podium</td>
+						</tr>
+					</table>
+				
+				</td>
+				<td class="text" align="left" valign="top">
+				
+					<table border="0" cellpadding="2" cellspacing="1" width="100%">
+						<tr>
+							<td class="text"><input type="checkbox"/> Água Salgada</td>
+						</tr>
+						<tr>
+							<td class="text"><input type="checkbox"/> Água Doce</td>
+						</tr>
+						<tr>
+							<td class="text">Cidade:</td>
+						</tr>
+						<tr>
+							<td class="text"><input type="text" class="text_field_maior"/></td>
+						</tr>
+					</table>
+				
+				</td>
+				<td class="text" align="left" valign="top">
+				
+					<table border="0" cellpadding="2" cellspacing="1" width="100%">
+						<tr>
+							<td class="text"><input type="radio"> Lazer</td>
+						</tr>
+						<tr>
+							<td class="text"><input type="radio"> Comercial</td>
+						</tr>
+					</table>
+				
+				</td>
+				<td class="text" valign="top">
+				
+					<table border="0" cellpadding="2" cellspacing="1" width="100%">
+						<tr>
+							<td class="text">Marca:</td>
+						</tr>
+						<tr>
+							<td class="text"><input type="text" class="text_field_maior"/></td>
+						</tr>
+						<tr>
+							<td class="text">Marca:</td>
+						</tr>
+						<tr>
+							<td class="text"><input type="text" class="text_field_maior"/></td>
+						</tr>
+					</table>
+				
+				</td>
+				<td class="text" valign="top">
+
+					<table border="0" cellpadding="2" cellspacing="1" width="100%">
+						<tr>
+							<td align="left" valign="top">
+
+								<table border="0" cellpadding="2" cellspacing="1" width="100%">
+									<tr>
+										<td class="text">Marca:</td>
+									</tr>
+									<tr>
+										<td class="text"><input type="text" class="text_field_maior"/></td>
+									</tr>
+									<tr>
+										<td class="text">Marca:</td>
+									</tr>
+									<tr>
+										<td class="text"><input type="text" class="text_field_maior"/></td>
+									</tr>
+								</table>
+
+							</td>
+							<td align="left" valign="top">
+							
+								<table border="0" cellpadding="2" cellspacing="1" width="100%">
+									<tr>
+										<td class="text"><input type="radio"> Inox</td>
+									</tr>
+									<tr>
+										<td class="text"><input type="radio"> Alumínio</td>
+									</tr>
+									<tr>
+										<td class="text"><input type="radio"> Plástico</td>
+									</tr>
+								</table>
+							
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		
+		<p/>
+		
+		<table width="98%" border="0" cellpadding="2" cellspacing="2">
+			<tr>
+				<td class="td_dark" width="60%">Nome e código da peça causadora do problema</td>
+				<td class="td_dark" width="40%">Rotação máxima do motor</td>
+			</tr>
+			<tr>
+				<td class="text">
+					<input type="text" class="text_field_maior"/>
+				</td>
+				<td class="text"><input type="text" class="text_field_maior"/></td>
+			</tr>
+		</table>
+
+		<p/>
+		
+		<table width="98%" border="0" cellpadding="2" cellspacing="2">
+			<tr id="CondicaoProblema">
+				<td>
+					<table border="0" cellpadding="2" cellspacing="0" width="100%">
+						<tr>
+							<td class="td_dark">Descrição do sintoma conforme relatado pelo cliente ou usuário do produto</td>
+						</tr>
+						<tr>
+							<td class="text">Em que condição ocorreu o problema?</td>
+						</tr>
+						<tr>
+							<td>
+								<textarea name="CondicaoProblemaText" class=text_field_maior style="width:100%" rows="6" disabled="disabled"></textarea>
+							</td>
+						</tr>
+						<tr id="CondicaoProblema_inputLine" style="display:none">
+							<td align="right" width="100%">
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td class="td_dark" width="10%" align="right">Adicionar:&nbsp;</td>
+										<td><input type="text" name="newCondicaoProblemaText" class="text_field_maior"/></td>
+										<td width="20%" align="right">
+											<button class="button_medium" onClick="JavaScript:addText('CondicaoProblema');">Salvar</button>
+											&nbsp;
+											<button class="button_medium" onClick="JavaScript:showHideInput('CondicaoProblema');">Cancelar</button>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr id="CondicaoProblema_addLine" style="display:show">
+							<td align="right">
+								<button class="button_medium" onClick="JavaScript:showHideInput('CondicaoProblema');">Adicionar</button>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+		<p/>
+		
+		<table width="98%" border="0" cellpadding="2" cellspacing="2">
+			<tr id="CausaProblema">
+				<td>
+					<table border="0" cellpadding="2" cellspacing="0" width="100%">
+						<tr>
+							<td class="td_dark">Descrição da causa do problema</td>
+						</tr>
+						<tr>
+							<td class="text">Em que condição ocorreu o problema?</td>
+						</tr>
+						<tr>
+							<td>
+								<textarea name="CausaProblemaText" class=text_field_maior style="width:100%" rows="6" disabled="disabled"></textarea>
+							</td>
+						</tr>
+						<tr id="CausaProblema_inputLine" style="display:none">
+							<td align="right" width="100%">
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td class="td_dark" width="10%" align="right">Adicionar:&nbsp;</td>
+										<td><input type="text" name="newCausaProblemaText" class="text_field_maior"/></td>
+										<td width="20%" align="right">
+											<button class="button_medium" onClick="JavaScript:addText('CausaProblema');">Salvar</button>
+											&nbsp;
+											<button class="button_medium" onClick="JavaScript:showHideInput('CausaProblema');">Cancelar</button>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr id="CausaProblema_addLine" style="display:show">
+							<td align="right">
+								<button class="button_medium" onClick="JavaScript:showHideInput('CausaProblema');">Adicionar</button>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+		<p/>
+		
+		<table width="98%" border="0" cellpadding="2" cellspacing="2">
+			<tr id="Diagnostico">
+				<td>
+					<table border="0" cellpadding="2" cellspacing="0" width="100%">
+						<tr>
+							<td class="td_dark">Diagnóstico</td>
+						</tr>
+						<tr>
+							<td class="text">Como foi verificado? O que foi verificado? Quais os testes efetuados?</td>
+						</tr>
+						<tr>
+							<td>
+								<textarea name="DiagnosticoText" class=text_field_maior style="width:100%" rows="6" disabled="disabled"></textarea>
+							</td>
+						</tr>
+						<tr id="Diagnostico_inputLine" style="display:none">
+							<td align="right" width="100%">
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td class="td_dark" width="10%" align="right">Adicionar:&nbsp;</td>
+										<td><input type="text" name="newDiagnosticoText" class="text_field_maior"/></td>
+										<td width="20%" align="right">
+											<button class="button_medium" onClick="JavaScript:addText('Diagnostico');">Salvar</button>
+											&nbsp;
+											<button class="button_medium" onClick="JavaScript:showHideInput('Diagnostico');">Cancelar</button>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr id="Diagnostico_addLine" style="display:show">
+							<td align="right">
+								<button class="button_medium" onClick="JavaScript:showHideInput('Diagnostico');">Adicionar</button>
+							</td>
+						</tr>
+						
+					</table>
+				</td>
+			</tr>
+		</table>
+
+		<p/>
+		
+		<table width="98%" border="0" cellpadding="2" cellspacing="2">
+			<tr id="Solucao">
+				<td>
+					<table border="0" cellpadding="2" cellspacing="0" width="100%">
+						<tr>
+							<td class="td_dark">Solução</td>
+						</tr>
+						<tr>
+							<td class="text">Ação tomada pela concessionária para corrigir o problema.</td>
+						</tr>
+						<tr>
+							<td>
+								<textarea class=text_field_maior style="width:100%" rows="6"></textarea>
+							</td>
+						</tr>
+						<tr id="Solucao_inputLine" style="display:none">
+							<td align="right" width="100%">
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td class="td_dark" width="10%" align="right">Adicionar:&nbsp;</td>
+										<td><input type="text" name="newSolucaoText" class="text_field_maior"/></td>
+										<td width="20%" align="right">
+											<button class="button_medium" onClick="JavaScript:addText('Solucao');">Salvar</button>
+											&nbsp;
+											<button class="button_medium" onClick="JavaScript:showHideInput('Solucao');">Cancelar</button>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr id="Solucao_addLine" style="display:show">
+							<td align="right">
+								<button class="button_medium" onClick="JavaScript:showHideInput('Solucao');">Adicionar</button>
+							</td>
+						</tr>						
+					</table>
+				</td>
+			</tr>
+		</table>
+
+		</center>
+		
+		</form>
+	
+	</body>
+</html>

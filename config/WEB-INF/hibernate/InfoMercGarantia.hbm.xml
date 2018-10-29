@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2009 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......InfoMercGarantia.hbm.xml
+   .: Criação.....02 de Agosto de 2009 
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "InfoMercGarantia" e tabela "YM_SG_INFOMERC_GARANTIA".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.InfoMercGarantia" table="YM_SG_INFOMERC_GARANTIA">
+         
+		<id name="entityId" column="INFOMERC_GARANTIA_ID" type="java.lang.Integer">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_INFOMERC_GARANTIA_S</param>
+			</generator>
+		</id> 		
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 
+		
+		<many-to-one name="infoMercado" 	
+					 class="br.com.yamaha.sistemagarantia.model.InfoMercado" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="INFO_MERC_ID" 	
+					 not-null="true" 
+					 lazy="false"/>	 
+				
+		<many-to-one name="garantia" 	
+					 class="br.com.yamaha.sistemagarantia.model.GarantiaHeader" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="GARANTIA_ID" 	
+					 not-null="true" 
+					 lazy="false"/>	
+					 
+		<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+					 				
+	</class>
+
+</hibernate-mapping>

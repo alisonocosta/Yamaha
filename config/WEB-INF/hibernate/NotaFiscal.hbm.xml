@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......NotaFiscal.hbm.xml
+   .: Criação.....13 de junho, 14:51
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "NotaFiscal" e tabela "YM_SG_NOTA".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.NotaFiscal" 
+	       table="YM_SG_NOTA"
+	       dynamic-insert="true"
+	       dynamic-update="true">
+           
+		<id name="entityId" column="NOTA_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_NOTA_S</param>
+			</generator>
+		</id>           
+
+		<property name="serieNF"      	   		column="SERIE_NF" 			type="java.lang.String" not-null="true" length="5" />
+		<property name="emissor"      	   		column="EMISSOR" 			type="java.lang.String" not-null="true" />
+		<property name="destinatario"      	   	column="DESTINATARIO" 		type="java.lang.String" not-null="true" />
+		<property name="numeroNF"  	 	   		column="NUM_NF" 	    	type="java.lang.Long"   not-null="true" />
+		<property name="dataNF"   		   		column="DATA_NF"   		   	type="java.util.Date"   not-null="true" />
+		<property name="serviceValueNF"    		column="VALOR_NF_SV"	    type="java.lang.Double" not-null="false" />
+		<property name="pecaValueNF"       		column="VALOR_NF_PC"	    type="java.lang.Double" not-null="false" />
+		<property name="icmsValueNF"       		column="VALOR_ICMS_NF"	   	type="java.lang.Double" not-null="false" />
+		<property name="NumeroComplNF"	   		column="NF_COMPL_NUM" 	   	type="java.lang.Long"   not-null="false"/>
+		<property name="dataComplNF"   	   		column="NF_COMPL_DATA"	   	type="java.util.Date"   not-null="false"/>
+		<property name="serieComplNF"      		column="NF_COMPL_SERIE" 	type="java.lang.String" not-null="false" length="5"/>		
+		<property name="serviceValueNF_COMP"    column="NF_COMPL_VALOR_SV"	type="double"           not-null="false" />
+		<property name="pecaValueNF_COMP"       column="NF_COMPL_VALOR_PC"	type="double"           not-null="false" />
+		<property name="icmsValueNF_COMP"       column="NF_COMPL_ICMS"	   	type="double"           not-null="false" />		
+		<property name="dataLiberacao" 	   		column="DATA_LIBERACAO"	   	type="java.util.Date"   not-null="false"/>	
+		<property name="dataPagamento" 	   		column="DATA_PGTO" 		   	type="java.util.Date"   not-null="false"/>
+		<property name="dataAdiantamento"  		column="DATA_ADTO" 		   	type="java.util.Date"   not-null="false"/>
+		<property name="tipoNFId"	 	   		column="TIPO_NF_ID"  	   	type="java.lang.Long"   not-null="false" />	
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  />  
+		
+		<many-to-one name="concessionaria" 	
+					 class="br.com.yamaha.sistemagarantia.model.Concessionaria" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="CONCESSIONARIA_ID" 	
+					 not-null="true" 
+					 lazy="false"/>
+			
+		
+		<many-to-one name="lote" 	
+					 class="br.com.yamaha.sistemagarantia.model.Lote" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="LOTE_ID" 	
+					 not-null="true" 
+					 lazy="false"/>
+					 
+		<bag name="cupons" table="YM_SG_CUPOM_NOTA" lazy="false" cascade="all">
+        	<key column="NOTA_ID"/>
+        	<many-to-many 
+        		column="CUPOM_ID"
+        		unique="true"
+        		class="br.com.yamaha.sistemagarantia.model.Cupom"/>
+        </bag>
+        
+        <bag name="garantias" table="YM_SG_GARANTIA_NOTA" lazy="false" cascade="all">
+        	<key column="NOTA_ID"/>
+        	<many-to-many 
+        		column="GARANTIA_ID"
+        		unique="true"
+        		class="br.com.yamaha.sistemagarantia.model.GarantiaHeader"/>
+        </bag>
+		
+		
+	</class>
+
+</hibernate-mapping>

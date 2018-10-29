@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......GarantiaHeader.hbm.xml
+   .: Criação.....01 de junho, 11:44
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "GarantiaHeader" e tabela "YM_SG_GARANTIA_HEADER".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.GarantiaHeader" table="YM_SG_GARANTIA_HEADER">
+         
+		<id name="entityId" column="GARANTIA_ID" type="java.lang.Integer">
+        	<generator class="org.hibernate.id.TableGenerator">
+                <param name="table">YM_SG_NUMERO_SG</param>
+                <param name="column">ULTIMO_NRO_SG</param>
+        	</generator>
+		</id>           
+
+		<property name="garantiaCode"     column="GARANTIA_CODE"      type="java.lang.String" not-null="false" length="20"/>
+		<property name="organizationId"   column="ORGANIZATION_ID"    type="java.lang.Long"   not-null="false" />
+		<property name="modelo"           column="MODELO"             type="java.lang.String" not-null="true"  length="12"/>
+		<property name="numeroOS"         column="NUMERO_OS"          type="java.lang.String" not-null="false" length="240"/>
+		<property name="quilometragem"    column="QUILOMETRAGEM"      type="java.lang.Long"   not-null="false"/>
+		<property name="diasUso"		  column="DIAS_USO"           type="java.lang.Long"   not-null="false"/>
+		<property name="horasUso"         column="HORAS_USO"          type="java.lang.Long"   not-null="false"/>
+		<property name="dataAberturaOS"   column="DATA_ABERTURA_OS"   type="java.util.Date"   not-null="true" />
+		<property name="dataFechamentoOS" column="DATA_FECHAMENTO_OS" type="java.util.Date"   not-null="false"/>
+		<property name="alertGarantiaId"  column="ALERT_GARANTIA_ID"  type="java.lang.Long"   not-null="false"/>
+		<property name="recusaId"         column="RECUSA_ID"          type="java.lang.Long"   not-null="false" />
+   		<property name="analistaId"       column="ANALISTA_ID"        type="java.lang.Long"   not-null="false"/>	
+   		
+   		<property name="preenchidoPor"    column="PREENCHIDO_POR"     type="java.lang.String" not-null="false" length="60"/>	
+		
+		<property name="notaGrupoId"           column="NOTA_GRUPO_ID"           type="java.lang.Long"   not-null="false"/>
+		<property name="valorServicoTerceiro"  column="VL_SERVICO_TERCEIRO"     type="double"           not-null="false"/>
+		<property name="justServicoTerceiro"   column="JUST_SERV_TERCEIRO"      type="java.lang.String" not-null="false" length="2000"/>
+
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date" not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date" not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long" not-null="true" update="false"/>
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long" not-null="true"/>
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date" not-null="true" update="false"/>
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date" not-null="true"/> 
+		
+		<property name="localUsoDoce"     column="LOCAL_USO_DOCE"     type="java.lang.String" not-null="false" length="1" />
+		<property name="localUsoSalg"     column="LOCAL_USO_SALG"     type="java.lang.String" not-null="false"  length="1" />
+		<property name="cidadeUso" 		  column="CIDADE_USO" 		  type="java.lang.String" not-null="false" length="30"/>
+		<property name="tipoUso"  		  column="TIPO_USO"           type="java.lang.String" not-null="false"  length="1" />
+		<property name="tipoUsoId"  	  column="TIPO_USO_ID"        type="java.lang.Long"   not-null="false"  length="1" />
+		<property name="marcaCasco"       column="MARCA_CASCO"        type="java.lang.String" not-null="false" length="20"/>
+   		<property name="modeloCasco"      column="MODELO_CASCO"       type="java.lang.String" not-null="false" length="20"/>		
+   		<property name="marcaHelice"      column="MARCA_HELICE"       type="java.lang.String" not-null="false" length="20"/>		
+   		<property name="materHelice"      column="MATER_HELICE"       type="java.lang.String" not-null="false" length="1"/>			
+		<property name="passoHelice"      column="PASSO_HELICE"       type="java.lang.Long"   not-null="false"/>		
+		<property name="rotacaoMaxima"    column="ROT_MAXIMA"         type="java.lang.Long"   not-null="false"/>
+		<property name="tipoGasolinaId"   column="TIPO_GASOLINA_ID"   type="java.lang.String" not-null="false"/>
+		<property name="flClassificacaoTecnica"   column="FL_CLASSIFICA_TEC"   type="java.lang.String" not-null="false" length="1"/>
+		<property name="tipoProblema"     column="TIPO_PROBLEMA"   type="java.lang.String" not-null="false" length="3"/>
+		<property name="classificaAcao"   column="ACAO_TECNICA"   type="java.lang.String" not-null="false" length="50"/>
+		
+		<one-to-one name="causaProblemaGarantia" 		class="br.com.yamaha.sistemagarantia.model.CausaProblemaGarantia" 	 	cascade="none"/>
+		<one-to-one name="condicaoProblemaGarantia" 	class="br.com.yamaha.sistemagarantia.model.CondicaoProblemaGarantia" 	cascade="none"/>
+		<one-to-one name="diagnosticoProblemaGarantia" 	class="br.com.yamaha.sistemagarantia.model.DiagnosticoProblemaGarantia" cascade="none"/>
+		<one-to-one name="solucaoProblemaGarantia" 		class="br.com.yamaha.sistemagarantia.model.SolucaoProblemaGarantia" 	cascade="none"/>
+				
+		<bag name="grupos" inverse ="true" lazy="false" cascade="none">
+        	<key column="GARANTIA_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.ServicoGrupo"/>
+        	
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+        	
+        </bag> 	
+      <!--  
+        <bag name="defeitos" inverse ="true" lazy="false" cascade="persist,merge,save-update">
+        	<key column="GARANTIA_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.DescricaoDefeito"/>
+        	
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+        	
+        </bag>	
+        -->  
+        <bag name="pareceres" inverse ="true" lazy="false" cascade="persist,merge,save-update">
+        	<key column="GARANTIA_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.ParecerTecnico"/>
+        	
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+        	
+        </bag>	
+        
+        <bag name="listGarantiaLine" inverse ="true" lazy="false" cascade="save-update">
+        	<key column="GARANTIA_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.GarantiaLine"/>
+        	
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+        	
+        </bag>	
+		
+		<many-to-one name="statusGarantia" 	
+					 class="br.com.yamaha.sistemagarantia.model.StatusGarantia" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="STATUS_MOV_ID" 	
+					 not-null="true" 
+					 lazy="false"
+					 fetch="join"/>	  	
+					 
+		<many-to-one name="lote"  		
+					 class="br.com.yamaha.sistemagarantia.model.Lote" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="LOTE_ID"			
+					 not-null="true"
+					 lazy="false"
+					 fetch="join"/>	
+					 
+		<many-to-one name="recall"  		
+					 class="br.com.yamaha.sistemagarantia.model.Recall" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="RECALL_ID"			
+					 not-null="false"
+					 lazy="false"
+					 fetch="join"/>
+					 
+		<many-to-one name="sintoma"  		
+					 class="br.com.yamaha.sistemagarantia.model.Sintoma" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="SINTOMA_ID"			
+					 not-null="true"
+					 lazy="false"
+					 fetch="join"/>
+					 
+		<many-to-one name="condicao"  		
+					 class="br.com.yamaha.sistemagarantia.model.Condicao" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="CONDICAO_ID"			
+					 not-null="true"
+					 lazy="false"
+					 fetch="join"/>
+		
+		<many-to-one name="AutorizacaoEspecialSG"  		
+					 class="br.com.yamaha.sistemagarantia.model.AutorizacaoEspecialSG" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="AUTORIZACAO_ESPECIAL_ID"			
+					 not-null="false"
+					 lazy="false" 
+					 not-found="ignore"
+					 fetch="join"/>
+		<!--
+		<join table="YM_SG_CAMPAIGN_BILLING" optional="true" inverse="true" >
+				<key column="GARANTIA_ID" unique="true"/> 
+				<many-to-one name="campaign" 
+							 column="CAMPAIGN_ID"
+							 not-null="true" 
+							 lazy="false" 
+							 unique="true" 
+							 fetch="join"/>
+		</join>	
+		-->	
+		<join table="YM_SG_INFOMERC_GARANTIA" optional="true" inverse="true" >				
+				<key column="GARANTIA_ID" unique="true"/>				
+				<many-to-one name="infoMercado" 
+							 column="INFO_MERC_ID"
+							 not-null="true" 
+							 lazy="false" 
+							 unique="true"/>
+		</join>
+						
+		
+		<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+		
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+
+</hibernate-mapping>

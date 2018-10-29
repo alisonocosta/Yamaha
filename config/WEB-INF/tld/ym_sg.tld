@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<taglib xmlns="http://java.sun.com/JSP/TagLibraryDescriptor">
+  <tlib-version>1.1</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>ym</short-name>
+  <description>Esta tag contém funcionalidades referentes ao Content Manager.</description>
+	
+	<!--  Tags para controle de mensagens  -->
+	<tag>
+		<name>javaScriptExecuter</name>
+		<tag-class>br.com.resource.infra.view.tag.JavaScriptExecuterTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>Tag utilizada para executar métodos javascript</description>
+	</tag>
+	<tag>
+		<name>alertMessage</name>
+		<tag-class>br.com.resource.infra.view.tag.AlertMessageTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>Tag utilizada para exibir mensagens de alerta vindas do controller</description>
+	</tag>
+	<tag>
+		<name>confirmMessage</name>
+		<tag-class>br.com.resource.infra.view.tag.ConfirmMessageTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>Tag utilizada para confirmar questões vindas do controller</description>
+	</tag>
+	
+	<!--  Popula um objeto SELECT com a lista de Estados Brasileiros -->
+	<tag>
+		<name>selectBrState</name>
+		<tag-class>br.com.resource.infra.view.tag.SelectBrazilianStateTag</tag-class>
+		<body-content>empty</body-content>
+		<description>
+			Lista todos estados brasileiros.
+			
+			selectedId - Id selecionado por padrão nesta tag.
+		</description>
+	    <attribute>
+			<name>selectedId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>showBlankLine</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>	
+	</tag>
+	
+	<!-- Apresenta um formulário de entrada com um ícone -->  
+	<tag>
+		<name>inputDate</name>
+		<tag-class>br.com.resource.infra.view.tag.InputDateTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>
+			Apresenta um formulário de entrada com um ícone
+			cuja função é abrir um calendário de referência.
+			
+			datePattern - Padrão de data a ser usado (não obrigatório).
+			icon        - Ícone usado para abrir o calendário.
+			iconDesc    - Descrição do ícone - alt (não obrigatório).
+			monthLabels - Labels usados para os meses.
+			dayHeaders  - Labels usados para os dias.
+			startDay    - Dia no qual inicia a contagem (não obrigatório).
+			todayLabel  - Label usado para marcar "hoje".
+			fieldLength - Tamanho do campo (não obrigatório).
+			fieldName   - Nome do campo.
+			readOnly    - Campo é somente leitura ou não (não obrigatório).
+			fieldYears  - Quantidade de anos a serem listados antes e após(não obrigatório).
+			tabIndex    - Valor para ordem de tabulação
+			onKeyUp     - Evento disparado ao solta uma tecla
+			maxLength   - Tamanho máximo de caracteres no campo
+		</description>
+	    <attribute>
+			<name>datePattern</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>icon</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>iconDesc</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>monthLabels</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>dayHeaders</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>startDay</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>todayLabel</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>fieldLength</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>fieldName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>fieldClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>readOnly</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>fieldYears</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>	
+		<attribute>
+			<name>onBlurMethod</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>	
+		<attribute>
+			<name>tabIndex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onKeyUp</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>maxLength</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>  
+	
+	<!-- Valida se o usuário está logado -->
+	<tag>
+		<name>checkLogon</name>
+		<tag-class>br.com.resource.infra.view.tag.CheckLogonTag</tag-class>
+		<body-content>empty</body-content>
+		<description>
+			Valida se o usuário está logado, procurando a existência
+			de um bean (User), dentro do escopo da sessão.
+			Se este bean não existir, direcionará o usuário para uma
+			outra página. Provavelmente um formulário de login.
+		
+			name - nome do bean a ser procurado na sessão.
+			page - página para onde o usuário deverá ser redirecionado
+			       caso o bean não exista na sessão.
+			roleName - Nome do perfil a ser pesquisado.
+			       
+			Se o parâmetro "name" não for enviado para a tag, esta
+			assumirá como padrão o valor existente na lista de constantes
+			da infraestrutura. 
+		</description>
+	    <attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>page</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>roleName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+	</tag>  
+	
+	<!-- Apresenta o nome da Concessinária no jsp -->
+	<tag>
+		<name>showConcessionaria</name>
+		<tag-class>br.com.yamaha.sistemagarantia.view.tag.ShowConcessionariaTag</tag-class>
+		<body-content>empty</body-content>
+		<description>
+			Apresenta o nome da Concessinária no jsp
+		</description>
+	</tag>
+	
+	<!-- Apresenta a lista de revisões de para um chassi -->
+	<tag>
+		<name>selectRevisao</name>
+		<tag-class>br.com.yamaha.sistemagarantia.view.tag.SelectRevisaoTag</tag-class>
+		<body-content>empty</body-content>
+		<description>
+			Apresenta a lista de revisões de para um chassi
+		</description>
+		<attribute>
+			<name>selectedId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<name>showBlankLine</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>listRevisao</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>

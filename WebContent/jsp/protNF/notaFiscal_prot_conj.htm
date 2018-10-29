@@ -1,0 +1,383 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Conjugada</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../../css/yamaha.css"></link>
+<script language="javascript">
+
+/**
+ * Função para verificar se existem itens sem relacioamento com Nota Fiscal de uma determinada SG
+ *
+ * @param tipo
+ *   Tipo do item para Associar 
+ *   - 'P' para Peça
+ *   - 'S' para Serviços
+ *   - 'M' para Mão de Obra de Terceiros
+ *
+ * @param garantiaId
+ *
+ * @return boolean
+ *    TRUE  - Quando existir item sem relacionamento
+ *    FALSE - Quando todos os itens estiverem relacionados
+ **/
+function hasNotSelectedItem(tipo, garantiaId) {
+
+	var itensSel = new Array();
+	var hasItem  = false;
+	
+	switch(tipo) {
+	
+		case 'P': itensSel = parent.pecas;
+				  break;
+		case 'S': itensSel = parent.servicos;
+				  break;
+		case 'M': itensSel = parent.servicos3os;
+				  break;
+				  
+		default: return itens;
+	}
+			
+	// Vamos percorrer a coleção para verificar os itens
+	for ( var ix = 0; ix < itensSel.length ; ix++ ) {
+	
+		if ( !itensSel[ix].getIsSelected() && !itensSel[ix].getIsNota() )
+			if ( garantiaId == itensSel[ix].id )
+				hasItem = true;	
+							
+	}				
+	
+	return hasItem;
+			
+}
+
+function checkValue(obj,ix,garantiaId) {
+
+	var objName =  obj.name.substr(0,obj.name.indexOf('_'));
+	
+	if ( objName == "sv" && obj.disabled != true ) {	
+		parent.servicos[ix].setIsSelected(true);
+	} else if ( objName == "mo" && obj.disabled != true ) {
+		parent.servicos3os[ix].setIsSelected(true);
+	} else if ( objName == "pc" && obj.disabled != true  ) {	
+		parent.pecas[ix].setIsSelected(true);
+	} else 
+		return false;
+		
+	removeCheckDif( garantiaId );	
+}
+
+function fechar() {
+	parent.document.getElementById("conjugada").click();
+	parent.hidePopWin(false,false);	
+}
+
+function removeCheckDif( garantiaId ) {
+
+	var f = window.document.popupConj;
+	var iObj = 0;
+	
+	for ( var i=0 ; i < f.elements.length ; i++ ) {
+		
+		var el=f.elements[i];
+		var elName = el.name;
+		if ( el.type=='checkbox' ) {
+		
+			var objName =  elName.substr(0,elName.indexOf('_'));
+			var garId 	=  elName.substr(elName.lastIndexOf('_') + 1,garantiaId.length);
+		
+			if ( garId != garantiaId ) {				
+				el.checked = false;
+				
+				if ( objName == "sv" && el.disabled != true ) {	
+					iObj = el.value;
+					parent.servicos[iObj].setIsSelected(false);
+				} else if ( objName == "mo" && el.disabled != true ) {
+					iObj = el.value;
+					parent.servicos3os[iObj].setIsSelected(false);
+				} else if ( objName == "pc" && el.disabled != true  ) {			
+					iObj = el.value;
+					parent.pecas[iObj].setIsSelected(false);
+				}
+				
+			}
+				
+		}
+	}
+}
+
+function checkAllPc(garantiaId) {
+	
+	var f = window.document.popupConj;
+	var chkObj = eval("window.document.popupConj.allPc_" + garantiaId);
+	var iObj = 0;
+	
+	for ( var i=0 ; i < f.elements.length ; i++ ) {
+		
+		var el=f.elements[i];
+		var elName = el.name;
+		if ( el.type=='checkbox' && elName != chkObj.name ) {
+			var objName =  elName.substr(0,elName.indexOf('_'));
+			var garId 	=  elName.substr(elName.lastIndexOf('_') + 1,garantiaId.length);
+			iObj = el.value;
+			if ( garId == garantiaId ) {					
+				if ( objName == "pc" && el.disabled != true  ) {	
+					el.checked = chkObj.checked;
+					if ( el.checked )
+						parent.pecas[iObj].setIsSelected(true);
+					else
+						parent.pecas[iObj].setIsSelected(false);
+				} else
+					removeCheckDif( garantiaId );	
+			}
+		}
+	}
+}
+
+function checkAll(garantiaId) {
+	var f = window.document.popupConj;
+	var chkObj = eval("window.document.popupConj.all_" + garantiaId);
+	var iObj = 0;
+	
+	for ( var i=0 ; i < f.elements.length ; i++ ) {
+		
+		var el=f.elements[i];
+		var elName = el.name;
+		if ( el.type=='checkbox' && elName != chkObj.name ) {
+		
+			var objName =  elName.substr(0,elName.indexOf('_'));
+			var garId 	=  elName.substr(elName.lastIndexOf('_') + 1,garantiaId.length);
+			//window.alert("Objeto:" + objName + " - Garantia:" + garId);
+			
+			// Serviço
+			if ( objName == "sv" && el.disabled != true ) {					
+				iObj = el.value;
+				if ( garId == garantiaId ) {
+					el.checked = chkObj.checked;
+					if ( el.checked ) {
+						parent.servicos[iObj].setIsSelected(true);
+					} else {
+						parent.servicos[iObj].setIsSelected(false);
+					}
+				} else {
+					el.checked = false;
+					parent.servicos[iObj].setIsSelected(false);					
+				}
+			// Mão de Obra de Terceiro			 
+			} else if ( objName == "mo" && el.disabled != true ) {
+				iObj = el.value;
+				if ( garId == garantiaId ) {
+					el.checked = chkObj.checked;
+					if ( el.checked ) {
+						parent.servicos3os[iObj].setIsSelected(true);
+					} else {
+						parent.servicos3os[iObj].setIsSelected(false);
+					}	
+				} else {
+					el.checked = false;
+					parent.servicos3os[iObj].setIsSelected(false);
+				}
+			// Peça		
+			} else if ( objName == "pc" && el.disabled != true  ) {			
+				iObj = el.value;
+				if ( garId == garantiaId ) {
+					el.checked = chkObj.checked;
+					if ( el.checked ) {
+						parent.pecas[iObj].setIsSelected(true);
+					} else {
+						parent.pecas[iObj].setIsSelected(false);
+					}
+				} else {				
+					el.checked = false;
+					parent.pecas[iObj].setIsSelected(false);
+				}				
+			} else {
+				el.checked = false;			
+			}
+		}
+	}
+}
+
+function enviaDados() {	
+
+	var f = window.document.popupConj;
+	var iObj = 0;
+	var hasServ = false;
+	var hasMo   = false;
+	var hasChecked = false;
+	
+	for ( var i=0 ; i < f.elements.length ; i++ ) {
+		
+		var el=f.elements[i];
+		var elName = el.name;
+		if ( el.type == 'checkbox' ) {
+		
+			var objName =  elName.substr(0,elName.indexOf('_'));
+			if ( objName == "pc" && el.disabled != true ) {		
+						
+				if ( el.checked ) {
+					var garId 	=  elName.substr(elName.lastIndexOf('_') + 1,elName.length);
+					//window.alert("Objeto:" + objName + " - Garantia:" + garId);
+				
+					var objSv  = eval("window.document.popupConj.sv_" + garId);
+					if ( objSv.checked && objSv.disabled != true )
+						hasServ = true;
+						
+					
+					var objMo = eval("window.document.popupConj.mo_" + garId);
+					if ( objMo.checked && objMo.disabled != true )
+						hasMo = true;
+						
+					if ( hasServ || hasMo )
+						hasChecked = true;
+				}
+			}
+		}
+	}
+	
+	if ( hasChecked ) {
+	
+		//parent.document.getElementById("pecaValueNF").value = window.top.convMoeda(valorTotal);
+		parent.document.getElementById("pecaValueNF").readOnly = false;
+		parent.document.getElementById("pecaValueNF").focus();		
+		if ( hasServ ) {
+			parent.document.getElementById("serviceValueNF").focus();
+			parent.document.getElementById("serviceValueNF").readOnly = false;
+		}
+		if ( hasMo ) {			
+			parent.document.getElementById("mo3ValueNF").readOnly = false;	
+		}
+		parent.hidePopWin(false, false);
+		
+	} else {
+	
+		parent.alert("Não foram seleciondaos itens conjugados para o lançamento da nota fiscal!");
+		return false;
+	}
+	
+}
+
+</script>
+</head>
+
+<body onBlur="window.focus();">
+	<form name="popupConj" action="">
+	
+		<script language="javascript">
+			var garantiaId   = 0;
+			var lineId       = 0;
+			var valorServico = "0,00";
+			var valorMo3     = "0,00";
+			var chassi       = "";
+			var idSv		 = 0;
+			var idMo		 = 0;
+			// Verificamos se todos os itens de peças, serviços e MO3 estão associados a nota
+			var isItemPecaNota       = parent.hasNotSelectedItem('P'); 
+			
+			if ( isItemPecaNota ) {
+				
+				for ( var iPc = 0; iPc <  parent.pecas.length ; iPc++ ) {
+				
+					if ( !parent.pecas[iPc].getIsNota() ) {
+												
+						var isItemServicoNota    = hasNotSelectedItem('S',parent.pecas[iPc].id);
+						var isItemServico3osNota = hasNotSelectedItem('M',parent.pecas[iPc].id);
+			
+						var isConjug = isItemServicoNota || isItemServico3osNota;
+			
+						if ( isConjug ) {	
+							// Se o id da garantia diferente do anterior devemos montar no cabeçalho
+							if ( garantiaId != parent.pecas[iPc].id ) {						
+								
+								if ( iPc > 0 )
+									window.document.write("</table></td></tr><tr><td heigt=15>&nbsp;</td></tr></table>");
+									
+								//Atualizamos o id
+								garantiaId   = parent.pecas[iPc].id;	
+								window.document.write("<table width='98%' style='border:1px solid #788C9B'><tr><td>");
+								window.document.write("<table width='100%'>");
+												
+								window.document.write("<tr><td class='tr_line' width='15%'><b>");
+								window.document.write("<input type='checkbox'  name='all_" +  garantiaId + "' value='ck' onClick='checkAll(" + garantiaId + " );'>");
+								window.document.write("&nbsp;" + garantiaId + "</b></td>");
+								
+								if ( isItemServicoNota ) {
+						
+									for ( var iSv = 0; iSv <  parent.servicos.length ; iSv++ ) {
+							
+										if ( parent.servicos[iSv].id == garantiaId ) {
+											valorServico = parent.servicos[iSv].valorFormatado;
+											chassi       = parent.servicos[iSv].chassi;
+											idSv         = iSv;
+										}
+									}
+							
+								}
+						
+								if ( isItemServico3osNota ) {
+						
+									for ( var iMo = 0; iMo <  parent.servicos3os.length ; iMo++ ) {
+							
+										if ( parent.servicos3os[iMo].id == garantiaId ) {
+											valorMo3 = parent.servicos3os[iMo].valorFormatado;
+											chassi   = parent.servicos3os[iMo].chassi;
+											idMo     = iMo;
+										}
+									}
+								}
+								window.document.write("<td class='tr_line' width='35%'><b>Chassi:</b>&nbsp;" + chassi + "</td>");
+								
+								var isDisabledSv = (isItemServicoNota    ? "" : "disabled" );
+								var isDisabledMo = (isItemServico3osNota ? "" : "disabled"); 
+								
+								//window.alert("isDisabledSv:" + isDisabledSv + " - isDisabledMo:" + isDisabledMo);
+								window.document.write("<td class='tr_line'><input type='checkbox'  name='sv_" +  garantiaId + "' value=" + idSv + " " + isDisabledSv + " onClick='checkValue( this," + idSv + "," + garantiaId +" );'><b>Serviço:</b>&nbsp;" + valorServico + "</td>");
+								window.document.write("<td class='tr_line'><input type='checkbox'  name='mo_" +  garantiaId + "' value=" + idMo + " " + isDisabledMo + " onClick='checkValue( this," + idMo + ","+ garantiaId +" );'><b>M.O.3º:</b>&nbsp;" + valorMo3 + "</td>");						
+								window.document.write("</tr>"); 
+								window.document.write("<tr></table>");
+								window.document.write("<table width='100%'>");
+						
+								lineId = parent.pecas[iPc].lineId;
+						
+								window.document.write("<tr><td class='td_dark' width='10%'><b>");
+								window.document.write("<input type='checkbox'  name='allPc_" +  garantiaId + "' value='ckPc' onClick='checkAllPc(" + garantiaId + " );'>");
+								window.document.write("&nbsp;Peças</b></td>");
+								window.document.write("<td class='td_dark' width='10%' align='center'><b>Qtde</b></td>");
+								window.document.write("<td class='td_dark' width='20%' align='center'><b>Código</b></td>");
+								window.document.write("<td class='td_dark' width='50%' align='center'><b>Descrição</b></td>");
+								window.document.write("<td class='td_dark' align='center' width='10%'><b>Valor</b></td>");								
+								window.document.write("</tr>"); 
+								window.document.write("<tr>");						
+								window.document.write("<td class='text'><input type='checkbox'  name='pc_" + iPc + "_" + garantiaId + "' value=" + iPc + " onClick='checkValue(this, " + iPc + "," + garantiaId + ");'></td>");
+								window.document.write("<td class='text' align='center'>" + parent.pecas[iPc].qtde 			+ "</td>");
+								window.document.write("<td class='text'>" + parent.pecas[iPc].itemCode 		+ "</td>");
+								window.document.write("<td class='text'>" + parent.pecas[iPc].descricao 	+ "</td>");
+								window.document.write("<td class='text' align='right'>" + parent.pecas[iPc].valorFormatado	+ "</td>");					
+								window.document.write("</tr>");
+						
+							} else {
+					
+								window.document.write("<tr>");						
+								window.document.write("<td class='text'><input type='checkbox'  name='pc_" + iPc + "_" + garantiaId + "' value=" + iPc + " onClick='checkValue(this, " + iPc + "," + garantiaId + ");'></td>");
+								window.document.write("<td class='text' align='center'>" + parent.pecas[iPc].qtde 			+ "</td>");
+								window.document.write("<td class='text'>" + parent.pecas[iPc].itemCode 		+ "</td>");
+								window.document.write("<td class='text'>" + parent.pecas[iPc].descricao		+ "</td>");
+								window.document.write("<td class='text' align='right'>" + parent.pecas[iPc].valorFormatado	+ "</td>");					
+								window.document.write("</tr>");
+							}
+						}
+					}	
+				}				
+				window.document.write( "</table>" );
+			}
+			window.document.write("</td></tr></table>");
+		</script>
+		<table width='98%'>
+			<tr>
+				<td class="text"  align="center"><input type="button" class="button_medium" value="Lançar" onClick="enviaDados()">&nbsp;&nbsp;<input type="button" class="button_medium" value="Fechar" onClick="fechar()"></td>
+				</tr>
+				</table>
+	</form>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......AlertCupom.hbm.xml
+   .: Criação.....21 de maio, 9:14
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "AlertCupom" e tabela "YM_SG_ALERT_CUPOM".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+--> 
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.AlertCupom" table="YM_SG_ALERT_CUPOM">
+           
+		<composite-id name="compositeEntityId" class="br.com.yamaha.sistemagarantia.model.id.AlertCupomId">
+			<key-property name="alertCupomSeq" column="ALERT_CUPOM_SEQ" type="java.lang.Long"/>
+			<key-property name="cupomId" 	   column="CUPOM_ID" 		type="java.lang.Long"/>
+		</composite-id>
+		
+		<property name="alertCupomSeveridade" column="ALERT_CUPOM_SEVERIDADE"  type="java.lang.String" not-null="true"/>
+		<property name="alertCupomText"       column="ALERT_CUPOM_TEXT"        type="java.lang.String" not-null="true"/>
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<!-- <property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  /> -->
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<!-- <property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 		-->
+				
+		
+	</class>
+
+</hibernate-mapping>

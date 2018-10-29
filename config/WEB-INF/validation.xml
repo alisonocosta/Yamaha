@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......validation.xml
+   .: Criação.....16 de abril, 08:51
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Configuração do Struts para validação de campos de formularios.
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->  
+<form-validation>
+
+    <formset>
+		
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: Logon.		                                       -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+        <form name="logonForm">
+            <field property="username" depends="required">
+                <arg0 key="logon.form.username"/>
+            </field>
+            <field property="password" depends="required">
+                <arg0 key="logon.form.password"/>               
+            </field>
+        </form>        
+		
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: Clientes.		                                       -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+        <form name="clienteForm">
+        	<field property="cnpj" depends="required,cpfCnpj">    		
+                <arg0 key="customer.cnpj"/>             
+            </field>
+            
+        	<field property="nome" depends="required,minlength">
+				<arg0 key="customer.name"/>
+				<arg1 name="minlength" key="${var:minlength}" resource="false"/>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>3</var-value>
+				</var>
+			</field>
+			
+			<field property="endereco" depends="required,minlength">
+				<arg0 key="customer.ender"/>
+				<arg1 name="minlength" key="${var:minlength}" resource="false"/>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>3</var-value>
+				</var>
+			</field>
+            
+          	<field property="cidade" depends="required">
+        			<arg0 key="customer.city"/>
+    		</field>  
+    		
+    		<field property="cep" depends="required,mask">    
+    			<msg name="mask" key="errors.mask"/>    						           	        	
+                <arg0 key="customer.postalCode"/>
+                <var>
+                    <var-name>mask</var-name>
+                    <var-value>^\d{5}\d*$</var-value>
+                </var>                              
+            </field>
+    		  		
+    		<field property="estado" depends="required">
+        			<arg0 key="customer.state"/>
+    		</field>
+    		
+    		<field property="email" depends="email">
+                <arg0 key="customer.email"/>
+            </field> 
+            
+        </form>
+        
+        
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: Lote.		                                       -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+        <form name="loteForm">
+			
+            <field property="idTipoLote" depends="required">
+                <arg0 key="lote.type"/>
+            </field> 
+            
+            <field property="idLinha" depends="required">
+                <arg0 key="lote.line"/>
+            </field> 
+            
+        </form>
+        
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: Cupom.		                                       -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+        <form name="cupomForm">
+        	<!-- 
+        	<field property="dataRevisao" depends="required,date">
+                <arg0 key="cupom.dateRev"/> 
+                <var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>				 
+            </field>
+             -->
+			<field property="chassi" depends="required,minlength">
+                <arg0 key="cupom.chassi"/>
+                <arg1 name="minlength" key="${var:minlength}" resource="false"/>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>10</var-value>
+				</var>
+            </field>
+            
+            <field property="numeroRevisao" depends="required">
+                <arg0 key="cupom.revision"/>
+            </field>
+            <!--
+            <field property="cupomCode" depends="requiredWhen">
+            	<arg0 key="cupom.numberCupom"/>
+            	<var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.linhaId.value != 1)</var-value>
+  				</var> 
+            </field> 
+             
+            <field property="dataVenda" depends="requiredWhen,date">
+                <arg0 key="cupom.sellDate"/>                              
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.valorRevisaoSelecionado.value == 1)</var-value>
+  				</var> 
+                <var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>				 
+            </field>
+            
+            <field property="dataEntrega" depends="requiredWhen,date">
+                <arg0 key="cupom.deliveryDate"/>                
+				<var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.valorRevisaoSelecionado.value == 1)</var-value>
+  				</var>
+                <var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+            </field>
+            -->
+            <field property="quilometragem" depends="requiredWhen">
+                <arg0 key="cupom.kilometrage"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.hasKM.value == "true")</var-value>
+  				</var>              
+            </field>
+           <!-- 
+            <field property="diasUso" depends="requiredWhen">
+                <arg0 key="cupom.useDays"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.linhaId.value == 2)</var-value>
+  				</var>              
+            </field>
+            -->
+            <field property="horasUso" depends="requiredWhen">
+                <arg0 key="cupom.useHours"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.linhaId.value == 2)</var-value>
+  				</var>              
+            </field>
+            
+            <field property="tipoUsoId" depends="requiredWhen">
+                <arg0 key="cupom.tipoUso"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.tipoUsoId.disabled == false)</var-value>
+  				</var>              
+            </field>
+          <!-- 
+            <field property="modeloBarco" depends="requiredWhen">
+                <arg0 key="cupom.modelo"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.modeloBarco.disabled == false)</var-value>
+  				</var>              
+            </field>
+            
+            <field property="marcaBarco" depends="requiredWhen">
+                <arg0 key="cupom.marca"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.marcaBarco.disabled == false)</var-value>
+  				</var>              
+            </field>
+            -->
+            <field property="cpfCnpjCliente" depends="requiredWhen,cpfCnpj">    		
+                <arg0 key="customer.cnpj"/> 
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.valorRevisaoSelecionado.value == 1)</var-value>
+  				</var>            
+            </field>
+            
+        </form>
+        
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: CupomAlter.		                                       -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+        <form name="cupomAlterForm">
+			
+			<field property="quilometragem" depends="requiredWhen">
+                <arg0 key="cupom.quilometragem"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomForm.hasKM.value == "true")</var-value>
+  				</var>              
+            </field>
+            
+			<field property="diasUso" depends="requiredWhen">
+                <arg0 key="cupom.useDays"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomAlterForm.linhaId.value == 2)</var-value>
+  				</var>              
+            </field>
+            
+            <field property="horasUso" depends="requiredWhen">
+                <arg0 key="cupom.useHours"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomAlterForm.linhaId.value == 2)</var-value>
+  				</var>              
+            </field>
+            
+            <field property="tipoUsoId" depends="requiredWhen">
+                <arg0 key="cupom.tipoUso"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.cupomAlterForm.tipoUsoId.disabled == false)</var-value>
+  				</var>              
+            </field>
+            
+        </form>
+        
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: garantiaMotoForm.	 Linha de Motocicleta              -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+        <form name="garantiaMotoForm">
+			
+			<field property="chassi" depends="required,minlength">
+                <arg0 key="garantia.form.sg.chassi"/>
+                <arg1 name="minlength" key="${var:minlength}" resource="false"/>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>10</var-value>
+				</var>
+            </field>
+            
+            <field property="numOS" depends="required">
+                <arg0 key="garantia.form.sg.numOS"/>                
+            </field>
+            
+            <field property="km" depends="requiredWhen">
+                <arg0 key="garantia.form.sg.km"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.garantiaMotoForm.hasKM.value == "true")</var-value>
+  				</var>
+            </field>
+            
+			<field property="diasUso" depends="requiredWhen">
+                <arg0 key="garantia.form.sg.diasUso"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.garantiaMotoForm.linhaId.value == 2)</var-value>
+  				</var>              
+            </field>
+            
+            <field property="horasUso" depends="requiredWhen">
+                <arg0 key="garantia.form.sg.hrsUso"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.garantiaMotoForm.linhaId.value == 2)</var-value>
+  				</var>              
+            </field>
+            
+            <field property="dtAbert" depends="required,date">
+                <arg0 key="garantia.form.sg.dtAbert"/>                				
+                <var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+            </field>
+            <!-- 
+            <field property="dtFech" depends="required,date">
+                <arg0 key="garantia.form.sg.dtFech"/>                				
+                <var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+            </field>
+             -->
+            <field property="preenchidoPor" depends="required">
+                <arg0 key="garantia.form.sg.preenchidoPor"/>
+            </field>
+            
+            <field property="condicaoProblema" depends="required">
+                <arg0 key="garantia.form.sg.descricao.msg.condicao"/>
+            </field>
+            
+            <field property="causaProblema" depends="required">
+                <arg0 key="garantia.form.sg.descricao.msg.causa"/>
+            </field>
+            
+            <field property="diagnostico" depends="required">
+                <arg0 key="garantia.form.sg.descricao.msg.diagnostico"/>
+            </field>
+            
+            <field property="solucao" depends="required">
+                <arg0 key="garantia.form.sg.descricao.msg.solucao"/>
+            </field>
+            <!-- INICIO  ist_edson comentado 24/09/2014 -->
+            <!-- 
+            <field property="sintoma" depends="requiredWhen">
+                <arg0 key="garantia.form.sg.sintoma"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(window.document.garantiaMotoForm.recall[1].checked == true)</var-value>
+  				</var>
+            </field>
+            
+            <field property="condicao" depends="requiredWhen">
+                <arg0 key="garantia.form.sg.condicao"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(window.document.garantiaMotoForm.recall[1].checked == true)</var-value>
+  				</var>
+            </field>
+             -->
+             <!-- INICIO  ist_edson comentado 24/09/2014 -->
+        </form>
+        
+        
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: garantiaPecaMotoForm.	 Linha de Motocicleta	                                   -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- 
+        <form name="garantiaPecaMotoForm">        	
+			<field property="descricaoDefeito" depends="requiredWhen">
+                <arg0 key="garantia.form.peca.desc"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(window.document.garantiaPecaMotoForm.isEdit.value == "false")</var-value>
+  				</var>
+            </field>
+        </form>
+        -->	
+        
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: garantiaForm. Linha Náutica                           -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+        <form name="garantiaForm">
+			
+			<field property="chassi" depends="required,minlength">
+                <arg0 key="garantia.form.sg.chassi"/>
+                <arg1 name="minlength" key="${var:minlength}" resource="false"/>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>10</var-value>
+				</var>
+            </field>
+            
+            <field property="numOS" depends="required">
+                <arg0 key="garantia.form.sg.numOS"/>                
+            </field>
+            
+            <field property="km" depends="requiredWhen">
+                <arg0 key="garantia.form.sg.km"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.garantiaForm.hasKM.value == "true")</var-value>
+  				</var>
+            </field>
+            
+			<field property="diasUso" depends="requiredWhen">
+                <arg0 key="garantia.form.sg.diasUso"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.garantiaForm.linhaId.value == 2)</var-value>
+  				</var>              
+            </field>
+            
+            <field property="horasUso" depends="requiredWhen">
+                <arg0 key="garantia.form.sg.hrsUso"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.garantiaForm.linhaId.value == 2)</var-value>
+  				</var>              
+            </field>
+            
+            <field property="dtAbert" depends="required,date">
+                <arg0 key="garantia.form.sg.dtAbert"/>                				
+                <var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+            </field>
+            <!-- 
+            <field property="dtFech" depends="required,date">
+                <arg0 key="garantia.form.sg.dtFech"/>                				
+                <var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+            </field>
+             -->
+            <field property="tipoGasolinaId" depends="required">
+                <arg0 key="garantia.form.tipo.combust"/>
+            </field>
+            
+            <field property="tipoUso" depends="required">
+                <arg0 key="garantia.form.tipo.uso"/>
+            </field>
+            
+            <field property="cidadeUso" depends="required">
+                <arg0 key="garantia.form.cidade.uso"/>
+            </field>
+            
+            <field property="rotacaoMaxima" depends="required">
+                <arg0 key="garantia.form.rotacao.maxima"/>
+            </field>
+            
+            <field property="preenchidoPor" depends="required">
+                <arg0 key="garantia.form.sg.preenchidoPor"/>               
+            </field>
+                        
+            <field property="condicaoProblema" depends="required">
+                <arg0 key="garantia.form.sg.descricao.msg.condicao"/>                
+            </field>
+            
+            <field property="causaProblema" depends="required">
+                <arg0 key="garantia.form.sg.descricao.msg.causa"/>                
+            </field>
+            
+            <field property="diagnostico" depends="required">
+                <arg0 key="garantia.form.sg.descricao.msg.diagnostico"/>                
+            </field>
+            
+            <field property="solucao" depends="required">
+                <arg0 key="garantia.form.sg.descricao.msg.solucao"/>                
+            </field>
+            
+             <field property="sintoma" depends="requiredWhen">
+                <arg0 key="garantia.form.sg.sintoma"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(window.document.garantiaForm.recall[1].checked == true)</var-value>
+  				</var>
+            </field>
+            
+            <field property="condicao" depends="requiredWhen">
+                <arg0 key="garantia.form.sg.condicao"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(window.document.garantiaForm.recall[1].checked == true)</var-value>
+  				</var>
+            </field>
+             
+        </form>
+        
+        
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: garantiaForm.		                                   -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- 
+        <form name="garantiaPecaForm">        	
+			<field property="descricaoDefeito" depends="requiredWhen">
+                <arg0 key="garantia.form.peca.desc"/>
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(window.document.garantiaPecaForm.isEdit.value == "false")</var-value>
+  				</var>
+            </field>
+        </form>
+		-->	
+		
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: infoMercadoForm.	                                   -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+        <form name="infoMercadoForm">
+        	
+            <field property="preenchidoPor" depends="required">
+                <arg0 key="infoMercado.form.preenchido"/>
+            </field>
+            <field property="tipoUso" depends="required">
+                <arg0 key="infoMercado.form.tipo.uso"/>
+            </field>
+            <field property="dataProblema" depends="requiredWhen,date">
+                <arg0 key="infoMercado.form.data.problema"/> 
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.infoMercadoForm.locked.value == true)</var-value>
+  				</var>                				
+                <var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+            </field>
+            <field property="dataVenda" depends="requiredWhen,date">
+                <arg0 key="infoMercado.form.data.venda"/> 
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.infoMercadoForm.locked.value == true)</var-value>
+  				</var>               				
+                <var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+            </field>
+           <field property="itemId" depends="required">
+                <arg0 key="infoMercado.form.peca.causadora"/>
+            </field>
+			<field property="condicaoProblema" depends="required">
+                <arg0 key="infoMercado.form.condicao"/>
+            </field>        
+			<field property="causaProblema" depends="required">
+                <arg0 key="infoMercado.form.causa"/>
+            </field>        
+			<field property="diagnostico" depends="required">
+                <arg0 key="infoMercado.form.diagnostico"/>
+            </field>        
+			<field property="solucao" depends="required">
+                <arg0 key="infoMercado.form.solucao"/>
+            </field>        
+        </form>
+        
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: estoqueForm.		                                       -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+        <form name="estoqueForm">
+			
+			<field property="chassi" depends="required,minlength">
+                <arg0 key="estoque.form.chassi"/>
+                <arg1 name="minlength" key="${var:minlength}" resource="false"/>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>10</var-value>
+				</var>
+            </field>
+        </form>
+        
+        <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+		<!-- Formulário: documentoForm.		                                       -->
+		<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+        <form name="documentoForm">
+			
+            <field property="description" depends="required">
+                <arg0 key="documento.fileupload.description"/>                
+            </field>
+            
+            <field property="startDate" depends="required,date">
+                <arg0 key="documento.fileupload.startDate"/> 
+                <var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>				 
+            </field>
+            
+            <field property="fileToUpload" depends="requiredWhen">
+                <arg0 key="documento.fileupload.selectFile"/>   
+                <var>
+    				<var-name>test</var-name>
+    				<var-value>(document.documentoForm.isEdit.value == true)</var-value>
+  				</var>              
+            </field>
+        	
+        </form>
+    </formset>
+
+</form-validation>

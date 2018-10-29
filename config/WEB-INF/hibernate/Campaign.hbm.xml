@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......Campaign.hbm.xml
+   .: Criação.....15 de julho, 15:28
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento da classe "Campaign" e tabela "YM_SG_CAMPAIGN_TEC_CHANGE".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.Campaign" table="YM_SG_CAMPAIGN_TEC_CHANGE">
+           
+		<id name="entityId" column="CAMPAIGN_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_CAMPAIGN_TEC_CHANGE_S</param>
+			</generator>
+		</id>           
+		
+		<property name="modelo"    	 		 column="MODEL_PRODUCT"	    	type="java.lang.String"  not-null="true" length="10"/>
+		<property name="chassiSeqStart"    	 column="CHASSI_SEQ_START"	    type="java.lang.String"  not-null="true" length="10"/>
+		<property name="chassiSeqFinal"    	 column="CHASSI_SEQ_END"	    type="java.lang.String"  not-null="true" length="10"/>		
+		<property name="codeCampaign"  		 column="CODE_CAMPAIGN" 		type="java.lang.String"  not-null="true" length="50"/>
+		<property name="validityStartDate"   column="VALIDITY_START_DATE"   type="java.util.Date"    not-null="true" />
+		<property name="validityEndDate"   	 column="VALIDITY_END_DATE"     type="java.util.Date"/>		
+		<property name="subjectCampaign"  	 column="SUBJECT_CAMPAIGN" 		type="java.lang.String"  not-null="true" length="4000"/>
+		<property name="serviceValue"		 column="SERVICE_VALUE" 		type="java.lang.Double"  not-null="true"/>
+		<property name="stRecall"  	 		 column="ST_RECALL" 			type="java.lang.String"  not-null="false" length="1"/>
+				
+		<property name="dataInicio"   column="START_DATE"   type="java.util.Date"    not-null="true" />
+		<property name="dataTermino"  column="END_DATE"     type="java.util.Date"    not-null="false" />
+		
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long" not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long" not-null="true"   />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date" not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date" not-null="true"  /> 
+				
+		<many-to-one name="condition"  		
+					 class="br.com.yamaha.sistemagarantia.model.Condicao" 
+					 cascade="none"
+               		 update="false" 
+               		 insert="false" 
+					 column="CONDITION_ID"			
+					 not-null="false"
+					 lazy="false"/>
+					 		
+					 
+		<many-to-one name="sintoma"  		
+					 class="br.com.yamaha.sistemagarantia.model.Sintoma" 
+					 cascade="none"
+               		 update="false" 
+               		 insert="false" 
+					 column="SINTOMA_ID"			
+					 not-null="false"
+					 lazy="false"/>	
+		
+		<bag name="services" table="YM_SG_CAMPAIGN_SERVICE" inverse="true" lazy="false">
+        	<key column="CAMPAIGN_ID"/> 
+        	<many-to-many 
+        		column="SERVICE_ID"
+        		unique="true"
+        		lazy="false" 
+        		class="br.com.yamaha.sistemagarantia.model.Servico"/>
+        		
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+        </bag>
+         
+        <bag name="billing" table="YM_SG_CAMPAIGN_BILLING" lazy="false" cascade="all">
+        	<key column="CAMPAIGN_ID"/>
+        	<many-to-many 
+        		column="BILLING_ID" 
+        		unique="true"
+        		class="br.com.yamaha.sistemagarantia.model.Faturamento"/>
+        		
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE > :asOfDate)]]></filter>
+        </bag>
+         
+        <bag name="pieces" inverse ="true" lazy="false" cascade="persist,merge,save-update">
+        	<key column="CAMPAIGN_ID" not-null="true"/> 
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.CampaignPiece"/>
+        		
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+        </bag>
+				 
+		<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+					 
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+	
+</hibernate-mapping>

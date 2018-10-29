@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......GarantiaLine.hbm.xml
+   .: Criação.....01 de junho, 11:12
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "GarantiaLine" e tabela "YM_SG_GARANTIA_LINE".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.GarantiaLine" table="YM_SG_GARANTIA_LINE">
+           
+        <composite-id name="compositeEntityId" class="br.com.yamaha.sistemagarantia.model.id.GarantiaLineId">
+			<key-property name="garantiaId" column="GARANTIA_ID" type="java.lang.Integer"/>
+			<key-property name="lineId"     column="LINE_ID"  type="java.lang.Long"/>
+		</composite-id>           
+
+		<property name="entityId"            column="GARANTIA_ID" type="java.lang.Integer"  not-null="false" update="false" insert="false" />        	
+
+		<!-- <property name="itemId"   	         column="ITEM_ID"               type="java.lang.Long"    not-null="true"  />-->
+		<property name="quantidade"          column="QUANTIDADE"            type="java.lang.Integer" not-null="true"  />
+		<property name="enviaPeca"           column="ENVIA_PECA"            type="java.lang.String"  not-null="false" length="1"   />
+		<property name="cobraPeca"           column="COBRA_PECA"            type="java.lang.String"  not-null="false" length="1"   />
+		<property name="cobraPecaFornecedor" column="COBRA_PECA_FORNECEDOR" type="java.lang.String"  not-null="false" length="1"   />
+		<property name="pecaFaltante"        column="PECA_FALTANTE"         type="java.lang.String"  not-null="false" length="1"   />
+		<property name="pecaCausadora"       column="PECA_CAUSADORA"        type="java.lang.String"  not-null="false" length="1"   />
+		<property name="valorCustoPadraoSP"  column="VL_CUSTO_PADRAO_SP"    type="double"    		 not-null="false"  />
+		<property name="valorPecaGarantia"   column="VL_PECA_GARANTIA"      type="double"    		 not-null="false"  />
+		<property name="valorPrecoSugerido"  column="VL_PRECO_SUGERIDO"     type="double"    		 not-null="false"  />
+		<property name="valorPrecoFob"       column="VL_PRECO_FOB"          type="double"    		 not-null="false"  />
+		<property name="valorRemessa"        column="VL_REMESSA"            type="java.lang.Double"  not-null="false"  />
+		<property name="fatorGarantiaId"     column="FATOR_GARANTIA_ID"     type="java.lang.Long"    not-null="true"   />
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="false" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  />  
+		
+		<many-to-one name="item"
+					 class="br.com.yamaha.sistemagarantia.model.Item" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="ITEM_ID" 
+					 not-null="true" 
+					 lazy="false" 
+					 fetch="join"/>	
+		
+		<many-to-one name="notaFiscalPeca" 	
+					 class="br.com.yamaha.sistemagarantia.model.NotaFiscal"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="NOTA_ID" 
+					 not-null="false"
+					 fetch="join"/>	
+		
+		<many-to-one name="notaFiscalRemessa" 	
+					 class="br.com.yamaha.sistemagarantia.model.NotaFiscal" 
+               		 update="true" 
+               		 insert="true" 
+ 					 column="NOTA_ID_REMESSA" 
+					 not-null="false"
+					 fetch="join"/>	
+		
+		<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE > :asOfDate)]]></filter>
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+
+</hibernate-mapping>

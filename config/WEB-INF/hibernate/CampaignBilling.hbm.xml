@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......CampaignPiece.hbm.xml
+   .: Criação.....25 de julho, 15:19
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento da classe "CampaignBilling" e tabela "YM_SG_CAMPAIGN_BILLING".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.CampaignBilling" table="YM_SG_CAMPAIGN_BILLING">
+           
+		<id name="entityId" column="CAMPAIGN_BILLING_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_CAMPAIGN_BILLING_S</param>
+			</generator>
+		</id> 
+		
+		<property name="dataInicio"   		column="START_DATE"   		type="java.util.Date"    not-null="true" />
+		<property name="dataTermino"  		column="END_DATE"     		type="java.util.Date"    not-null="false" />
+		
+		<property name="criadoPor"       	column="CREATED_BY"       	type="java.lang.Long" 	 not-null="true" update="false" />
+		<property name="atualizadoPor"   	column="LAST_UPDATE_BY"   	type="java.lang.Long" 	 not-null="true"   />
+		<property name="dataCriacao"     	column="CREATED_DATE"     	type="java.util.Date" 	 not-null="true" update="false" />
+		<property name="dataAtualizacao" 	column="LAST_UPDATE_DATE" 	type="java.util.Date" 	 not-null="true"  /> 
+		
+		<many-to-one name="campaign"  		
+					 class="br.com.yamaha.sistemagarantia.model.Campaign" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="CAMPAIGN_ID"			
+					 not-null="false"
+					 lazy="false"
+					 fetch="join"/>		
+		
+		<many-to-one name="billing"  		
+					 class="br.com.yamaha.sistemagarantia.model.Faturamento" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="BILLING_ID"			
+					 not-null="false"
+					 lazy="false"
+					 fetch="select"/>	
+					 
+		<many-to-one name="garantia"  		
+					 class="br.com.yamaha.sistemagarantia.model.GarantiaHeader" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="GARANTIA_ID"			
+					 not-null="true"
+					 lazy="false"
+					 fetch="select"/>	
+					 
+		<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE > :asOfDate)]]></filter>
+					 
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+	
+</hibernate-mapping>

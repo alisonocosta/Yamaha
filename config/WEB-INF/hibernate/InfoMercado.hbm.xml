@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......InfoMercado.hbm.xml
+   .: Criação.....30 de junho, 21:24
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "InfoMercado" e tabela "YM_SG_INFO_MERCADO".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.InfoMercado" table="YM_SG_INFO_MERCADO">
+         
+		<id name="entityId" column="INFO_MERC_ID" type="java.lang.Integer">
+        	<generator class="org.hibernate.id.TableGenerator">
+                <param name="table">YM_SG_NUMERO_INFO</param>
+                <param name="column">ULTIMO_NRO_INFO</param>
+        	</generator>
+		</id>           
+
+		<property name="preenchidoPor"    column="PREENCHIDO_POR"     type="java.lang.String" not-null="true"  length="50"/>
+		<property name="dataInfo"         column="DATA_INFO"    	  type="java.util.Date"   not-null="true"/>
+		<property name="chassi"           column="CHASSI"             type="java.lang.String" not-null="true"  length="12"/>
+		<property name="totalHrs"         column="TOTAL_HRS"          type="java.lang.Long"   not-null="true"/>
+		<property name="dataVenda"    	  column="DATA_VENDA"      	  type="java.util.Date"   not-null="true"/>
+		<property name="dataProblema"	  column="DATA_PROB"          type="java.util.Date"   not-null="true"/>
+		<property name="localUsoDoce"     column="LOCAL_USO_DOCE"     type="java.lang.String" not-null="false" length="1" />
+		<property name="localUsoSalg"     column="LOCAL_USO_SALG"     type="java.lang.String" not-null="true"  length="1" />
+		<property name="cidadeUso" 		  column="CIDADE_USO" 		  type="java.lang.String" not-null="false" length="30"/>
+		<property name="tipoUso"  		  column="TIPO_USO"           type="java.lang.String" not-null="true"  length="1" />
+		<property name="tipoUsoId"  	  column="TIPO_USO_ID"        type="java.lang.Long"   not-null="true"  length="1" />
+		<property name="marcaCasco"       column="MARCA_CASCO"        type="java.lang.String" not-null="false" length="20"/>
+   		<property name="modeloCasco"      column="MODELO_CASCO"       type="java.lang.String" not-null="false" length="20"/>		
+   		<property name="marcaHelice"      column="MARCA_HELICE"       type="java.lang.String" not-null="false" length="20"/>		
+   		<property name="materHelice"      column="MATER_HELICE"       type="java.lang.String" not-null="false" length="1"/>			
+		<property name="passoHelice"      column="PASSO_HELICE"       type="java.lang.Long"   not-null="false"/>		
+		<property name="rotacaoMaxima"    column="ROT_MAXIMA"         type="java.lang.Long"   not-null="false"/>
+		<property name="gravidadeId"      column="GRAVIDADE_ID"       type="java.lang.Long"   not-null="false"/>
+		<property name="tipoGasolinaId"   column="TIPO_GASOLINA_ID"   type="java.lang.String" not-null="true"/>
+		<property name="tipoProblemaId"   column="TIPO_PROBLEMA_ID"   type="java.lang.Long"   not-null="false"/>
+		<property name="itemId"           column="ITEM_ID"            type="java.lang.Long"   not-null="false"/>
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 
+		
+		<many-to-one name="concessionaria" 	
+					 class="br.com.yamaha.sistemagarantia.model.Concessionaria" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="CONCESSIONARIA_ID" 	
+					 not-null="true" 
+					 lazy="false"/>	 
+				
+		<many-to-one name="statusInfoMercado" 	
+					 class="br.com.yamaha.sistemagarantia.model.StatusInfoMercado" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="STATUS_IM_ID" 	
+					 not-null="true" 
+					 lazy="false"/>	
+					 
+		<bag name="listFotos"  lazy = "false" cascade="save-update">
+        	<key column="INFO_MERC_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.InfoMercFotos"/>
+        	
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+        	
+        </bag>
+        
+        <join table="YM_SG_INFOMERC_GARANTIA" optional="true" inverse="true">
+				<key column="INFO_MERC_ID" unique="true"/>
+				<many-to-one name="garantia" 
+							 column="GARANTIA_ID"
+							 not-null="true" 
+							 lazy="false" 
+							 unique="true"/>
+		</join>
+					 				
+	</class>
+
+</hibernate-mapping>

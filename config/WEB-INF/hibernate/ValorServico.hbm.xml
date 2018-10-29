@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......ValorServico.hbm.xml
+   .: Criação.....09 de maio, 15:08
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "ValorServico" e tabela "YM_SG_VALOR_SERVICOS".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.ValorServico" table="YM_SG_VALOR_SERVICOS">
+           
+		<id name="entityId" column="VALOR_SERVICOS_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_VALOR_SERVICOS_S</param>
+			</generator>
+		</id>           
+
+		<property name="codigoRegiao"  	 column="COD_REGIAO"   	   type="java.lang.Long"   not-null="true" />
+		<property name="modelo"      	 column="MODELO" 		   type="java.lang.String" not-null="true" length="12"/>
+		<property name="valorMaoObra"    column="VL_MAO_OBRA" 	   type="java.lang.Double" not-null="false" />
+		<property name="percBonificacao" column="PERC_BONIFICACAO" type="java.lang.Double" not-null="false"/>
+		<property name="valorRevisao"	 column="VL_REVISAO" 	   type="java.lang.Double" not-null="false" />	
+								
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 
+		
+		<many-to-one name="revisao" 	
+					 class="br.com.yamaha.sistemagarantia.model.Revisao" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+ 					 column="REVISAO_ID" 	
+					 not-null="true" 
+					 lazy="false"
+					 fetch="join"/>
+		
+	</class>
+
+</hibernate-mapping>

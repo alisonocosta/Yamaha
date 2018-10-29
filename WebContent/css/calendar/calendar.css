@@ -1,0 +1,91 @@
+@CHARSET "ISO-8859-1";
+
+/* Classes referentes ao script de calendário */
+
+/* Dropdowns de mês e ano. */
+.WMcpYearNavigation {  
+	font-family: Verdana; 
+	font-size: 9px; 
+	color: #000000; 
+	background-color: #F3F3F3; 
+	border:0;
+}
+.WMcpMonthNavigation {
+	font-family: Verdana; 
+	font-size: 9px; 
+	color: #000000; 
+	background-color: #F3F3F3; 
+	border:0;
+}
+
+/* Cabeçalhos para os dias. */
+.WMcpDayColumnHeader {
+	font-family: Verdana; 
+	font-size: 10px; 
+	font-weight: bold;
+	text-align: right;
+	color: 6677DD;
+	border:0;
+}
+TD.WMcpDayColumnHeader {
+		text-align:right;
+		border:solid thin #6677DD;
+		border-width:0 0 1 0;
+}
+
+/* Referentes à data marcada no calendário. */
+.WMcpCurrentDate {
+	font-family: Verdana;
+	font-size: 9px;
+	color: #FFFFFF;
+	text-align: right;
+	text-decoration: none;
+}
+TD.WMcpCurrentDate {
+	background-color: #6677DD;
+}
+
+/** Datas desabilitadas. */
+.WMcpCurrentDateDisabled {
+	font-family: Verdana;
+	font-size: 9px;
+	color: #D0D0D0;
+	text-align: right;
+	text-decoration: line-through;
+}
+
+/** Link para exibir o dia de hoje. */
+A.WMcpTodayText	{
+	font-family: Verdana;
+	font-size: 8pt;
+	color: #6677DD;
+	font-weight: bold;
+	text-decoration: none;
+}
+TD.WMcpTodayText {
+	border: solid thin #6677DD;
+	border-width: 1 0 0 0;
+}
+
+/** Dias do mês corrente */
+.WMcpCurrentMonthDate {
+	font-family: Verdana;
+	font-size: 9px;
+	color: #000000;
+	text-align: right;
+	text-decoration: none;
+}
+
+/** Dias de outros meses. */
+.WMcpOtherMonthDate {
+	font-family: Verdana;
+	font-size: 9px;
+	color: #D4D4D4;
+	text-align: right;
+	text-decoration: line-through;
+}
+
+/** Borda geral. */
+.WMcpBorder	{
+	border: solid thin #6677DD;
+}

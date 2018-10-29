@@ -1,0 +1,1482 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+	<!DOCTYPE struts-config PUBLIC 
+		"-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"        
+		"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+ 
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......struts-config.xml 
+   .: Criação.....4 de abril, 12:39
+   .: Autor.......Edson Luiz Sumensari
+                  Thiago Uriel M. Garcia
+                  Gisele Panosso
+   .: Descrição...Configuração do Struts.
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->  
+    
+<struts-config>
+
+
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+	<!-- Parte 1: FormBeans.                                               -->
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+    <form-beans>
+    
+    	<!-- Formulário: Logon. -->	
+	    <form-bean 	name="logonForm"	type="org.apache.struts.validator.DynaValidatorActionForm">
+	      <form-property name="username" 			type="java.lang.String"/>
+	      <form-property name="password" 			type="java.lang.String"/>
+	      <form-property name="newPassword" 		type="java.lang.String"/>
+	    </form-bean>
+	    
+		<!-- Formulário: Clientes. -->
+		<form-bean name="clienteForm" type="org.apache.struts.validator.DynaValidatorActionForm"> 
+		
+			<!-- Parâmetros para formulário. -->
+			<form-property name="entityId"		  type="java.lang.Long" initial="null"/>
+			<form-property name="codigoCliente"   type="java.lang.Long"/>
+        	<form-property name="criadoPor"   	  type="java.lang.Long"/>
+        	<form-property name="atualizadoPor"   type="java.lang.Long"/>
+        	<form-property name="pessoaFJ"   	  type="java.lang.String"/>
+        	<form-property name="cep"   		  type="java.lang.String"/>
+        	<form-property name="cnpj"   		  type="java.lang.String"/>
+        	<form-property name="nome"   		  type="java.lang.String"/>
+        	<form-property name="endereco"   	  type="java.lang.String"/>
+        	<form-property name="bairro"   		  type="java.lang.String"/>
+        	<form-property name="cidade"   		  type="java.lang.String"/>
+        	<form-property name="estado"   		  type="java.lang.String"/>
+        	<form-property name="telefoneRes"     type="java.lang.String"/>
+        	<form-property name="telefoneCom"     type="java.lang.String"/>
+        	<form-property name="telefoneCel"     type="java.lang.String"/>
+        	<form-property name="dddRes"     	  type="java.lang.String"/>
+        	<form-property name="dddCom"     	  type="java.lang.String"/>
+        	<form-property name="dddCel"     	  type="java.lang.String"/>
+        	<form-property name="email"           type="java.lang.String"/>
+        	<form-property name="dataNascimento"  type="java.lang.String"/>
+        	<form-property name="sexo"            type="java.lang.String"/>
+        	
+        	<form-property name="dataCriacao"     type="java.lang.String"/>
+        	<form-property name="dataAtualizacao" type="java.lang.String"/>
+        	<form-property name="isFromCupom"     type="java.lang.String" initial="false"/>
+        	
+        	<!-- Parâmetros para listagem. -->
+        	<form-property name="listStart"   type="java.lang.String"/>
+        	<form-property name="listLimit"   type="java.lang.String"/>
+        	<form-property name="listOrder"   type="java.lang.String"/>
+        	<form-property name="listField"   type="java.lang.String"/>
+        	<form-property name="listTotal"   type="java.lang.String"/>
+        	<form-property name="listPage"    type="java.lang.String" initial="1"/>
+        	<form-property name="listCliente" type="java.util.List"/>
+			<form-property name="listResults" type="java.util.List"/>
+
+			<!-- Parâmetros gerais. -->
+			<form-property name="task" type="java.lang.String" initial="list"/>
+        	
+		</form-bean>  
+		
+		<!-- Formulário: Lote. -->
+		<form-bean name="loteForm" type="org.apache.struts.validator.DynaValidatorActionForm"> 
+			<form-property name="entityId"		   type="java.lang.Integer"/>
+			<form-property name="idConcessionaria" type="java.lang.Long"/>
+			<form-property name="idLinha" 		   type="java.lang.Long"/>
+			<form-property name="idStatusLote"	   type="java.lang.Long"/>
+			<form-property name="idTipoLote"	   type="java.lang.Long"/>
+			<form-property name="dataLote" 		   type="java.lang.String"/>
+			<form-property name="dataFechamento"   type="java.lang.String"/>
+			<form-property name="dataLiberacao"    type="java.lang.String"/>
+			<form-property name="criadoPor"		   type="java.lang.Long"/>
+			<form-property name="atualizadoPor"	   type="java.lang.Long"/>
+			<form-property name="dataCriacao"	   type="java.lang.String"/>
+			<form-property name="dataAtualizacao"  type="java.lang.String"/>
+			<form-property name="locked"           type="java.lang.String" initial="n"/>
+			<form-property name="criterio"	       type="java.lang.Long"/>
+			
+			<!-- Parâmetros para listagem. -->
+        	<form-property name="listStart"   type="java.lang.String"/>
+        	<form-property name="listLimit"   type="java.lang.String"/>
+        	<form-property name="listOrder"   type="java.lang.String"/>
+        	<form-property name="listField"   type="java.lang.String"/>
+        	<form-property name="listTotal"   type="java.lang.String"/>
+        	<form-property name="listPage"    type="java.lang.String" initial="1"/>
+			<!-- <form-property name="listResults" type="br.com.resource.infra.view.list.DefaultPaginatedList"/> -->
+			
+			<form-property name="listResults" 			  type="java.util.List"/>
+			<form-property name="descriptionLoteTypeList" type="java.util.List"/>
+			<form-property name="descriptionLineList" 	  type="java.util.List"/>
+			<form-property name="listStatusLote" 		  type="java.util.List"/>
+			
+			<!-- Parâmetros gerais. -->
+			<form-property name="task" type="java.lang.String" initial="list"/>
+			
+		</form-bean>        
+		
+		<!-- Formulário: Cupom. -->
+		<form-bean name="cupomForm" type="org.apache.struts.validator.DynaValidatorActionForm"> 
+			<form-property name="entityId"		   	type="java.lang.Long" initial="null"/>
+			<form-property name="cupomCode"		   	type="java.lang.Long" />
+			<form-property name="loteId" 		   	type="java.lang.Integer"/>
+			<form-property name="revisaoId"		   	type="java.lang.Long"/>
+			<form-property name="numeroRevisao"	   	type="java.lang.Long"/>
+			<form-property name="tipoUsoId"		   	type="java.lang.Long"/>
+			<form-property name="linhaId"		   	type="java.lang.Long"/>
+			<form-property name="linhaDescricao"    type="java.lang.String"/>			
+			<form-property name="chassi" 		   	type="java.lang.String"/>
+			<form-property name="dataVenda"	   	   	type="java.lang.String"/>
+			<form-property name="dataEntrega"	   	type="java.lang.String"/>		
+			<form-property name="dataRevisao"	   	type="java.lang.String"/>
+			<form-property name="sysDate"	   	    type="java.lang.String"/>
+			<form-property name="quilometragem"	   	type="java.lang.Long"/>	
+			<form-property name="clienteId"		   	type="java.lang.Long" initial="null"/>
+			<form-property name="cpfCnpjCliente"  	type="java.lang.String"/>
+			<form-property name="clienteNome"	   	type="java.lang.String"/>
+			<form-property name="modeloBarco" 		type="java.lang.String"/>
+			<form-property name="marcaBarco" 		type="java.lang.String"/>			
+			<form-property name="diasUso"   	   	type="java.lang.Long"/>
+			<form-property name="horasUso"    	   	type="java.lang.Long"/>
+			<form-property name="validate"    	   	type="java.lang.Boolean" initial="false"/>
+			<form-property name="validado"    	   	type="java.lang.String"  initial="false"/>
+			<form-property name="alterState"    	type="java.lang.Boolean" initial="false"/>	
+			<form-property name="hasKM"    	   		type="java.lang.Boolean"/>	
+			<form-property name="prazoEntrega"	   	type="java.lang.Long"/>
+			
+			<form-property name="criadoPor"		   type="java.lang.Long"/>
+			<form-property name="atualizadoPor"	   type="java.lang.Long"/>
+			<form-property name="dataCriacao"	   type="java.lang.String"/>
+			<form-property name="dataAtualizacao"  type="java.lang.String"/>			
+			
+			<!-- Parâmetros para listagem. -->
+        	<form-property name="listStart"   type="java.lang.String"/>
+        	<form-property name="listLimit"   type="java.lang.String"/>
+        	<form-property name="listOrder"   type="java.lang.String"/>
+        	<form-property name="listField"   type="java.lang.String"/>
+        	<form-property name="listTotal"   type="java.lang.String"/>
+        	<form-property name="listPage"    type="java.lang.String" initial="1"/>
+			<form-property name="listResults" type="java.util.List"/>
+			<form-property name="listRevisao" type="java.util.List"/>
+			<form-property name="listUseType" type="java.util.List"/>
+			
+			<!-- Parâmetros gerais. -->
+			<form-property name="task" type="java.lang.String" initial="list"/>
+			
+		</form-bean>   
+		
+		<!-- Formulário: CupomAlter. -->
+		<form-bean name="cupomAlterForm" type="org.apache.struts.validator.DynaValidatorActionForm"> 
+			<form-property name="entityId"		   	type="java.lang.Long" />
+			<form-property name="loteId" 		   	type="java.lang.Integer"/>
+			<form-property name="revisaoId"		   	type="java.lang.Long"/>  
+			<form-property name="tipoUsoId"		   	type="java.lang.Long"/>
+			<form-property name="linhaId"		   	type="java.lang.Long"/>  
+			<form-property name="listUseType" 		type="java.util.List"/>  
+			<form-property name="diasUso"   	   	type="java.lang.Long"/>
+			<form-property name="horasUso"    	   	type="java.lang.Long"/>
+			<form-property name="quilometragem"	   	type="java.lang.Long"/>	
+		</form-bean>  
+		
+		<!-- Formulário: notaFiscalListForm. -->
+		<form-bean name="notaFiscalListForm"        type="org.apache.struts.action.DynaActionForm"> 
+			<form-property name="numeroNF"		   	type="java.lang.Long" />
+			<form-property name="serieNF"		   	type="java.lang.String"/>  
+			<form-property name="dateNF"		   	type="java.lang.String"/>
+			<form-property name="serviceValueNF"   	type="java.lang.Long" />
+			<form-property name="pecaValueNF"	   	type="java.lang.Long"/>  
+			<form-property name="remessaValueNF"   	type="java.lang.Long"/>
+			<form-property name="mo3ValueNF"   	    type="java.lang.Long"/>
+			<form-property name="icmsValueNF"   	type="java.lang.Long"/>
+			<form-property name="loteId" 	        type="java.lang.Integer"/>
+			<form-property name="tipoNota"		   	type="java.lang.String"/>
+			<form-property name="emitente"		   	type="java.lang.String"/>
+			<form-property name="empresa"		   	type="java.lang.String"/>
+			<form-property name="toleranciaNota" 	type="java.lang.String"/>
+			<form-property name="toleranciaDiasNF"	type="java.lang.String"/>
+			<form-property name="pathBack" 			type="java.lang.String"/>
+			<form-property name="sysDate"	   	    type="java.lang.String"/>
+			<form-property name="individualLaunch" 	type="java.lang.String" initial="N"/>
+			<form-property name="isDif" 			type="java.lang.String" initial="N"/>
+			
+			<!-- Nota Fiscal Complementar -->
+			<form-property name="numeroNFcomp"		   	type="java.lang.Long" />
+			<form-property name="serieNFcomp"		   	type="java.lang.String"/>  
+			<form-property name="dateNFcomp"		   	type="java.lang.String"/>
+			<form-property name="serviceValueNFcomp"   	type="java.lang.Long" />
+			<form-property name="pecaValueNFcomp"	   	type="java.lang.Long"/>  
+			<form-property name="remessaValueNFcomp"   	type="java.lang.Long"/>
+			<form-property name="mo3ValueNFcomp"   	    type="java.lang.Long"/>
+			<form-property name="icmsValueNFcomp"   	type="java.lang.Long"/>
+			
+			<form-property name="serviceBalance"   	type="java.lang.String" />
+			<form-property name="serviceTotal"	   	type="java.lang.String"/>  
+			<form-property name="pecaBalance"   	type="java.lang.String"/>
+			<form-property name="pecaTotal"   		type="java.lang.String" />
+			<form-property name="remessaBalance"	type="java.lang.String"/>  
+			<form-property name="remessaTotal"   	type="java.lang.String"/>
+			
+			<form-property name="cuponsTokens"   	type="java.lang.String" />
+			<form-property name="garantiasTokens"  	type="java.lang.String"/>		
+			
+			<form-property name="listItens"        type="java.util.List"/>
+			<form-property name="listItensYMA"     type="java.util.List"/>
+			<form-property name="listItensYMB"     type="java.util.List"/>
+			<form-property name="listCupons"       type="java.util.List"/>
+			<form-property name="listGarantias"    type="java.util.List"/>
+			<form-property name="listMov"		   type="java.util.List"/>
+			<form-property name="listSeries"       type="java.util.List"/>
+			<form-property name="selectedItemYMA"  type="java.lang.String[]"/>
+			<form-property name="selectedItemYMB"  type="java.lang.String[]"/>
+			<form-property name="selectedLotesYMA" type="java.lang.String[]"/>
+			<form-property name="selectedLotesYMB" type="java.lang.String[]"/>
+		</form-bean>
+		
+		<!-- Formulário: Garantia. Linha de Motocicleta -->
+		<form-bean name="garantiaMotoForm" type="org.apache.struts.validator.DynaValidatorActionForm"> 
+		
+			<!-- Parâmetros para formulário. -->
+			<form-property name="entityId"     		type="java.lang.Integer"/>
+			<form-property name="lote"         		type="java.lang.Integer"/>
+        	<form-property name="chassi"       		type="java.lang.String"/>
+        	<form-property name="chassiIni"    		type="java.lang.String"/>
+        	<form-property name="chassiFim"    		type="java.lang.String"/> 
+        	<form-property name="sysDate"	   		type="java.lang.String"/>       	        	
+        	<form-property name="km"           		type="java.lang.Long"/>
+        	<form-property name="diasUso"      		type="java.lang.Long"/>
+        	<form-property name="horasUso"     		type="java.lang.Long"/>
+        	<form-property name="infoMercadoId"		type="java.lang.Integer"/>
+        	<form-property name="linhaId"      		type="java.lang.Long"/> 
+        	<form-property name="statusLoteId" 		type="java.lang.Long"/>        	
+        	<form-property name="dtVenda"      		type="java.lang.String"/>
+        	<form-property name="numOS"        		type="java.lang.String"/>
+        	<form-property name="dtAbert"      		type="java.lang.String"/>
+        	<form-property name="dtFech"       		type="java.lang.String"/>
+        	<form-property name="sintoma"      		type="java.lang.Long"/>
+        	<form-property name="condicao"     		type="java.lang.Long"/>
+        	<form-property name="sintomaId"      	type="java.lang.Long"/>
+        	<form-property name="condicaoId"     	type="java.lang.Long"/>
+        	<form-property name="servico_1"    		type="java.lang.String"/>
+        	<form-property name="servico_2"    		type="java.lang.String"/>
+        	<form-property name="servico_3"    		type="java.lang.String"/>
+        	<form-property name="descServico_1"    	type="java.lang.String"/>
+        	<form-property name="descServico_2"    	type="java.lang.String"/>
+        	<form-property name="descServico_3"    	type="java.lang.String"/>
+        	<form-property name="hasServTer"   		type="java.lang.String" initial="N"/>
+        	<form-property name="servTer"      		type="java.lang.String"/>
+        	<form-property name="servTerUnFormat"  	type="java.lang.Double"/>
+        	<form-property name="justif"       		type="java.lang.String"/>
+        	<form-property name="cortesia"     		type="java.lang.String" initial="N"/>
+        	<form-property name="autEsp"       		type="java.lang.String"/>        	
+        	<form-property name="validated"    		type="java.lang.String" initial="false"/>
+        	<form-property name="alterState"   		type="java.lang.String" initial="false"/>
+        	<form-property name="isEdit"       		type="java.lang.String" initial="false"/>
+        	<form-property name="isRecall"     		type="java.lang.String" initial="false"/>        	
+        	<form-property name="recall"       		type="java.lang.String" initial="N"/>
+        	<form-property name="recallId"     		type="java.lang.Long"/>
+        	<form-property name="campaign"     		type="java.lang.String" initial="N"/>
+        	<form-property name="campaignId"   		type="java.lang.Long"/>
+        	<form-property name="campaignNum"     	type="java.lang.String" initial="N"/>
+        	<form-property name="isCampaign"  		type="java.lang.String" initial="false"/>
+        	<form-property name="subjectCampaign"  	type="java.lang.String" />
+        	<form-property name="hasKM"    	   		type="java.lang.Boolean"/>
+        	<form-property name="hasInforMercado"   type="java.lang.String" initial="false"/>
+        	<form-property name="hasParecerYm"      type="java.lang.String" initial="false"/>
+        	<form-property name="parecerYm"         type="java.lang.String"/> 
+        	<form-property name="observacaoYm"      type="java.lang.String"/>   
+        	
+        	<!-- Inclusão campos novos 2012 -->
+        	<form-property name="preenchidoPor" 	type="java.lang.String"/>
+        	<form-property name="condicaoProblema"  type="java.lang.String"/>
+			<form-property name="causaProblema"     type="java.lang.String"/>
+			<form-property name="diagnostico"       type="java.lang.String"/>
+			<form-property name="solucao"           type="java.lang.String"/>
+        	
+        	<!-- Informações de Recall -->
+        	<form-property name="sintomaIdRecall"    type="java.lang.Long"/>
+        	<form-property name="sintomaDescRecall"  type="java.lang.String"/>
+        	
+        	<form-property name="condicaoIdRecall"    type="java.lang.Long"/>  
+        	<form-property name="condicaoDescRecall"  type="java.lang.String"/>     
+        	
+        	<!-- Informações de Campanha -->
+        	<form-property name="sintomaIdCampaign"    type="java.lang.Long"/>
+        	<form-property name="sintomaDescCampaign"  type="java.lang.String"/>
+        	
+        	<form-property name="condicaoIdCampaign"    type="java.lang.Long"/>  
+        	<form-property name="condicaoDescCampaign"  type="java.lang.String"/>  	
+        	
+			<form-property name="criadoPor"		  type="java.lang.Long"/>
+			<form-property name="atualizadoPor"	  type="java.lang.Long"/>
+			<form-property name="dataCriacao"	  type="java.lang.String"/>
+			<form-property name="dataAtualizacao" type="java.lang.String"/>
+			<form-property name="tipoProblema" 			type="java.lang.String" initial="blank"/>
+        	<form-property name="classificaAcao" 		type="java.lang.String" initial="blank"/> 
+        	<form-property name="flClassificacaoTecnica" type="java.lang.String"/> 
+        	
+        	<!-- Parâmetros para listagem. -->
+        	<form-property name="listStart"         type="java.lang.String"/>
+        	<form-property name="listLimit"         type="java.lang.String"/>
+        	<form-property name="listOrder"         type="java.lang.String"/>
+        	<form-property name="listField"         type="java.lang.String"/>
+        	<form-property name="listTotal"         type="java.lang.String"/>
+        	<form-property name="listPage"          type="java.lang.String" initial="1"/>
+        	<form-property name="listAut"      		type="java.util.List"/>
+        	<form-property name="listGarantias"     type="java.util.List"/>
+        	<form-property name="listCondicoes"     type="java.util.List"/>
+        	<form-property name="listSintomas"      type="java.util.List"/>
+        	<form-property name="listServicos"      type="java.util.List"/>        	
+        	<form-property name="listRecall"        type="java.util.List"/>
+        	<form-property name="listCampaign"      type="java.util.List"/>
+        	<form-property name="listPieces"         type="java.util.List"/>
+			<form-property name="listResults"       type="br.com.resource.infra.view.list.DefaultPaginatedList"/>
+
+			<!-- Parâmetros gerais. -->
+			<form-property name="task" 			type="java.lang.String" initial="list"/>
+        	<form-property name="deleteTargets" type="java.lang.String[]"/>
+		</form-bean>
+		
+		<!-- Formulário: Garantia - Peças. Linha de Motocicleta -->
+		<form-bean name="garantiaPecaMotoForm" type="org.apache.struts.action.DynaActionForm"> 
+		
+			<!-- Parâmetros para formulário. -->
+			<form-property name="counter"          		type="java.lang.Long"    initial="1"   />
+			<form-property name="entityId"         		type="java.lang.Integer" initial="null"/>
+			<form-property name="loteId"           		type="java.lang.Integer" initial="null"/>
+			<form-property name="linhaId"          		type="java.lang.Long"    initial="null"/>
+			<form-property name="numeroOS"         		type="java.lang.String"/>
+			<form-property name="onlyService"      		type="java.lang.String"  initial="false"/>
+			<form-property name="chassi"           		type="java.lang.String"/>
+			<form-property name="isEdit"           		type="java.lang.String"  initial="false"/>
+			<form-property name="validated"        		type="java.lang.String"  initial="false"/>
+			<form-property name="dataAberturaOS"   		type="java.lang.String"/>
+			<form-property name="dataFechamentoOS" 		type="java.lang.String"/>
+			<form-property name="parecerTecnico"   		type="java.lang.String"/>
+			<form-property name="histDescricaoDefeito" 	type="java.lang.String"/>
+			<form-property name="histParecerTecnico"   	type="java.lang.String"/>
+			<form-property name="isRecall"   	   		type="java.lang.String"  initial="false"/>
+			<form-property name="options"          		type="java.util.List"/>
+			<form-property name="filledLines"      		type="java.util.List"/>
+			<form-property name="listFiles"      		type="java.util.List"/>
+		
+			<!--  Parâmetros para tratar uma foto enviada -->
+			<form-property 					name="uploadFile1" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="uploadFile2" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="uploadFile3" 		type="org.apache.struts.upload.FormFile"/>
+	     	<form-property initial="0" 		name="uploadLength"		type="java.lang.Long"/>
+	     		
+			<!-- Parâmetros gerais. -->
+			<form-property name="task" 					type="java.lang.String" initial="list"/>
+        	
+		</form-bean>
+		
+		<!-- Formulário: Garantia. Linha Náutica-->
+		<form-bean name="garantiaForm" type="org.apache.struts.validator.DynaValidatorActionForm"> 
+		
+			<!-- Parâmetros para formulário. -->
+			<form-property name="entityId"     		type="java.lang.Integer"/>
+			<form-property name="lote"         		type="java.lang.Integer"/>
+        	<form-property name="chassi"       		type="java.lang.String"/>
+        	<form-property name="chassiIni"    		type="java.lang.String"/>
+        	<form-property name="chassiFim"    		type="java.lang.String"/> 
+        	<form-property name="sysDate"	   		type="java.lang.String"/>       	        	
+        	<form-property name="km"           		type="java.lang.Long"/>
+        	<form-property name="diasUso"      		type="java.lang.Long"/>
+        	<form-property name="horasUso"     		type="java.lang.Long"/>
+        	<form-property name="infoMercadoId"		type="java.lang.Integer"/>
+        	<form-property name="linhaId"      		type="java.lang.Long"/> 
+        	<form-property name="statusLoteId" 		type="java.lang.Long"/>        	
+        	<form-property name="dtVenda"      		type="java.lang.String"/>
+        	<form-property name="numOS"        		type="java.lang.String"/>
+        	<form-property name="dtAbert"      		type="java.lang.String"/>
+        	<form-property name="dtFech"       		type="java.lang.String"/>
+        	<form-property name="tipoGasolinaId"   type="java.lang.String" initial="-1"/>
+			<form-property name="localUsoDoce"     type="java.lang.String" initial="N"/>
+			<form-property name="localUsoSalg"     type="java.lang.String" initial="N"/>
+			<form-property name="cidadeUso"        type="java.lang.String"/>
+			<form-property name="materHelice"      type="java.lang.String"/>
+			<form-property name="tipoUso"          type="java.lang.String" initial="-1"/>
+			<form-property name="marcaCasco"       type="java.lang.String"/>
+			<form-property name="modeloCasco"      type="java.lang.String"/>
+			<form-property name="marcaHelice"      type="java.lang.String"/> 
+			<form-property name="passoHelice"      type="java.lang.Long"/>
+			<form-property name="rotacaoMaxima"    type="java.lang.Long"/>			
+        	<form-property name="sintoma"      		type="java.lang.Long"/>
+        	<form-property name="condicao"     		type="java.lang.Long"/>
+        	<form-property name="sintomaId"      	type="java.lang.Long"/>
+        	<form-property name="condicaoId"     	type="java.lang.Long"/>
+        	<form-property name="servico_1"    		type="java.lang.String"/>
+        	<form-property name="servico_2"    		type="java.lang.String"/>
+        	<form-property name="servico_3"    		type="java.lang.String"/>
+        	<form-property name="descServico_1"    	type="java.lang.String"/>
+        	<form-property name="descServico_2"    	type="java.lang.String"/>
+        	<form-property name="descServico_3"    	type="java.lang.String"/>
+        	<form-property name="hasServTer"   		type="java.lang.String" initial="N"/>
+        	<form-property name="servTer"      		type="java.lang.String"/>
+        	<form-property name="servTerUnFormat"  	type="java.lang.Double"/>
+        	<form-property name="justif"       		type="java.lang.String"/>
+        	<form-property name="cortesia"     		type="java.lang.String" initial="N"/>
+        	<form-property name="autEsp"       		type="java.lang.String"/>        	
+        	<form-property name="validated"    		type="java.lang.String" initial="false"/>
+        	<form-property name="alterState"   		type="java.lang.String" initial="false"/>
+        	<form-property name="isEdit"       		type="java.lang.String" initial="false"/>
+        	<form-property name="isRecall"     		type="java.lang.String" initial="false"/>        	
+        	<form-property name="recall"       		type="java.lang.String" initial="N"/>
+        	<form-property name="recallId"     		type="java.lang.Long"/>
+        	<form-property name="campaign"     		type="java.lang.String" initial="N"/>
+        	<form-property name="campaignId"   		type="java.lang.Long"/>
+        	<form-property name="campaignNum"     	type="java.lang.String" initial="N"/>
+        	<form-property name="isCampaign"  		type="java.lang.String" initial="false"/>
+        	<form-property name="subjectCampaign"  	type="java.lang.String" />
+        	<form-property name="hasKM"    	   		type="java.lang.Boolean"/>
+        	<form-property name="hasInforMercado"   type="java.lang.String" initial="false"/>
+        	<form-property name="hasParecerYm"      type="java.lang.String" initial="false"/>
+        	<form-property name="parecerYm"         type="java.lang.String"/> 
+        	<form-property name="observacaoYm"      type="java.lang.String"/>     
+        	
+        	<!-- Inclusão campos novos 2012 -->
+        	<form-property name="preenchidoPor" 	type="java.lang.String"/>
+        	<form-property name="condicaoProblema"  type="java.lang.String"/>
+			<form-property name="causaProblema"     type="java.lang.String"/>
+			<form-property name="diagnostico"       type="java.lang.String"/>
+			<form-property name="solucao"           type="java.lang.String"/>
+        	
+        	<!-- Informações de Recall -->
+        	<form-property name="sintomaIdRecall"    type="java.lang.Long"/>
+        	<form-property name="sintomaDescRecall"  type="java.lang.String"/>
+        	
+        	<form-property name="condicaoIdRecall"    type="java.lang.Long"/>  
+        	<form-property name="condicaoDescRecall"  type="java.lang.String"/>     
+        	
+        	<!-- Informações de Campanha -->
+        	<form-property name="sintomaIdCampaign"    type="java.lang.Long"/>
+        	<form-property name="sintomaDescCampaign"  type="java.lang.String"/>
+        	
+        	<form-property name="condicaoIdCampaign"    type="java.lang.Long"/>  
+        	<form-property name="condicaoDescCampaign"  type="java.lang.String"/>  	
+        	
+			<form-property name="criadoPor"		  type="java.lang.Long"/>
+			<form-property name="atualizadoPor"	  type="java.lang.Long"/>
+			<form-property name="dataCriacao"	  type="java.lang.String"/>
+			<form-property name="dataAtualizacao" type="java.lang.String"/>
+        	
+        	<!-- Parâmetros para listagem. -->
+        	<form-property name="listStart"         type="java.lang.String"/>
+        	<form-property name="listLimit"         type="java.lang.String"/>
+        	<form-property name="listOrder"         type="java.lang.String"/>
+        	<form-property name="listField"         type="java.lang.String"/>
+        	<form-property name="listTotal"         type="java.lang.String"/>
+        	<form-property name="listPage"          type="java.lang.String" initial="1"/>
+        	<form-property name="listAut"      		type="java.util.List"/>
+        	<form-property name="listGarantias"     type="java.util.List"/>
+        	<form-property name="listCondicoes"     type="java.util.List"/>
+        	<form-property name="listSintomas"      type="java.util.List"/>
+        	<form-property name="listServicos"      type="java.util.List"/>        	
+        	<form-property name="listRecall"        type="java.util.List"/>
+        	<form-property name="listCampaign"      type="java.util.List"/>
+        	<form-property name="listPieces"         type="java.util.List"/>
+			<form-property name="listResults"       type="br.com.resource.infra.view.list.DefaultPaginatedList"/>
+			
+			<form-property name="listTipoGasolina" type="java.util.List"/>
+			<form-property name="listTipoProduto"  type="java.util.List"/>			
+			<form-property name="listTipoUso"      type="java.util.List"/>
+
+			<!-- Parâmetros gerais. -->
+			<form-property name="task" 			type="java.lang.String" initial="list"/>
+        	<form-property name="deleteTargets" type="java.lang.String[]"/>
+		</form-bean>
+		
+		<!-- Formulário: Garantia - Peças.  Linha Náutica-->
+		<form-bean name="garantiaPecaForm" type="org.apache.struts.validator.DynaValidatorActionForm"> 
+		
+			<!-- Parâmetros para formulário. -->
+			<form-property name="counter"          		type="java.lang.Long"    initial="1"   />
+			<form-property name="entityId"         		type="java.lang.Integer" initial="null"/>
+			<form-property name="loteId"           		type="java.lang.Integer" initial="null"/>
+			<form-property name="linhaId"          		type="java.lang.Long"    initial="null"/>
+			<form-property name="numeroOS"         		type="java.lang.String"/>
+			<form-property name="onlyService"      		type="java.lang.String"  initial="false"/>
+			<form-property name="chassi"           		type="java.lang.String"/>
+			<form-property name="isEdit"           		type="java.lang.String"  initial="false"/>
+			<form-property name="validated"        		type="java.lang.String"  initial="false"/>
+			<form-property name="dataAberturaOS"   		type="java.lang.String"/>
+			<form-property name="dataFechamentoOS" 		type="java.lang.String"/>		
+			<form-property name="descricaoDefeito" 		type="java.lang.String"/>
+			<form-property name="parecerTecnico"   		type="java.lang.String"/>
+			<form-property name="histDescricaoDefeito" 	type="java.lang.String"/>
+			<form-property name="histParecerTecnico"   	type="java.lang.String"/>
+			<form-property name="isRecall"   	   		type="java.lang.String"  initial="false"/>
+			<form-property name="options"          		type="java.util.List"/>
+			<form-property name="filledLines"      		type="java.util.List"/>
+			<form-property name="listFiles"      		type="java.util.List"/>
+			
+			<!--  Parâmetros para tratar uma foto enviada -->
+			<form-property 					name="uploadFile1" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="uploadFile2" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="uploadFile3" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="uploadFile4" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="uploadFile5" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="uploadFile6" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="uploadFile7" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="uploadFile8" 		type="org.apache.struts.upload.FormFile"/>
+	     	<form-property initial="0" 		name="uploadLength"		type="java.lang.Long"/>
+		
+			<!-- Parâmetros gerais. -->
+			<form-property name="task" 					type="java.lang.String" initial="list"/>
+        	
+		</form-bean>
+		
+		<!-- Formulário: Lista de Informações de Mercado. -->
+		<form-bean name="infoMercadoForm" type="org.apache.struts.validator.DynaValidatorActionForm"> 
+		
+			<!-- Parâmetros para formulário. -->
+			<form-property name="locked"           type="java.lang.String"  initial="false"/>
+			<form-property name="isEdit"            type="java.lang.String" initial="false"/>
+			<form-property name="entityId"         type="java.lang.Integer" initial="null"/>
+			<form-property name="itemId"           type="java.lang.Long"/>
+			<form-property name="itemCode"         type="java.lang.String"/>
+			<form-property name="descItem"         type="java.lang.String"/>
+			<form-property name="statusImId"       type="java.lang.Long"/>
+			<form-property name="concessionariaId" type="java.lang.Long"/>
+			<form-property name="data"             type="java.lang.String"/>
+			<form-property name="preenchidoPor"    type="java.lang.String"/> 
+			<form-property name="chassi"           type="java.lang.String"/>
+			<form-property name="totalHrs"         type="java.lang.Long"/>
+			<form-property name="dataVenda"        type="java.lang.String"/>
+			<form-property name="dataProblema"     type="java.lang.String"/>
+			<form-property name="tipoGasolinaId"   type="java.lang.String" initial="-1"/>
+			<form-property name="localUsoDoce"     type="java.lang.String" initial="N"/>
+			<form-property name="localUsoSalg"     type="java.lang.String" initial="N"/>
+			<form-property name="cidadeUso"        type="java.lang.String"/>
+			<form-property name="materHelice"      type="java.lang.String"/>
+			<form-property name="tipoUso"          type="java.lang.String" initial="-1"/>
+			<form-property name="marcaCasco"       type="java.lang.String"/>
+			<form-property name="modeloCasco"      type="java.lang.String"/>
+			<form-property name="marcaHelice"      type="java.lang.String"/> 
+			<form-property name="passoHelice"      type="java.lang.Long"/> 
+			<form-property name="pecaCausadora"    type="java.lang.String"/>
+			<form-property name="rotacaoMaxima"    type="java.lang.Long"/>
+			<form-property name="condicaoProblema" type="java.lang.String"/>
+			<form-property name="causaProblema"    type="java.lang.String"/>
+			<form-property name="diagnostico"      type="java.lang.String"/>
+			<form-property name="solucao"          type="java.lang.String"/>
+			<form-property name="isOnlyInfo"       type="java.lang.String"  initial="true"/>
+			<form-property name="garantiaId"       type="java.lang.Integer" initial="0"/> 
+			<form-property name="hasGarantia"      type="java.lang.String"  initial="false"/>
+			<form-property name="condicaoProblema_newItems" type="java.lang.String" initial="blank"/>
+			<form-property name="causaProblema_newItems"    type="java.lang.String" initial="blank"/>
+			<form-property name="diagnostico_newItems"      type="java.lang.String" initial="blank"/>
+			<form-property name="solucao_newItems"          type="java.lang.String" initial="blank"/>
+
+			<!--  Parâmetros para tratar uma foto enviada -->
+			<form-property 					name="imageFile1" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="imageFile2" 		type="org.apache.struts.upload.FormFile"/>
+			<form-property 					name="imageFile3" 		type="org.apache.struts.upload.FormFile"/>
+      		<form-property initial="0" 		name="imageLength" 		type="java.lang.Long"/>
+			
+			<!-- Parâmetros gerais. -->
+			<form-property name="listResults"      type="java.util.List"/>
+			<form-property name="listTipoGasolina" type="java.util.List"/>
+			<form-property name="listTipoProduto"  type="java.util.List"/>
+			<form-property name="listItems"        type="java.util.List"/>
+			<form-property name="listFotos"        type="java.util.List"/>
+			
+			<form-property name="listTipoUso"      type="java.util.List"/>
+			<form-property name="filterType"       type="java.lang.Integer" initial="0"/>
+			<form-property name="filterValue"      type="java.lang.String" initial=""/>
+        	
+		</form-bean>
+
+		<!-- Parâmetros dos Relatórios. -->				
+		<form-bean name="reportForm" type="org.apache.struts.action.DynaActionForm">
+			<form-property name="dataInicio"         type="java.lang.String"/>
+			<form-property name="dataFim"            type="java.lang.String"/>
+			<form-property name="ano"                type="java.lang.String"/>
+			<form-property name="km"                 type="java.lang.Long"  />
+			<form-property name="linhaId"            type="java.lang.Long"  />
+			<form-property name="linhaList"          type="java.util.List"  />
+			<form-property name="tipoProdutoId"      type="java.lang.Long"  />
+			<form-property name="tipoProdutoList"    type="java.util.List"  />
+			<form-property name="concessionariaId"   type="java.lang.Long"  />			
+			<form-property name="concessionariaList" type="java.util.List"  />
+			<form-property name="representanteId"    type="java.lang.Long"  />			
+			<form-property name="representanteList"  type="java.util.List"  />			
+			<form-property name="regiao"             type="java.lang.String"/>						
+			<form-property name="valorMinimo"        type="java.lang.Long"  />				
+			<form-property name="tipoServico"        type="java.lang.String"/>	
+			<form-property name="modelo"             type="java.lang.String"/>	
+			<form-property name="modeloId"           type="java.lang.String"/>	
+			<form-property name="modeloList"         type="java.util.List"  />										
+			<form-property name="analistaId"         type="java.lang.Long"  />																														
+			<form-property name="analistaList"       type="java.util.List"  />				
+			<form-property name="recall"             type="java.lang.Long"  />
+			<form-property name="lote"               type="java.lang.Integer"/>	
+			<form-property name="tipoLoteId"         type="java.lang.Long"  />
+			<form-property name="tipoLoteList"       type="java.util.List"  />
+			<form-property name="empresaId"          type="java.lang.Long"  />			
+			<form-property name="empresaList"        type="java.util.List"  />
+			<form-property name="moeda"              type="java.lang.String"/>			
+			<form-property name="fornecedor"         type="java.lang.String"/>					
+			<form-property name="fornecedorList"     type="java.util.List"  />					
+			
+			<!-- Consulta de Lote -->		
+			<form-property name="linha"		   	      type="java.lang.String"    />
+			<form-property name="tipoLote"		      type="java.lang.String"    />
+			<form-property name="concessionaria"      type="java.lang.String"    />
+			<form-property name="endereco"	   	      type="java.lang.String"    />  
+			<form-property name="cep"   	          type="java.math.BigDecimal"/>
+			<form-property name="cidade"   	          type="java.lang.String"    />
+			<form-property name="estado"   	          type="java.lang.String"    />
+			<form-property name="cnpj" 	              type="java.math.BigDecimal"/>
+			<form-property name="dtAbertura"	      type="java.util.Date"      />
+			<form-property name="dtLiberacao"	      type="java.util.Date"      />
+			<form-property name="dtFechamento"	      type="java.util.Date"      />
+			<form-property name="dtStatus"	          type="java.util.Date"      />			
+			<form-property name="status" 	          type="java.math.BigDecimal"/>    
+			<form-property name="descStatus"          type="java.lang.String"    />    
+			<form-property name="descStatusAnterior"  type="java.lang.String"    />
+			
+			<form-property name="listConcessionaria"  type="java.util.List"/>	
+			
+			<!-- Consulta Histórico do chassi -->	
+			<form-property name="produto"	  	      type="java.lang.String"    />
+			<form-property name="origem"	  	      type="java.lang.String"    />
+			<form-property name="revenda"	  	      type="java.lang.String"    />
+			<form-property name="fabModelo"	  	      type="java.lang.String"    />
+			<form-property name="dtVenda"	  	      type="java.util.Date"      />
+			<form-property name="notaFiscal"	  	  type="java.lang.Long"      />
+			<form-property name="empresa"	  	      type="java.lang.String"    />
+			<form-property name="dtRevenda"	     	  type="java.util.Date"      />
+			<form-property name="dtFabricacao"	  	  type="java.util.Date"      />
+			<form-property name="cor"	  	          type="java.lang.String"    />
+			<form-property name="nrGarantia"	  	  type="java.math.BigDecimal"/>
+			<form-property name="chassi"              type="java.lang.String"    />	
+			<form-property name="chassiIni"           type="java.lang.String"    />	
+			<form-property name="chassiFim"           type="java.lang.String"    />	
+				
+			<form-property name="nrRevisao"	     	  type="java.math.BigDecimal"/>
+			<form-property name="dtRevisao"	  	      type="java.util.Date"      />
+			<form-property name="situacao"	  	      type="java.lang.String"    />
+			<form-property name="nrLote"	     	  type="java.math.BigDecimal"/>			
+			<form-property name="statusLote"          type="java.lang.String"    />	
+			<form-property name="autorizacao"         type="java.lang.String"    />	
+			
+			<form-property name="garantiaId"  	      type="java.lang.Long"      />						
+			<form-property name="garantia"	  	      type="java.lang.String"    />			
+			<form-property name="numeroOs"	  	      type="java.lang.String"    />		
+			<form-property name="dtAberturaOs"	  	  type="java.util.Date"      />
+			<form-property name="dtFechamentoOs"	  type="java.util.Date"      />		
+			<form-property name="cortesia"	  	      type="java.lang.String"    />	
+			
+			<form-property name="peca"                type="java.lang.String"    />							
+			<form-property name="vlServico3"	  	  type="java.math.BigDecimal"/>	
+			<form-property name="codServico"	  	  type="java.lang.String"    />	
+			<form-property name="codSintoma"	  	  type="java.lang.String"    />	
+			<form-property name="codCondicao"	  	  type="java.lang.String"    />	
+			<form-property name="defeito"	  	      type="java.lang.String"    />	
+			<form-property name="parecerAnalista"	  type="java.lang.String"    />			
+			
+			<form-property name="listCabecalho"       type="java.util.List"/>						
+			<form-property name="listRevisao"         type="java.util.List"/>									
+			<form-property name="listGarantia"        type="java.util.List"/>									
+			<form-property name="listTotais"          type="java.util.List"/>	
+			
+			<!-- Consulta Notas Fiscais -->	
+			<form-property name="serie"               type="java.lang.String"/>
+			<form-property name="dtNotaFiscal"	  	  type="java.util.Date"  />
+			<form-property name="valor"	  	          type="java.math.BigDecimal"/>	
+			<form-property name="tipoNF"              type="java.lang.String"/>
+			
+			<form-property name="listEmpresas"        type="java.util.List"  />	
+			
+			<form-property name="listProgramas"       type="java.util.List"  />	
+					
+		</form-bean>
+		
+		<!-- Formulário: Estoque. -->
+		<form-bean name="estoqueForm" type="org.apache.struts.validator.DynaValidatorActionForm"> 
+		
+			<!-- Parâmetros para formulário. -->
+			<form-property name="entityId"		   type="java.lang.Long" initial="null"/>
+			<form-property name="dataEstoque"      type="java.lang.String"/>
+        	<form-property name="chassi"   	       type="java.lang.String"/>
+        	
+        	<!-- Parâmetros para listagem. -->
+			<form-property name="listResults"   type="java.util.List"/>
+			<form-property name="deleteTargets" type="java.lang.String[]"/>
+
+		</form-bean>  
+		
+		<!-- Formulário: Documento. -->
+		<form-bean name="documentoForm" type="org.apache.struts.validator.DynaValidatorActionForm"> 
+		
+			<!-- Parâmetros para formulário. -->
+			<form-property name="entityId"		   type="java.lang.Long" initial="null"/>
+			<form-property name="filename"         type="java.lang.String"/>
+        	<form-property name="description"      type="java.lang.String"/>
+        	<form-property name="startDate"        type="java.lang.String"/>
+        	<form-property name="endDate"          type="java.lang.String"/>
+        	
+        	<form-property name="fileToUpload" 	   type="org.apache.struts.upload.FormFile"/>
+        	
+        	<!-- Parâmetros para listagem. -->
+			<form-property name="listResults"   type="java.util.List"/>
+			<form-property name="deleteTargets" type="java.lang.String[]"/>
+
+		</form-bean>
+		
+		<!-- Formulário: Análise de Garantia. -->
+		<form-bean name="analiseGarantiaForm" type="org.apache.struts.action.DynaActionForm"> 
+		
+			<!-- Parâmetros formulário de pesquisa. -->	
+			<form-property name="criterio"  		type="java.lang.String"/>
+			<form-property name="parametro" 		type="java.lang.String"/>
+			
+			<!-- Parâmetros formulário de análise de garantia. -->			
+			<form-property name="entityId"     		type="java.lang.Integer"/>
+			<form-property name="loteId"         	type="java.lang.Integer"/>
+        	<form-property name="chassi"       		type="java.lang.String"/> 
+        	<form-property name="dtVenda"      		type="java.lang.String"/>
+        	<form-property name="numOS"        		type="java.lang.String"/>
+        	<form-property name="dtAbert"      		type="java.lang.String"/>
+        	<form-property name="dtFech"       		type="java.lang.String"/>
+        	<form-property name="condicaoProblema"  type="java.lang.String"/>
+			<form-property name="causaProblema"     type="java.lang.String"/>
+			<form-property name="diagnostico"       type="java.lang.String"/>
+			<form-property name="solucao"           type="java.lang.String"/>
+			<form-property name="autorizacaoEspecial" type="java.lang.String"/>
+			<form-property name="km"           		type="java.lang.Long"/>
+			<form-property name="horasUso"     		type="java.lang.Long"/>
+			<!-- INICIO Alteração ist_edson  08/09/2014 -->
+        	<form-property name="condicao"  		type="java.lang.String"/>
+			<form-property name="sintoma"     		type="java.lang.String"/>
+        	<form-property name="servTer"      		type="java.lang.String"/>
+			<!-- FIM Alteração ist_edson  08/09/2014 -->
+			
+			<form-property name="dtFaturamento"  	type="java.lang.String"/>
+        	<form-property name="nuNtFiscal"   		type="java.lang.Long"/>
+        	<form-property name="empresa"   		type="java.lang.String"/>
+        	<form-property name="dsConcessionaria"  type="java.lang.String"/>
+        	<form-property name="cnpjConc"  		type="java.lang.String"/>
+        	<form-property name="dsCidade"  		type="java.lang.String"/>
+        	<form-property name="dsUf"  		    type="java.lang.String"/>
+        	<form-property name="idTipo"         	type="java.lang.Long"/>
+        	<form-property name="nmRepresentante"  type="java.lang.String"/>
+        	<form-property name="servico_1"    		type="java.lang.String"/>
+        	<form-property name="servico_2"    		type="java.lang.String"/>
+        	<form-property name="servico_3"    		type="java.lang.String"/>
+        	<form-property name="descServico_1"    	type="java.lang.String"/>
+        	<form-property name="descServico_2"    	type="java.lang.String"/>
+        	<form-property name="descServico_3"    	type="java.lang.String"/>
+        	
+        	<form-property name="parecerYm"         type="java.lang.String"/>        	        	
+        	<form-property name="parecerYm_newItems"    type="java.lang.String" initial="blank"/>
+        	
+        	<form-property name="observacaoYm"          type="java.lang.String"/>        	        	
+        	<form-property name="observacaoYm_newItems" type="java.lang.String" initial="blank"/>
+        	
+        	<!-- Parâmetros para listagem. -->        	
+        	<form-property name="listRevisao"     	type="java.util.List"/>
+			<form-property name="listResults" 		type="java.util.List"/>
+			<form-property name="listFiles"      	type="java.util.List"/>
+			<form-property name="listGarantias"		type="java.util.List"/>
+			<form-property name="listPecas"			type="java.util.List"/>
+			<form-property name="cobraFornTargets" 	type="java.lang.String[]"/>
+			
+			<!-- Parâmetros gerais. -->
+			<form-property name="task" 			type="java.lang.String" initial="list"/>
+		
+		</form-bean> 
+		
+		<!-- Formulário: Análise de Garantia para Náutica. -->
+		<form-bean name="analiseGarantiaNauticaForm" type="org.apache.struts.action.DynaActionForm"> 
+		
+			<!-- Parâmetros formulário de pesquisa. -->	
+			<form-property name="criterio"  		type="java.lang.String"/>
+			<form-property name="parametro" 		type="java.lang.String"/>
+			
+			<!-- Parâmetros formulário de análise de garantia. -->			
+			<form-property name="entityId"     		type="java.lang.Integer"/>
+			<form-property name="loteId"         	type="java.lang.Integer"/>
+        	<form-property name="chassi"       		type="java.lang.String"/> 
+        	<form-property name="dtVenda"      		type="java.lang.String"/>
+        	<form-property name="createdDate"  		type="java.lang.String"/>
+        	<form-property name="numOS"        		type="java.lang.String"/>
+        	<form-property name="dtAbert"      		type="java.lang.String"/>
+        	<form-property name="dtFech"       		type="java.lang.String"/>
+        	<form-property name="condicaoProblema"  type="java.lang.String"/>
+			<form-property name="causaProblema"     type="java.lang.String"/>
+			<form-property name="diagnostico"       type="java.lang.String"/>
+			<form-property name="solucao"           type="java.lang.String"/>
+			<form-property name="autorizacaoEspecial" type="java.lang.String"/>
+			<form-property name="km"           		type="java.lang.Long"/>
+			<form-property name="horasUso"     		type="java.lang.Long"/>
+			
+			<form-property name="dtFaturamento"  	type="java.lang.String"/>
+        	<form-property name="nuNtFiscal"   		type="java.lang.Long"/>
+        	<form-property name="empresa"   		type="java.lang.String"/>
+        	<form-property name="dsConcessionaria"  type="java.lang.String"/>
+        	<form-property name="cnpjConc"  		type="java.lang.String"/>
+        	<form-property name="dsCidade"  		type="java.lang.String"/>
+        	<form-property name="dsUf"  		    type="java.lang.String"/>
+        	<form-property name="idTipo"         	type="java.lang.Long"/>
+        	<form-property name="nmRepresentante"  type="java.lang.String"/>
+        	<form-property name="preenchidoPor"    type="java.lang.String"/> 
+        	<form-property name="servico_1"    		type="java.lang.String"/>
+        	<form-property name="servico_2"    		type="java.lang.String"/>
+        	<form-property name="servico_3"    		type="java.lang.String"/>
+        	<form-property name="descServico_1"    	type="java.lang.String"/>
+        	<form-property name="descServico_2"    	type="java.lang.String"/>
+        	<form-property name="descServico_3"    	type="java.lang.String"/>
+        	
+        	<form-property name="tipoGasolinaId"   type="java.lang.String" initial="-1"/>
+			<form-property name="localUsoDoce"     type="java.lang.String" initial="N"/>
+			<form-property name="localUsoSalg"     type="java.lang.String" initial="N"/>
+			<form-property name="cidadeUso"        type="java.lang.String"/>
+			<form-property name="materHelice"      type="java.lang.String"/>
+			<form-property name="tipoUso"          type="java.lang.String" initial="-1"/>
+			<form-property name="marcaCasco"       type="java.lang.String"/>
+			<form-property name="modeloCasco"      type="java.lang.String"/>
+			<form-property name="marcaHelice"      type="java.lang.String"/> 
+			<form-property name="passoHelice"      type="java.lang.Long"/>
+			<form-property name="rotacaoMaxima"    type="java.lang.Long"/>	
+        	
+        	<form-property name="parecerYm"         type="java.lang.String"/>        	        	
+        	<form-property name="parecerYm_newItems"    type="java.lang.String" initial="blank"/>
+        	
+        	<form-property name="observacaoYm"          type="java.lang.String"/>        	        	
+        	<form-property name="observacaoYm_newItems" type="java.lang.String" initial="blank"/>
+        	
+        	<!-- Parâmetros para listagem. -->        	
+        	<form-property name="listRevisao"     	type="java.util.List"/>
+			<form-property name="listResults" 		type="java.util.List"/>
+			<form-property name="listFiles"      	type="java.util.List"/>
+			<form-property name="listGarantias"		type="java.util.List"/>
+			<form-property name="listPecas"			type="java.util.List"/>
+			<form-property name="cobraFornTargets" 	type="java.lang.String[]"/>
+			<form-property name="listTipoGasolina" type="java.util.List"/>
+			<form-property name="listTipoProduto"  type="java.util.List"/>
+			<form-property name="listTipoUso"      type="java.util.List"/>
+			
+			<!-- Parâmetros gerais. -->
+			<form-property name="task" 			type="java.lang.String" initial="list"/>
+		
+		</form-bean> 
+			
+			<!-- Formulário: Classificação Técnica de Garantia de Moto. -->
+		<form-bean name="classificaGarantiaMotoForm" type="org.apache.struts.action.DynaActionForm"> 
+		
+			<!-- Parâmetros formulário de pesquisa. -->	
+			<form-property name="criterio"  		type="java.lang.String"/>
+			<form-property name="parametro" 		type="java.lang.String"/>
+			
+			<!-- Parâmetros formulário de análise de garantia. -->			
+			<form-property name="entityId"     		type="java.lang.Integer"/>
+			<form-property name="loteId"         	type="java.lang.Integer"/>
+        	<form-property name="chassi"       		type="java.lang.String"/> 
+        	<form-property name="dtVenda"      		type="java.lang.String"/>
+        	<form-property name="numOS"        		type="java.lang.String"/>
+        	<form-property name="dtAbert"      		type="java.lang.String"/>
+        	<form-property name="dtFech"       		type="java.lang.String"/>
+        	<form-property name="condicaoProblema"  type="java.lang.String"/>
+			<form-property name="causaProblema"     type="java.lang.String"/>
+			<form-property name="diagnostico"       type="java.lang.String"/>
+			<form-property name="solucao"           type="java.lang.String"/>
+			
+			<form-property name="dtFaturamento"  	type="java.lang.String"/>
+        	<form-property name="nuNtFiscal"   		type="java.lang.Long"/>
+        	<form-property name="empresa"   		type="java.lang.String"/>
+        	<form-property name="dsConcessionaria"  type="java.lang.String"/>
+        	<form-property name="cnpjConc"  		type="java.lang.String"/>
+        	<form-property name="dsCidade"  		type="java.lang.String"/>
+        	<form-property name="dsUf"  		    type="java.lang.String"/>
+        	
+        	<form-property name="parecerYm"         type="java.lang.String"/>        	        	
+        	<form-property name="parecerYm_newItems"    type="java.lang.String" initial="blank"/>
+        	
+        	<form-property name="observacaoYm"          type="java.lang.String"/>        	        	
+        	<form-property name="observacaoYm_newItems" type="java.lang.String" initial="blank"/>
+        	<form-property name="tipoProblema" 			type="java.lang.String" initial="blank"/>
+        	<form-property name="classificaAcao" 		type="java.lang.String" initial="blank"/>        	
+        	
+        	<!-- Parâmetros para listagem. -->        	
+        	<form-property name="listRevisao"     	type="java.util.List"/>
+			<form-property name="listResults" 		type="java.util.List"/>
+			<form-property name="listFiles"      	type="java.util.List"/>
+			<form-property name="listGarantias"		type="java.util.List"/>
+			<form-property name="listPecas"			type="java.util.List"/>
+			<form-property name="cobraFornTargets" 	type="java.lang.String[]"/>
+			
+			<!-- Parâmetros gerais. -->
+			<form-property name="task" 			type="java.lang.String" initial="list"/>
+			
+		</form-bean>  
+				
+    </form-beans>
+
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+	<!-- Parte 2: Global Exceptions.                                       -->
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+    <global-exceptions/>
+
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+	<!-- Parte 3: Global Forwards.                                         -->
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+   
+    <global-forwards>
+		<forward name="errorPage" 
+ 	             path="/jsp/error.jsp"/>
+		<forward name="report" 
+ 	             path="/application_report.report"/>    
+ 	    <forward name="sessionExpired" 
+ 	             path="/jsp/sessionExpired.jsp"/>
+    </global-forwards>
+
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+	<!-- Parte 4: Action Mappings                                          -->
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->	
+    <action-mappings>
+
+		<action path="/Home" 
+				type="br.com.yamaha.sistemagarantia.controller.HomeAction" 
+				scope="request" 
+				name="logonForm"
+		    	parameter="task">		    	
+		    <forward name="_logon"
+			         path="/jsp/logon.jsp"/>			         
+			<forward name="_show"
+			         path="/jsp/home.jsp"/>			         
+			<forward name="_index"
+			         path="/index.jsp"/>
+			<forward name="_inner"
+			         path="/redirect.jsp"/>
+			   
+		</action>
+		
+		<action path="/RelatorioYman" 
+				type="br.com.yamaha.sistemagarantia.controller.RelatorioYmanAction" 
+				scope="request" 
+		    	parameter="task">		    	
+		    <forward name="_relYman"
+			         path="/jsp/yman_form.jsp"/>
+			   
+		</action>
+		
+		<action path="/Warranty" 
+				type="br.com.yamaha.sistemagarantia.controller.WarrantyAction" 
+				scope="request" >
+			<forward name="_show"
+			         path="/jsp/home.jsp"/>
+			<forward name="_logon"
+			         path="/jsp/logon.jsp"/>
+			   
+		</action>
+
+		<action path="/Lote" 
+				type="br.com.yamaha.sistemagarantia.controller.LoteAction" 
+				name="loteForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/lote_form.jsp"/>
+			<forward name="_list"
+			         path="/jsp/lote_list.jsp"/>
+			<forward name="_search"
+			         path="/jsp/lote_search.jsp"/>
+			<forward name="_cupom"
+			         path="/Cupom.do?task=add"/>
+			<forward name="_garantiaMoto"
+			         path="/GarantiaMoto.do?task=add"/>
+			<forward name="_garantiaNautica"
+			         path="/Garantia.do?task=add"/>
+		</action>
+
+		<action path="/Cliente" 
+				type="br.com.yamaha.sistemagarantia.controller.ClienteAction" 
+				name="clienteForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/cliente_form.jsp"/>
+			<forward name="_list"
+			         path="/jsp/cliente_list.jsp"/>
+			<forward name="_search"
+			         path="/jsp/cliente_search.jsp"/>
+			<forward name="_cupom"
+			         path="/Cupom.do?task=postIncludeClient"/>
+		</action>
+		
+		<action path="/Cupom" 
+				type="br.com.yamaha.sistemagarantia.controller.CupomAction" 
+				name="cupomForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/cupom_form.jsp"/>
+			<forward name="_list"
+			         path="/jsp/cupom_list.jsp"/>
+			<forward name="_listPostInsert"
+			         path="/Cupom.do?task=list"/>
+			<forward name="_search"
+			         path="/jsp/cupom_search.jsp"/>
+			<forward name="_customer"
+			         path="/Cliente.do?task=add"/>
+			<forward name="_customerInclude"
+			         path="/Cliente.do?task=include"/>  
+			<forward name="_notaFiscalInclude"
+			         path="/NotaFiscal.do?task=launchNoteByItem"/>
+			<!-- 
+				Demanda: 00003
+				Data:29/06/2012
+				Resource IT
+			-->
+			<forward name="_customerEditByCnpj"
+			         path="/Cliente.do?task=editByCnpjFromCupom"/>                
+		</action>
+		
+		<action path="/CupomAlter" 
+				type="br.com.yamaha.sistemagarantia.controller.CupomAlterAction" 
+				name="cupomAlterForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_alter"
+			         path="/jsp/cupom_alter.jsp"/>
+		</action>
+		
+		<action path="/NotaFiscal" 
+				type="br.com.yamaha.sistemagarantia.controller.NotaFiscalAction" 
+				name="notaFiscalListForm"
+				scope="request"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/notaFiscal_lote_disponivel.jsp"/>
+			<forward name="_note"
+					 path="/jsp/notaFiscal_lancamento_prot.jsp"/>			        	        
+			<forward name="_cupom"
+			         path="/Cupom.do?task=alter"/>
+			<forward name="_listCupom"
+			         path="/Cupom.do?task=list"/>
+			<forward name="_garantia"
+			         path="/Garantia.do?task=alter"/>
+			<forward name="_listGarantia"
+			         path="/Garantia.do?task=list"/>
+		</action>
+				
+		<!-- INICIO *** Declaração do Form de Garantia Header para linha de Motocicletas -->
+		<action path="/GarantiaMoto" 
+				type="br.com.yamaha.sistemagarantia.moto.controller.GarantiaMotoAction" 
+				name="garantiaMotoForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/moto/garantia_moto_form.jsp"/>
+			<forward name="_formRecall"
+			         path="/jsp/garantia_form_recall.jsp"/>
+			<forward name="_formCampaign"
+			         path="/jsp/moto/garantia_form_campaign.jsp"/>
+			<forward name="_edit"
+			         path="/jsp/moto/garantia_moto_edit.jsp"/>
+			<forward name="_list"
+			         path="/jsp/moto/garantia_moto_list.jsp"/>			
+			<forward name="_peca"
+			         path="/GarantiaPecaMoto.do?task=add"/>
+			<forward name="_pecaEdit"
+			         path="/GarantiaPecaMoto.do?task=alter"/>			
+		</action>	
+		<!-- FIM *** Declaração do Form de Garantia Header para linha de Motocicletas -->
+		
+		<!-- INICIO *** Declaração do Form de Peças para linha de Motocicletas -->
+		<action path="/GarantiaPecaMoto" 
+				type="br.com.yamaha.sistemagarantia.moto.controller.GarantiaPecaMotoAction" 
+				name="garantiaPecaMotoForm"
+				scope="request"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/moto/peca_moto_form.jsp"/>
+			<forward name="_edit"
+			         path="/jsp/moto/peca_moto_edit.jsp"/>
+			<forward name="_notaFiscalInclude"
+			         path="/NotaFiscal.do?task=launchNoteByItem"/>
+		</action>	
+		<!-- FIM *** Declaração do Form de Peças para linha de Motocicletas -->
+		
+		
+		<action path="/Garantia" 
+				type="br.com.yamaha.sistemagarantia.controller.GarantiaAction" 
+				name="garantiaForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/garantia_form.jsp"/>
+			<forward name="_formRecall"
+			         path="/jsp/garantia_form_recall.jsp"/>
+			<forward name="_formCampaign"
+			         path="/jsp/garantia_form_campaign.jsp"/>
+			<forward name="_edit"
+			         path="/jsp/garantia_edit.jsp"/>
+			<forward name="_list"
+			         path="/jsp/garantia_list.jsp"/>			
+			<forward name="_peca"
+			         path="/GarantiaPeca.do?task=add"/>
+			<forward name="_pecaEdit"
+			         path="/GarantiaPeca.do?task=alter"/>			
+		</action>	
+		
+		<action path="/GarantiaPeca" 
+				type="br.com.yamaha.sistemagarantia.controller.GarantiaPecaAction" 
+				name="garantiaPecaForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/peca_form.jsp"/>
+			<forward name="_edit"
+			         path="/jsp/peca_edit.jsp"/>
+			<forward name="_notaFiscalInclude"
+			         path="/NotaFiscal.do?task=launchNoteByItem"/>
+		</action>		
+		
+		<action path="/InfoMercado" 
+				type="br.com.yamaha.sistemagarantia.controller.InfoMercadoAction" 
+				name="infoMercadoForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/info_mercado_form.jsp"/>
+			<forward name="_list"
+			         path="/jsp/info_mercado_list.jsp"/>
+			<forward name="_downloader" 
+ 	                 path="/Downloader"/>
+		</action>	
+		
+		<action path="/Estoque" 
+				type="br.com.yamaha.sistemagarantia.controller.EstoqueAction" 
+				name="estoqueForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/estoque_form.jsp"/>
+			<forward name="_list"
+			         path="/jsp/estoque_list.jsp"/>
+		</action>
+		
+		<action path="/Relatorio" 
+				type="br.com.yamaha.sistemagarantia.controller.RelatorioAction" 
+				name="reportForm"
+				scope="request"
+		    	parameter="task">
+			<forward name="_list"
+			         path="/jsp/relatorio_list.jsp"/>
+			<forward name="_listInner"
+			         path="/jsp/relatorio_inner_list.jsp"/>
+			<forward name="_relatorioZeroKmFilter"
+			         path="/jsp/report_0km_form.jsp"/>
+			<forward name="_relatorioAnalisePecasFilter"
+			         path="/jsp/report_analisePecas_form.jsp"/>		
+			<forward name="_relatorioPagamentosFilter"
+			         path="/jsp/report_pagamentos_form.jsp"/>	
+			<forward name="_relatorioRecusaFilter"
+			         path="/jsp/report_recusa_form.jsp"/>		
+			<forward name="_relatorioVerificacaoFilter"
+			         path="/jsp/report_verificacao_form.jsp"/>			         		         		         	         
+			<forward name="_relatorioMensalModeloFilter"
+			         path="/jsp/report_mensalModelo_form.jsp"/>		
+			<forward name="_relatorioMalaDiretaFilter"
+			         path="/jsp/report_malaDireta_form.jsp"/>		
+			<forward name="_relatorioSolicitacaoGarantiaFilter"
+			         path="/jsp/report_solicitacaoGarantia_form.jsp"/>	
+			<forward name="_relatorioProcRevisoesFase1Filter"
+			         path="/jsp/report_procRevisoesFase1_form.jsp"/>
+			<forward name="_relatorioProcRevisoesFase2Filter"
+			         path="/jsp/report_procRevisoesFase2_form.jsp"/>	
+			<forward name="_relatorioConsultaNFFilter"
+			         path="/jsp/report_consultaNF_form.jsp"/>
+			<forward name="_relatorioConsultaNfResultForm"
+			         path="/jsp/report_consultaNfResult_form.jsp"/>			         		
+			<forward name="_relatorioConsultaLoteFilter"
+			         path="/jsp/report_consultaLote_form.jsp"/>	
+			<forward name="_relatorioConsultaLoteResultForm"
+			         path="/jsp/report_consultaLoteResult_form.jsp"/>	
+			<forward name="_relatorioDocRevisaoFilter"
+			         path="/jsp/report_docRevisao_form.jsp"/>	
+			<forward name="_relatorioHistChassiFilter"
+			         path="/jsp/report_histChassi_form.jsp"/>
+			<forward name="_relatorioHistChassiResultForm"
+			         path="/jsp/report_histChassiResult_form.jsp"/>		
+			<forward name="_relatorioProcPecasFase1Filter"
+			         path="/jsp/report_procPecasFase1_form.jsp"/>			
+			<forward name="_relatorioProcPecasFase2Filter"
+			         path="/jsp/report_procPecasFase2_form.jsp"/>	
+			<forward name="_relatorioGarantPecasFilter"
+			         path="/jsp/report_garantiaPecas_form.jsp"/>	
+			<forward name="_relatorioGarantPecasModeloFilter"
+			         path="/jsp/report_garantiaPecasMod_form.jsp"/>		
+			<forward name="_relatorioImportedPartsFilter"
+			         path="/jsp/report_importedParts_form.jsp"/>
+			<forward name="_relatorioGraficosIndividuais"
+			         path="/jsp/report_graficosIndividuais_form.jsp"/>	
+			<forward name="_relatorioGraficosIndividuaisLinha"
+			         path="/jsp/report_graficosIndividuais_linha_form.jsp"/>       
+			<forward name="_relatorioServiceReport"
+			         path="/jsp/report_serviceReport_form.jsp"/>
+			<forward name="_relatorioGraficoGarantiaPaga"
+			         path="/jsp/report_grafico_garantia_paga_form.jsp"/>	
+			<forward name="_relatorioGraficoGarantiaMensalPercentual"
+			         path="/jsp/report_grafico_garantia_mensal_percentual_form.jsp"/>	
+			<forward name="_relatorioGerenciamentoMes"
+			         path="/jsp/report_gerenciamento_mes_form.jsp"/>	         		         		         
+		         			         	         	         			         
+		</action>
+		
+		<action path="/Documento" 
+				type="br.com.yamaha.sistemagarantia.controller.DocumentoAction" 
+				name="documentoForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">			
+			<forward name="_list"
+			         path="/jsp/documento_list.jsp"/>
+			<forward name="_edit"
+			         path="/jsp/documento_edit.jsp"/>
+			<forward name="_download"
+			         path="/jsp/documento_download.jsp"/>
+		</action>	
+		
+		<action path="/AnaliseGarantia" 
+				type="br.com.yamaha.sistemagarantia.processo.controller.AnaliseGarantiaAction" 
+				name="analiseGarantiaForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/processo/analiseGarantia_form.jsp"/>
+			<forward name="_list"
+			         path="/jsp/processo/analiseGarantia_list.jsp"/>			
+		</action>	
+		
+		<action path="/AnaliseGarantiaNautica" 
+				type="br.com.yamaha.sistemagarantia.processo.controller.AnaliseGarantiaNauticaAction" 
+				name="analiseGarantiaNauticaForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/processo/analiseGarantiaNautica_form.jsp"/>
+			<forward name="_list"
+			         path="/jsp/processo/analiseGarantia_list.jsp"/>			
+		</action>	
+		
+		<action path="/InsertAnaliseParecerYm" 
+				type="br.com.yamaha.sistemagarantia.processo.controller.ajax.InsertAnaliseParecerYmAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/InsertAnaliseObservacaoYm" 
+				type="br.com.yamaha.sistemagarantia.processo.controller.ajax.InsertAnaliseObservacaoYmAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/ClassificaGarantiaMoto" 
+				type="br.com.yamaha.sistemagarantia.processo.controller.ClassificaGarantiaMotoAction" 
+				name="classificaGarantiaMotoForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/jsp/processo/classificaGarantiaMoto_form.jsp"/>
+			<forward name="_list"
+			         path="/jsp/processo/classificaGarantiaMoto_list.jsp"/>			
+		</action>
+		
+		<action path="/InsertObservacaoClassifcacaoYm" 
+				type="br.com.yamaha.sistemagarantia.processo.controller.ajax.InsertObservacaoClassificacaoYmAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/Teste" 
+				type="br.com.yamaha.sistemagarantia.controller.TestAction" 
+				name="cupomForm"
+				scope="request"
+				validate="true"
+		    	parameter="task">
+			<forward name="_form"
+			         path="/index.jsp"/>
+			<!--          
+			<forward name="_proc"
+			         path="/jsp/manut_form.jsp"/>
+			-->
+		</action>
+		
+		<!--  INICIO - acesso ao relatório RMPS ist_edson 17/09/2014 -->
+		<action path="/RelatorioRmps" 
+				type="br.com.yamaha.sistemagarantia.controller.RelatorioRmpsAction" 
+				scope="request">
+				<forward name="_relRmps"
+			         path="/jsp/pageDispatchRmps.html"/>
+			         <!-- 
+				<forward name="_relRmps"
+			         path="/jsp/pageDispatch.jsp?param=http://172.31.2.79:8000/pls/apexd/f?p=1002"/> -->
+			    <forward name="_logon"
+			         path="/jsp/logon.jsp"/>
+		</action>	
+		<!--  FIM - acesso ao relatório RMPS ist_edson 17/09/2014 -->
+		
+		<action path="/Relogio" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.RelogioAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/Authentication" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.AuthenticationAjaxAction" 
+				scope="request">
+		</action>	
+		
+		<action path="/DeterminaChassi" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.DeterminaChassiAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/DeterminaChassiRev" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.DeterminaChassiRevAjaxAction" 
+				scope="request">
+		</action>	
+		
+		<action path="/DeterminaChassiEstoque" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.DeterminaChassiEstoqueAjaxAction" 
+				scope="request">
+		</action>
+
+		<action path="/DeterminaCliente" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.DeterminaClienteAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/DeterminaItem" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.DeterminaItemAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/DeterminaItemInfoMerc" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.DeterminaItemInfoMercAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/GetCliente" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.GetClienteAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/GetGarantiaValues" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.GetGarantiaValuesAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/GetGarantiaMotoValues" 
+				type="br.com.yamaha.sistemagarantia.moto.controller.ajax.GetGarantiaMotoValuesAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/GetInfoMercValues" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.GetInfoMercValuesAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/GetTipoMoto" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.GetTipoMotoAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/GetValidateNF" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.GetValidateNFAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/LoadRecall" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.LoadRecallAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/LoadCampaign" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.LoadCampaignAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/LoadRevisao" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.LoadRevisaoAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/LoadItens" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.LoadItensAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/LoadService" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.LoadApproachServiceAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/ListChassiForIM" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.DeterminaChassiByLinhaAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/LoadModels" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.LoadModelsAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/InsertCondicaoProblema" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.InsertCondicaoProblemaAjaxAction" 
+				scope="request">
+		</action>		
+		
+		<action path="/InsertCausaProblema" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.InsertCausaProblemaAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/InsertDiagnosticoProblema" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.InsertDiagnosticoProblemaAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/InsertSolucaoProblema" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.InsertSolucaoProblemaAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/LoadCampaignNew" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.LoadCampaignNewAjaxAction" 
+				scope="request">
+		</action>
+		
+		<action path="/GetEstadoDdd" 
+				type="br.com.yamaha.sistemagarantia.controller.ajax.GetEstadoDddAjaxAction" 
+				scope="request">
+		</action>
+		
+    </action-mappings>
+
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+	<!-- Parte 4: Controller, I18N e Plugins                               -->
+	<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+    <controller processorClass="org.apache.struts.action.RequestProcessor" locale="true"/>
+
+    <message-resources parameter="application" />
+
+	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+		<set-property property="contextConfigLocation" value="/WEB-INF/spring-config.xml"/>
+	</plug-in>
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+	</plug-in>
+
+</struts-config>

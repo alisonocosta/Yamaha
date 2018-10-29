@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......StatusLote.xml
+   .: Criação.....23 de abril, 16:27
+   .: Autor.......Thiago Uriel M. Garcia
+   .: Descrição...Mapeamento entre classe "StatusLote" e tabela "YM_SG_STATUS_LOTE".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.StatusLote" table="YM_SG_STATUS_LOTE">
+           
+		<id name="entityId" column="STATUS_LOTE_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_STATUS_LOTE_S</param>
+			</generator>
+		</id>           
+
+		<property name="descricao"         column="DESCRICAO"    type="java.lang.String" not-null="true"  />
+		<property name="descricaoReduzida" column="DESCR_REDUZ"  type="java.lang.String" not-null="true"  />
+		<property name="corStatus"         column="STATUS_COLOR" type="java.lang.String" not-null="false" />
+		<property name="mascara"           column="MASCARA"      type="java.lang.String" not-null="false" length="50" />
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  />  
+		
+		<bag name="lotes" inverse="true" lazy="true">
+        	<key column="STATUS_LOTE_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.Lote" />
+        </bag> 
+
+	</class>
+
+</hibernate-mapping>

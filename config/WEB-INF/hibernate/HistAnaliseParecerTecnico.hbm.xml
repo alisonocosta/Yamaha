@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Yamaha
+Copyright (c) 2012 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......HistCausaProblema.hbm.xml
+   .: Criação.....30/12/2012, 19:27
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento Hibernate.
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.processo.model.HistAnaliseParecerTecnico" table="YM_SG_HIST_PARECER_TECNICO">
+           
+		<id name="entityId" column="PARECER_TECNICO_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_HIST_PARECER_TECNICO_S</param>
+			</generator>
+		</id> 
+				
+		<property name="garantiaId"   		column="GARANTIA_ID"         type="java.lang.Integer"   />
+		<property name="parecerTecnicoTxt"  column="PARECER_TECNICO_TXT" type="java.lang.String" />
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+				
+	</class>
+	
+</hibernate-mapping>

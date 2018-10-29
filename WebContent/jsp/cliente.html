@@ -1,0 +1,269 @@
+
+
+
+<html>
+	<head>
+		<title>Yamaha - Sistema de Garantia</title>
+		<base href="http://localhost:8080/ym_garantia_ccs/jsp/layout.jsp">
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta>
+		<link rel="stylesheet" type="text/css" href="../css/yamaha.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/menu/menu.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/themes/default.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/themes/mac_os_x.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/themes/pwc-os.css"></link>
+		<script type="text/javascript" src="../scripts/Menu/menu.js"> </script>
+		<script type="text/javascript" src="../scripts/Ajax/Clock/ajaxClock.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/window_utils.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/prototype.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/effects.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/window.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/window_effects.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/debug.js"> </script>
+		<script type="text/javascript" src="../scripts/WindowUI/pwc-os.js"> </script>
+	</head>
+	<body topmargin="0" leftmargin="0" onload="getClock();">
+		
+		<div id="dock"></div>		
+		
+		<!-- Início: Tabela de alinhamento -->
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+		
+			<!-- Início: Header -->
+			<tr>
+				<td align="left" valign="middle">
+				
+					<!-- Início: Logo -->
+					<table border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td><img src="../images/home_logo_red.gif" border="0" alt="Yamaha"/></td>
+						</tr>
+					</table>
+					<!-- Fim: Logo -->
+				
+				</td>
+				<td align="right" valign="middle">
+				
+					<!-- Início: Relógio -->
+					<table border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td><img src="../images/home_clock_01.gif" border="0"/></td>
+							<td background="../images/home_clock_02.gif" align="right" valign="middle" class="clock">
+								<div id="clockDiv"></div>
+							</td>
+							<td><img src="../images/home_clock_03.gif" border="0"/></td>
+						</tr>
+					</table>
+					<!-- Fim: Relógio -->
+				
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" colspan="2" width="100%">
+				
+					<!-- Início: Barra de divisão -->
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+						<tr>
+							<td width="144"><img src="../images/header_separator_01_01.gif" border="0"/></td>
+							<td background="../images/header_separator_01_02.gif"></td>
+							<td width="6"><img src="../images/header_separator_01_03.gif" border="0"/></td>
+						</tr>
+						<tr>
+							<td><img src="../images/header_separator_02_01.gif" border="0"/></td>
+							<td background="../images/header_separator_02_02.gif" align="right" valign="middle" class="bold">
+								Oskar Comercio De Motos E Pecas Ltda
+
+							</td>
+							<td><img src="../images/header_separator_02_03.gif" border="0"/></td>
+						</tr>
+						<tr>
+							<td><img src="../images/header_separator_03_01.gif" border="0"/></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+					<!-- Fim: Barra de divisão -->
+				
+				</td>
+			</tr>
+			<!-- Fim: Header -->			
+		</table>
+		<!-- Fim: Tabela de alinhamento -->
+
+	</body>
+</html>
+
+    
+   
+
+
+
+
+
+
+
+
+<html>
+	<head>
+		<title>Yamaha - Sistema de Garantia</title>
+		<base href="http://localhost:8080/ym_garantia_ccs/jsp/layout.jsp">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+		<link rel="stylesheet" type="text/css" href="../css/displaytag/displaytag.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/displaytag/site.css"></link>
+		<script type="text/javascript">
+			function editar(entityId) { 
+				window.top.location.href ="javascript:newTitle('Editar Cliente');";
+				window.location.href = "Cliente.do?task=edit&entityId=" + entityId;
+				
+			} 
+		</script>
+	</head>
+	<body leftmargin="0" topmargin="0">
+	
+		<form name="clienteForm" method="get" action="Cliente.do">
+
+			<input type="hidden" name="task" value="list">	
+	
+			<center>
+	
+				
+<table class="grid" id="cliente">
+<thead>
+<tr>
+<th>CNPJ/CPF</th>
+<th class="sorted order1">Nome do Cliente</th>
+<th>Telefone</th></tr></thead>
+<tbody>
+<tr class="odd">
+<td>02.563.549/0001-10</td>
+<td>
+						<a href="javascript:editar(51677);">A Alta Confecções Ltda.</a>						
+					</td>
+<td>062 2952164 (res.)</td></tr>
+<tr class="even">
+<td>03.257.031/0001-10</td>
+<td>
+						<a href="javascript:editar(130792);">A. Aranha Monte Verde Com Serv</a>						
+					</td>
+<td>094 33463625 (res.)</td></tr>
+<tr class="odd">
+<td>04.057.024/0001-38</td>
+<td>
+						<a href="javascript:editar(354582);">A. Arnaud Consult Tec Propr Indl S/C Ltda</a>						
+					</td>
+<td>31061377 (res.)</td></tr>
+<tr class="even">
+<td>43.959.386/0001-76</td>
+<td>
+						<a href="javascript:editar(338810);">A Baiuca Ltda.</a>						
+					</td>
+<td>014 37331488 (res.)</td></tr>
+<tr class="odd">
+<td>24.969.719/0001-01</td>
+<td>
+						<a href="javascript:editar(122314);">A Belle &amp; Cia Ltda Epp</a>						
+					</td>
+<td>66-5541161 (res.)</td></tr>
+<tr class="even">
+<td>84.742.675/0001-04</td>
+<td>
+						<a href="javascript:editar(201566);">A C F De Melo Me</a>						
+					</td>
+<td>069 32227388 (res.)</td></tr>
+<tr class="odd">
+<td>04.356.029/0001-61</td>
+<td>
+						<a href="javascript:editar(130841);">A. C. F. Riral Ruropolis</a>						
+					</td>
+<td>093 3515 2771 (res.)</td></tr>
+<tr class="even">
+<td>04.367.720/0001-40</td>
+<td>
+						<a href="javascript:editar(130844);">A. C. F. Rural De Anapu</a>						
+					</td>
+<td>093 3515 2771 (res.)</td></tr>
+<tr class="odd">
+<td>03.017.277/0001-15</td>
+<td>
+						<a href="javascript:editar(130785);">A. C. F. Rural De Pacaja</a>						
+					</td>
+<td>093 3515 2771 (res.)</td></tr>
+<tr class="even">
+<td>07.036.187/0001-22</td>
+<td>
+						<a href="javascript:editar(130961);">A. C. F. Rural De Placas</a>						
+					</td>
+<td>093 3515 2771 (res.)</td></tr>
+<tr class="odd">
+<td>04.178.488/0001-00</td>
+<td>
+						<a href="javascript:editar(338191);">A C Volpini Etiquetas Me</a>						
+					</td>
+<td>019 38313270 (res.)</td></tr>
+<tr class="even">
+<td>62.019.203/0001-87</td>
+<td>
+						<a href="javascript:editar(339220);">A Caramurucar P E S Ltda Me</a>						
+					</td>
+<td>016 6235554 (res.)</td></tr>
+<tr class="odd">
+<td>180.176.730-00</td>
+<td>
+						<a href="javascript:editar(82612);">A Copnstrujan Ltda</a>						
+					</td>
+<td>038 38213333 (res.)</td></tr>
+<tr class="even">
+<td>07.670.504/0001-68</td>
+<td>
+						<a href="javascript:editar(251083);">A. Cultura Trad. Extremo Sul</a>						
+					</td>
+<td>048 35240345 (res.)</td></tr>
+<tr class="odd">
+<td>72.497.944/0001-27</td>
+<td>
+						<a href="javascript:editar(28724);">A E A Quimica Ltda</a>						
+					</td>
+<td>085 34631439 (res.)</td></tr>
+<tr class="even">
+<td>04.420.590/0001-62</td>
+<td>
+						<a href="javascript:editar(130847);">A. F. C. F. Rural De Altamir</a>						
+					</td>
+<td>093 3515 2771 (res.)</td></tr>
+<tr class="odd">
+<td>03.657.110/0001-19</td>
+<td>
+						<a href="javascript:editar(102361);">A. F. Do Nascimento Me</a>						
+					</td>
+<td>033 33311460 (res.)</td></tr>
+<tr class="even">
+<td>05.087.904/0001-10</td>
+<td>
+						<a href="javascript:editar(122203);">A F P.Angelo E Cia Ltda Me</a>						
+					</td>
+<td>065 6239226 (res.)</td></tr>
+<tr class="odd">
+<td>07.642.361/0001-80</td>
+<td>
+						<a href="javascript:editar(57464);">A Fiqueredo Dos Santos E Cia</a>						
+					</td>
+<td>099 35920073 (res.)</td></tr>
+<tr class="even">
+<td>03.191.154/0001-04</td>
+<td>
+						<a href="javascript:editar(173704);">A G L Prod. Farmaceuticos Ltda</a>						
+					</td>
+<td>045 3268 1288 (res.)</td></tr></tbody></table><span class="pagebanner">356.816 itens encontrados. Exibindo de 1 até 20.</span><span class="pagelinks"><strong>1</strong>, <a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=2&amp;task=list&amp;dir=asc" title="Ir para página 2">2</a>, <a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=3&amp;task=list&amp;dir=asc" title="Ir para página 3">3</a>, <a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=4&amp;task=list&amp;dir=asc" title="Ir para página 4">4</a>, <a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=5&amp;task=list&amp;dir=asc" title="Ir para página 5">5</a>, <a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=6&amp;task=list&amp;dir=asc" title="Ir para página 6">6</a>, <a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=7&amp;task=list&amp;dir=asc" title="Ir para página 7">7</a>, <a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=8&amp;task=list&amp;dir=asc" title="Ir para página 8">8</a> [<a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=2&amp;task=list&amp;dir=asc">Próximo</a>/<a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=17841&amp;task=list&amp;dir=asc">Último</a>]</span><div class="exportlinks">Exportar para: 
+<a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=1&amp;6578706f7274=1&amp;d-1331432-e=1&amp;task=list&amp;dir=asc"><span class="export csv">CSV </span></a>|
+<a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=1&amp;6578706f7274=1&amp;d-1331432-e=2&amp;task=list&amp;dir=asc"><span class="export excel">Excel </span></a>|
+<a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=1&amp;6578706f7274=1&amp;d-1331432-e=3&amp;task=list&amp;dir=asc"><span class="export xml">XML </span></a>|
+<a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=1&amp;6578706f7274=1&amp;d-1331432-e=5&amp;task=list&amp;dir=asc"><span class="export pdf">PDF </span></a>|
+<a href="/ym_garantia_ccs/Cliente.do?limit=20&amp;sort=2&amp;page=1&amp;6578706f7274=1&amp;d-1331432-e=6&amp;task=list&amp;dir=asc"><span class="export rtf">RTF </span></a></div>
+				
+			</center>
+		
+		</form>
+				
+	</body>
+
+</html>
+  

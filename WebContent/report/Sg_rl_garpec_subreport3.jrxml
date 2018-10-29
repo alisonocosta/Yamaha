@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="Sg_rl_garpec_subreport3"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="782"
+		 pageHeight="555"
+		 columnWidth="782"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<queryString><![CDATA[SELECT to_char(yl.fechamento_date,'YYYY')                   ano                                                                       
+      , 'TOT REVISÕES'                                       topico                                                                    
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),1,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m01               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),2,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m02               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),3,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m03               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),4,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m04               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),5,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m05               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),6,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m06               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),7,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m07               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),8,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m08               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),9,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))   m09               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),10,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))  m10               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),11,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))  m11               
+      , sum(decode(to_number(to_char(yl.fechamento_date,'MM')),12,nvl(yc.vl_revisao,0)+nvl(yc.vl_bonificacao,0),0))  m12               
+      , 0  m13
+      , 0  m14
+      , 0  m15
+      , 0  m16
+      , 0  m17
+      , 0  m18
+      , 0  m19
+      , 0  m20
+      , 0  m21
+      , 0  m22
+      , 0  m23
+      , 0  m24       
+   FROM ym_sg_lote        yl                                                                                                           
+      , ym_sg_cupom       yc                                                                                                           
+      , ym_sg_revisao	  yr                                                                                                            
+  WHERE yl.lote_id            = yc.lote_id                                                                                             
+    AND yc.revisao_id         = yr.revisao_id                                                                                          
+    AND yl.status_lote_id      in (9, 11)                                                                                              
+    AND yr.numero_revisao  in (1,2,3)                                                                                                  
+    AND to_char(yl.fechamento_date,'YYYY') = 2003                                                                                 
+    AND yl.linha_id	                       = 1                                                                                   
+    AND yc.status_mov_id  = 2                                                                                                          
+    AND yr.numero_revisao < 4                                                                                                          
+  GROUP BY to_char(yl.fechamento_date,'YYYY')                                                                                          
+         , 'TOT REVISÕES'                                                                                                              
+UNION ALL
+SELECT to_char(yf.data_nf, 'YYYY')                   ano                                                                               
+      , 'VL FATUR'                                   topico     
+      , 0  m01 
+      , 0  m02 
+      , 0  m03 
+      , 0  m04 
+      , 0  m05 
+      , 0  m06 
+      , 0  m07 
+      , 0  m08 
+      , 0  m09 
+      , 0  m10 
+      , 0  m11 
+      , 0  m12                                                                             
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),1,yf.vl_produto,0))   m13                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),2,yf.vl_produto,0))   m14                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),3,yf.vl_produto,0))   m15                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),4,yf.vl_produto,0))   m16                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),5,yf.vl_produto,0))   m17                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),6,yf.vl_produto,0))   m18                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),7,yf.vl_produto,0))   m19                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),8,yf.vl_produto,0))   m20                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),9,yf.vl_produto,0))   m21                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),10,yf.vl_produto,0))  m22                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),11,yf.vl_produto,0))  m23                                                        
+      , sum(decode(to_number(to_char(yf.data_nf,'MM')),12,yf.vl_produto,0))  m24                                                        
+   FROM ym_sg_faturamento	   yf                                                                                                        
+  WHERE yf.end_date is NULL                                                                                                            
+    AND to_char(yf.data_nf, 'YYYY') = 2003                                                                                       
+    AND yf.linha_id	                = 1                                                                                     
+  GROUP BY to_char(yf.data_nf, 'YYYY')                                                                                                 
+         , 'VL FATUR']]></queryString>
+
+	<field name="ano" class="java.lang.String"/>
+	<field name="topico" class="java.lang.String"/>
+	<field name="m01" class="java.lang.Double"/>
+	<field name="m02" class="java.lang.Double"/>
+	<field name="m03" class="java.lang.Double"/>
+	<field name="m04" class="java.lang.Double"/>
+	<field name="m05" class="java.lang.Double"/>
+	<field name="m06" class="java.lang.Double"/>
+	<field name="m07" class="java.lang.Double"/>
+	<field name="m08" class="java.lang.Double"/>
+	<field name="m09" class="java.lang.Double"/>
+	<field name="m10" class="java.lang.Double"/>
+	<field name="m11" class="java.lang.Double"/>
+	<field name="m12" class="java.lang.Double"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="12"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="69"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-13"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m01}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="123"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-14"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m02}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="177"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-15"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m03}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="231"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-16"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m04}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="285"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-17"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m05}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="339"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-18"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m06}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="393"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-19"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m07}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="447"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-20"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m08}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="501"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-21"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m09}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="555"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m10}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="609"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-23"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m11}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="663"
+						y="0"
+						width="54"
+						height="12"
+						forecolor="#000000"
+						key="textField-24"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{m12}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="68"
+						height="12"
+						forecolor="#000000"
+						backcolor="#DDDDDD"
+						key="staticText-2"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="6"/>
+					</textElement>
+				<text><![CDATA[REV/VL FATUR]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="717"
+						y="0"
+						width="65"
+						height="12"
+						forecolor="#000000"
+						key="textField-26"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($F{m01}.doubleValue() +
+           $F{m02}.doubleValue() + 
+           $F{m03}.doubleValue() +
+           $F{m04}.doubleValue() +
+           $F{m05}.doubleValue() +
+           $F{m06}.doubleValue() +
+           $F{m07}.doubleValue() +
+           $F{m08}.doubleValue() +
+           $F{m09}.doubleValue() +
+           $F{m10}.doubleValue() +
+           $F{m11}.doubleValue() +
+           $F{m12}.doubleValue())]]></textFieldExpression>
+				</textField>
+			</band>
+		</summary>
+</jasperReport>

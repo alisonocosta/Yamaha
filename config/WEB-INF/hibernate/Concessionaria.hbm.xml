@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......Concessionaria.hbm.xml
+   .: Criação.....3 de maio, 9:59
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "Concessionaria" e tabela "YM_SG_CONCESSIONARIA".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.Concessionaria" table="YM_SG_CONCESSIONARIA">
+           
+		<id name="entityId" column="CONCESSIONARIA_ID" type="java.lang.Long">
+        	<generator class="sequence">
+				<param name="sequence">YM_SG_CONCESSIONARIA_S</param>
+			</generator>
+		</id>           
+
+		<property name="cnpj"            	column="CNPJ"             type="java.lang.Long"   not-null="true"  />
+		<property name="razaoSocial"	 	column="RAZAO_SOCIAL"     type="java.lang.String" not-null="true"  />
+		<property name="cep"             	column="CEP"              type="java.lang.Long"   not-null="true"  />		
+		<property name="endereco"        	column="ENDERECO"         type="java.lang.String" not-null="true"  />
+		<property name="bairro"          	column="BAIRRO"           type="java.lang.String" not-null="false"  />
+		<property name="cidade"          	column="CIDADE"           type="java.lang.String" not-null="true"  />
+		<property name="uf"          		column="ESTADO"           type="java.lang.String" not-null="true"  />
+		<property name="telefone_1"      	column="TELEFONE1"        type="java.lang.String" not-null="false" />
+		<property name="telefone_2"      	column="TELEFONE2"        type="java.lang.String" not-null="false" />	
+		<property name="regiaMoto"       	column="REGIAO_MOTO"      type="java.lang.Long"   not-null="false" />
+		<property name="regiaNautica"    	column="REGIAO_NAUTICA"   type="java.lang.Long"   not-null="false" />
+		<property name="flagBonificacao" 	column="FLAG_BONIFICACAO" type="java.lang.String" not-null="true"  length="1"/>	
+		<property name="flagAprovacaoAutom" column="APROVA_AUT"    	  type="java.lang.String" not-null="false" length="1"/>	
+		<property name="flagSistema" 	    column="FLAG_SISTEMA"     type="java.lang.String" not-null="true"  length="1"/>	
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 
+		
+		<bag name="lotes" inverse="true" lazy="true" >
+        	<key column="CONCESSIONARIA_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.Lote" />
+        	
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+        </bag> 
+        
+        <many-to-one name="estado"  		
+					 class="br.com.yamaha.sistemagarantia.model.Estado" 
+					 cascade="none"
+               		 update="true" 
+               		 insert="true" 
+					 column="ESTADO_ID"			
+					 not-null="false"
+					 fetch="join"/>
+					 
+		<many-to-one name="representante"  		
+					 class="br.com.yamaha.sistemagarantia.model.Representante" 
+					 cascade="none"
+               		 update="false" 
+               		 insert="false" 
+					 column="REPRESENTANTE_NAUT"			
+					 not-null="false"
+					 fetch="join"/>
+        
+        <filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+        	
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+
+</hibernate-mapping>

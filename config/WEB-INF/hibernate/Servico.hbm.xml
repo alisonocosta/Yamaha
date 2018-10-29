@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Resource Tecnologia
+Copyright (c) 2007 - Todos os direitos reservados
+
+   .: Projeto.....Yamaha - Sistema de Garantia
+   .: Objeto......Servico.hbm.xml
+   .: Criação.....18 de junho, 9:00
+   .: Autor.......Edson Luiz Sumensari
+   .: Descrição...Mapeamento entre classe "ValorServico" e tabela "YM_SG_SERVICO".
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-->
+
+<hibernate-mapping schema="YM_SG">
+
+	<class name="br.com.yamaha.sistemagarantia.model.Servico" table="YM_SG_SERVICO">
+           
+		<id name="entityId" column="SERVICO_ID" type="java.lang.Long">
+        	<generator class="native"/>
+		</id>           
+
+		<property name="servicoCode"     column="SERVICO_CODE"     type="java.lang.String" not-null="true" length="4"/>
+		<property name="descricao"     	 column="DESCRICAO"		   type="java.lang.String" not-null="true" length="100"/>								
+		
+		<property name="dataInicio"      column="START_DATE"       type="java.util.Date"   not-null="false" />
+		<property name="dataTermino"     column="END_DATE"         type="java.util.Date"   not-null="false" />
+		<property name="criadoPor"       column="CREATED_BY"       type="java.lang.Long"   not-null="true" update="false" />
+		<property name="atualizadoPor"   column="LAST_UPDATE_BY"   type="java.lang.Long"   not-null="true"  />
+		<property name="dataCriacao"     column="CREATED_DATE"     type="java.util.Date"   not-null="true" update="false" />
+		<property name="dataAtualizacao" column="LAST_UPDATE_DATE" type="java.util.Date"   not-null="true"  /> 
+		
+		<bag name="recallServicos" inverse ="true" lazy="true" cascade="persist,merge,save-update">
+        	<key column="SERVICO_ID" not-null="true"/>
+        	<one-to-many class="br.com.yamaha.sistemagarantia.model.RecallServico"/>
+        	
+        	<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+        	
+        </bag>
+		
+		
+		<many-to-one name="linha"  		
+					 class="br.com.yamaha.sistemagarantia.model.Linha" 
+					 cascade="none"
+               		 update="false" 
+               		 insert="false" 
+					 column="LINHA_ID"			
+					 not-null="false"
+					 lazy="false"/>	
+		
+		<filter name="effectiveDate"><![CDATA[START_DATE <= :asOfDate AND (END_DATE is null or END_DATE >= :asOfDate)]]></filter>
+		
+	</class>
+	
+	<filter-def name="effectiveDate">
+		<filter-param name="asOfDate" type="java.util.Date"/>
+	</filter-def>
+
+</hibernate-mapping>
